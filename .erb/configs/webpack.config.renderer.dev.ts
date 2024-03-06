@@ -6,8 +6,6 @@ import path from 'path';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-
 import checkNodeEnv from '../scripts/check-node-env';
 
 import baseConfig from './webpack.config.base';
@@ -150,8 +148,6 @@ const configuration: webpack.Configuration = {
     new webpack.LoaderOptionsPlugin({
       debug: true,
     }),
-
-    new ReactRefreshWebpackPlugin(),
 
     new HtmlWebpackPlugin({
       filename: path.join('index.html'),
