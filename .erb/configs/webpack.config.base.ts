@@ -2,6 +2,7 @@
  * Base webpack config used across other specific configs
  */
 
+import NodePolyfillPlugin from 'node-polyfill-webpack-plugin';
 import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
 import webpack from 'webpack';
 
@@ -52,6 +53,9 @@ const configuration: webpack.Configuration = {
   },
 
   plugins: [
+    new NodePolyfillPlugin({
+      excludeAliases: ['console'],
+    }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
     }),
