@@ -3,9 +3,11 @@ import { useCallback, useState } from 'react';
 import { Grid, Stack } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
-import PanelGridItem from '../../common/PanelGridItem';
+import PanelGridItem from '../../components/PanelGridItem';
 
 import MainPageActionButtons from './MainPageActionButtons';
+import { Pesel, Sex } from '../../util/parse-pesel';
+import { format } from 'date-fns';
 
 const PATIENT_COLUMNS: GridColDef[] = [
   { field: 'name', headerName: 'Nazwisko i imię', flex: 0.6 },
@@ -17,17 +19,12 @@ const DIAGNOSIS_COLUMNS: GridColDef[] = [
   { field: 'code', headerName: 'Kod' },
 ];
 
-enum Sex {
-  Male = 'M',
-  Female = 'F',
-}
+
 
 interface Patient {
   id: number;
   name: string;
-  pesel: string;
-  age: number;
-  sex: Sex;
+  pesel: Pesel;
 }
 
 function sexToPolishString(sex: Sex): string {
@@ -52,9 +49,7 @@ export default function MainPage() {
       .map((row, index) => ({
         id: index + 1,
         name: row[1],
-        pesel: row[2],
-        age: parseInt(row[2].slice(0, 2), 10),
-        sex: parseInt(row[2].slice(-1), 10) % 2 === 0 ? Sex.Male : Sex.Female,
+        pesel: Pesel.parse(row[2])
       }));
 
     setPatientData(newPatientData);
@@ -91,13 +86,16 @@ export default function MainPage() {
                 <strong>Nazwisko i imię:</strong> {selectedPatient.name}
               </div>
               <div>
-                <strong>PESEL:</strong> {selectedPatient.pesel}
+                <strong>PESEL:</strong> {selectedPatient.pesel.toString()}
               </div>
               <div>
-                <strong>Wiek:</strong> {selectedPatient.age}
+                <strong>Data urodzenia:</strong> {format(selectedPatient.pesel.birthdate, 'dd.MM.yyyy')}
               </div>
               <div>
-                <strong>Płeć:</strong> {sexToPolishString(selectedPatient.sex)}
+                <strong>Wiek:</strong> {selectedPatient.pesel.age}
+              </div>
+              <div>
+                <strong>Płeć:</strong> {sexToPolishString(selectedPatient.pesel.sex)}
               </div>
             </Stack>
           )}
