@@ -4,6 +4,7 @@ import { contextBridge, ipcRenderer } from 'electron';
 contextBridge.exposeInMainWorld('ipcRenderer', {
     on(...args: Parameters<typeof ipcRenderer.on>) {
         const [channel, listener] = args;
+        // eslint-disable-next-line @typescript-eslint/no-shadow
         ipcRenderer.on(channel, (event, ...args) => listener(event, ...args));
     },
     off(...args: Parameters<typeof ipcRenderer.off>) {
