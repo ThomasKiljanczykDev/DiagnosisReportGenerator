@@ -1,6 +1,11 @@
 # Logs
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -14,6 +19,11 @@ coverage
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
 node_modules
+dist
+dist-ssr
+dist-electron
+release
+*.local
 
 # OSX
 .DS_Store
@@ -23,7 +33,16 @@ release/build
 .erb/dll
 
 .idea
-npm-debug.log.*
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 *.css.d.ts
 *.sass.d.ts
 *.scss.d.ts
+/test-results/
+/playwright-report/
+/playwright/.cache/
