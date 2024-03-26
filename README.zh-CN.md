@@ -15,7 +15,7 @@
 🌱 结构清晰，可塑性强  
 💪 支持在渲染进程中使用 Electron、Node.js API  
 🔩 支持 C/C++ 模块  
-🖥 很容易实现多窗口  
+🖥 很容易实现多窗口
 
 ## 快速开始
 
@@ -39,7 +39,7 @@ npm run dev
 
 ## 目录
 
-*🚨 默认情况下, `electron` 文件夹下的文件将会被构建到 `dist-electron`*
+_🚨 默认情况下, `electron` 文件夹下的文件将会被构建到 `dist-electron`_
 
 ```tree
 ├── electron                                 Electron 源码文件夹
@@ -83,8 +83,8 @@ export default {
 
 ## ❔ FAQ
 
-- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
-- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
+-   [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
+-   [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
 
 ## 🍵 🍰 🍣 🍟
 

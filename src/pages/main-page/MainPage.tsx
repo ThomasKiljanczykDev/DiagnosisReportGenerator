@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
+import { Pesel, Sex } from '@/util/parse-pesel';
 import { Grid, Stack } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
 import PanelGridItem from '../../components/PanelGridItem';
-import { Pesel, Sex } from '@/util/parse-pesel';
 
 import MainPageActionButtons from './MainPageActionButtons';
 

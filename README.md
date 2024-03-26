@@ -16,7 +16,7 @@ English | [简体中文](README.zh-CN.md)
 💪 Supports Node.js API in the renderer process  
 🔩 Supports C/C++ native addons  
 🐞 Debugger configuration included  
-🖥 Easy to implement multiple windows  
+🖥 Easy to implement multiple windows
 
 ## 🛫 Quick Setup
 
@@ -41,7 +41,7 @@ npm run dev
 ## 📂 Directory structure
 
 Familiar React application structure, just with `electron` folder on the top :wink:  
-*Files in this folder will be separated from your React application and built into `dist-electron`*  
+_Files in this folder will be separated from your React application and built into `dist-electron`_
 
 ```tree
 ├── electron                                 Electron-related code
@@ -60,7 +60,7 @@ Familiar React application structure, just with `electron` folder on the top :wi
 <!--
 ## 🚨 Be aware
 
-This template integrates Node.js API to the renderer process by default. If you want to follow **Electron Security Concerns** you might want to disable this feature. You will have to expose needed API by yourself.  
+This template integrates Node.js API to the renderer process by default. If you want to follow **Electron Security Concerns** you might want to disable this feature. You will have to expose needed API by yourself.
 
 To get started, remove the option as shown below. This will [modify the Vite configuration and disable this feature](https://github.com/electron-vite/vite-plugin-electron-renderer#config-presets-opinionated).
 
@@ -87,5 +87,5 @@ export default {
 
 ## ❔ FAQ
 
-- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
-- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
+-   [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
+-   [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)

@@ -40,9 +40,9 @@ export default function MainPageActionButtons({ onFileImport }: MainPageActionBu
             });
 
             workSheetJson = workSheetJson
-                .map((row) => row.map((cell) => cell.trim()))
-                .filter((row) => row.some((cell) => cell))
-                .filter((row) => row.length > 0);
+                .map(row => row.map(cell => cell.trim()))
+                .filter(row => row.some(cell => cell))
+                .filter(row => row.length > 0);
 
             onFileImport(workSheetJson);
         },
