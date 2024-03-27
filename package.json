@@ -31,14 +31,17 @@
         "date-fns": "^3.6.0",
         "docx-templates": "^4.11.5",
         "electron-updater": "^6.1.8",
+        "fflate": "^0.8.2",
+        "papaparse": "^5.4.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-router-dom": "^6.22.3",
-        "xlsx": "^0.18.5"
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
     },
     "devDependencies": {
         "@playwright/test": "^1.42.1",
-        "@types/react": "^18.2.64",
+        "@types/papaparse": "^5.3.14",
+        "@types/react": "^18.2.72",
         "@types/react-dom": "^18.2.21",
         "@typescript-eslint/eslint-plugin": "^7.4.0",
         "@typescript-eslint/parser": "^7.4.0",

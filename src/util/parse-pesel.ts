@@ -3,16 +3,18 @@ export enum Sex {
     Female = 'F'
 }
 
-export class Pesel {
-    peselString: string;
+export class Pesel extends Object {
+    private readonly peselString: string;
 
-    sex: Sex;
+    readonly sex: Sex;
 
-    birthdate: Date;
+    readonly birthdate: Date;
 
-    age: number;
+    readonly age: number;
 
     constructor(peselString: string, sex: Sex, birthdate: Date) {
+        super();
+
         this.peselString = peselString.trim();
         this.sex = sex;
         this.birthdate = birthdate;

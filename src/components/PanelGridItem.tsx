@@ -9,16 +9,16 @@ interface PanelGridItemProps {
     height: number | string;
 }
 
-export default function PanelGridItem({ children, title, width, height }: PanelGridItemProps) {
+export default function PanelGridItem(props: PanelGridItemProps) {
     return (
         <Grid item>
-            <Paper sx={{ width, height }}>
+            <Paper sx={{ width: props.width, height: props.height }}>
                 <Grid container flexDirection="column" height="100%" sx={{ padding: 3 }}>
                     <Grid item>
-                        <h3 style={{ marginTop: 0 }}>{title}</h3>
+                        <h3 style={{ marginTop: 0 }}>{props.title}</h3>
                     </Grid>
                     <Grid flex={1} item minHeight={0} minWidth={0}>
-                        {children}
+                        {props.children}
                     </Grid>
                 </Grid>
             </Paper>

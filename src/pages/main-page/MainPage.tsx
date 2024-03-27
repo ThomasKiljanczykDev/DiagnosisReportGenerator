@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
-import { Pesel, Sex } from '@/util/parse-pesel';
+import { Patient } from '@/type/common';
+import { sexToPolishString } from '@/util/util';
 import { Grid, Stack } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
@@ -19,35 +20,11 @@ const DIAGNOSIS_COLUMNS: GridColDef[] = [
     { field: 'code', headerName: 'Kod' }
 ];
 
-interface Patient {
-    id: number;
-    name: string;
-    pesel: Pesel;
-}
-
-function sexToPolishString(sex: Sex): string {
-    switch (sex) {
-        case Sex.Male:
-            return 'Mężczyzna';
-        case Sex.Female:
-            return 'Kobieta';
-        default:
-            return 'Nieznana';
-    }
-}
-
 export default function MainPage() {
     const [patientData, setPatientData] = useState<Patient[]>([]);
     const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
-    const onFileImport = useCallback((fileContent: string[][]) => {
-        // skip first row
-        const newPatientData: Patient[] = fileContent.slice(1).map((row, index) => ({
-            id: index + 1,
-            name: row[1],
-            pesel: Pesel.parse(row[2])
-        }));
-
+    const onFileImport = useCallback((newPatientData: Patient[]) => {
         setPatientData(newPatientData);
     }, []);
 
@@ -57,7 +34,7 @@ export default function MainPage() {
 
     return (
         <Stack display="inline-flex" spacing={1}>
-            <MainPageActionButtons onFileImport={onFileImport} />
+            <MainPageActionButtons onFileImport={onFileImport} patientData={patientData} />
 
             <Grid alignItems="stretch" container spacing={2}>
                 <PanelGridItem height={400} title="Lista pacjentów" width={600}>

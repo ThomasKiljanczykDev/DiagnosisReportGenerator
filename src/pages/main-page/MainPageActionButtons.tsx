@@ -1,87 +1,51 @@
-import { ChangeEvent, useCallback, useState } from 'react';
-import { createReport } from 'docx-templates';
-import * as XLSX from 'xlsx';
+import { ChangeEvent, useCallback } from 'react';
 
+import VisuallyHiddenInput from '@/components/VisuallyHiddenInput';
+import ExportService from '@/services/export.service';
+import { ImportService } from '@/services/import.service';
+import { Patient } from '@/type/common';
+import { MimeType, saveFile } from '@/util/util';
 import { Button, Grid } from '@mui/material';
-import { styled } from '@mui/material/styles';
-
-const VisuallyHiddenInput = styled('input')({
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1
-});
 
 interface MainPageActionButtonsProps {
-    onFileImport: (fileContent: string[][]) => void;
+    patientData: Patient[];
+    onFileImport: (patients: Patient[]) => void;
 }
 
-export default function MainPageActionButtons({ onFileImport }: MainPageActionButtonsProps) {
-    const [importedFile, setImportedFile] = useState<File | null>(null);
-
+export default function MainPageActionButtons(props: MainPageActionButtonsProps) {
     const handleFileChange = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
-            setImportedFile(file ?? null);
             if (!file) {
                 return;
             }
 
-            const fileData = await file.arrayBuffer();
-            const workBook = XLSX.read(fileData);
-            const workSheet = workBook.Sheets[workBook.SheetNames[0]];
-            let workSheetJson: string[][] = XLSX.utils.sheet_to_json(workSheet, {
-                header: 1,
-                rawNumbers: false
-            });
+            // if file is excel
+            let patientData: Patient[] = [];
+            if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
+                patientData = await ImportService.parseExcelFile(file);
+            } else {
+                patientData = await ImportService.parseCsvFile(file);
+            }
 
-            workSheetJson = workSheetJson
-                .map(row => row.map(cell => cell.trim()))
-                .filter(row => row.some(cell => cell))
-                .filter(row => row.length > 0);
-
-            onFileImport(workSheetJson);
+            props.onFileImport(patientData);
         },
-        [onFileImport]
+        [props.onFileImport]
     );
 
-    const handleReportGeneration = useCallback(async () => {
-        if (!importedFile) {
-            return;
-        }
+    const handleReportGeneration = useCallback(
+        async (event: ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files?.[0];
+            if (!file || !props.patientData.length) {
+                return;
+            }
 
-        const docxBuffer = await importedFile.arrayBuffer();
-        const uint8Array = new Uint8Array(docxBuffer);
-
-        const data = {
-            date: new Date().toLocaleDateString(),
-            cardNo: '123456789',
-            name: 'Jan Kowalski',
-            pesel: '123456789'
-        };
-
-        const report = await createReport({
-            template: uint8Array,
-            cmdDelimiter: ['{{', '}}'],
-            data
-        });
-
-        // Show save file prompt
-        const blob = new Blob([report], {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'report.docx';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    }, [importedFile]);
+            const zipData = await ExportService.generateReport(file, props.patientData);
+            const filename = `${file.name}-${new Date().toLocaleDateString()}.zip`;
+            saveFile(zipData, filename, MimeType.zip);
+        },
+        [props.patientData]
+    );
 
     return (
         <Grid container spacing={2}>
@@ -96,8 +60,18 @@ export default function MainPageActionButtons({ onFileImport }: MainPageActionBu
                 </Button>
             </Grid>
             <Grid item>
-                <Button onClick={handleReportGeneration} variant="contained">
+                <Button
+                    component="label"
+                    role="none"
+                    variant="contained"
+                    disabled={!props.patientData.length}
+                >
                     Generuj raporty
+                    <VisuallyHiddenInput
+                        accept=".docx"
+                        onChange={handleReportGeneration}
+                        type="file"
+                    />
                 </Button>
             </Grid>
         </Grid>
