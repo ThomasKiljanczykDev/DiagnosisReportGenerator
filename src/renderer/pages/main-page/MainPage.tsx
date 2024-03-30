@@ -1,7 +1,8 @@
 import { useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
-import { Pesel, Sex } from '@/util/parse-pesel';
+import { Patient, Pesel } from '@/common/models/patient';
+import { sexToPolishString } from '@/renderer/util/text-util';
 import { Grid, Stack } from '@mui/material';
 import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 
@@ -9,9 +10,14 @@ import PanelGridItem from '../../components/PanelGridItem';
 
 import MainPageActionButtons from './MainPageActionButtons';
 
-const PATIENT_COLUMNS: GridColDef[] = [
+const PATIENT_COLUMNS: GridColDef<Patient>[] = [
     { field: 'name', headerName: 'Nazwisko i imię', flex: 0.6 },
-    { field: 'pesel', headerName: 'PESEL', flex: 0.4 }
+    {
+        field: 'pesel',
+        headerName: 'PESEL',
+        flex: 0.4,
+        valueFormatter: (value: Pesel) => value.string
+    }
 ];
 
 const DIAGNOSIS_COLUMNS: GridColDef[] = [
@@ -19,35 +25,20 @@ const DIAGNOSIS_COLUMNS: GridColDef[] = [
     { field: 'code', headerName: 'Kod' }
 ];
 
-interface Patient {
-    id: number;
-    name: string;
-    pesel: Pesel;
-}
-
-function sexToPolishString(sex: Sex): string {
-    switch (sex) {
-        case Sex.Male:
-            return 'Mężczyzna';
-        case Sex.Female:
-            return 'Kobieta';
-        default:
-            return 'Nieznana';
-    }
-}
+const DIAGNOSIS_DATA = [
+    { name: 'HBC', code: '1' },
+    { name: 'HBC ss', code: '2' },
+    { name: 'NS', code: '4' },
+    { name: 'NS kch', code: '5' },
+    { name: 'NS mch', code: '6' },
+    { name: 'FRC ss', code: '7' }
+];
 
 export default function MainPage() {
     const [patientData, setPatientData] = useState<Patient[]>([]);
     const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null);
 
-    const onFileImport = useCallback((fileContent: string[][]) => {
-        // skip first row
-        const newPatientData: Patient[] = fileContent.slice(1).map((row, index) => ({
-            id: index + 1,
-            name: row[1],
-            pesel: Pesel.parse(row[2])
-        }));
-
+    const onFileImport = useCallback((newPatientData: Patient[]) => {
         setPatientData(newPatientData);
     }, []);
 
@@ -57,7 +48,7 @@ export default function MainPage() {
 
     return (
         <Stack display="inline-flex" spacing={1}>
-            <MainPageActionButtons onFileImport={onFileImport} />
+            <MainPageActionButtons onFileImport={onFileImport} patientData={patientData} />
 
             <Grid alignItems="stretch" container spacing={2}>
                 <PanelGridItem height={400} title="Lista pacjentów" width={600}>
@@ -68,7 +59,11 @@ export default function MainPage() {
                     />
                 </PanelGridItem>
                 <PanelGridItem height={400} title="Rozpoznania" width={600}>
-                    <DataGrid columns={DIAGNOSIS_COLUMNS} rows={[]} />
+                    <DataGrid
+                        columns={DIAGNOSIS_COLUMNS}
+                        rows={DIAGNOSIS_DATA}
+                        getRowId={row => row.code}
+                    />
                 </PanelGridItem>
             </Grid>
             <Grid alignItems="stretch" container spacing={2}>
@@ -79,7 +74,7 @@ export default function MainPage() {
                                 <strong>Nazwisko i imię:</strong> {selectedPatient.name}
                             </div>
                             <div>
-                                <strong>PESEL:</strong> {selectedPatient.pesel.toString()}
+                                <strong>PESEL:</strong> {selectedPatient.pesel.string}
                             </div>
                             <div>
                                 <strong>Data urodzenia:</strong>{' '}

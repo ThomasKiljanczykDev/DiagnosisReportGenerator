@@ -2,7 +2,7 @@ module.exports = {
     plugins: ['simple-import-sort'],
     overrides: [
         {
-            files: ['**/*.js', '**/*.ts', '**/*.tsx'],
+            files: ['**/*.js', '**/*.ts', '**/*.jsx', '**/*.tsx'],
             rules: {
                 'simple-import-sort/imports': [
                     'error',

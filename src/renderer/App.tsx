@@ -1,4 +1,4 @@
-import { StrictMode, useMemo } from 'react';
+import { useMemo } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -13,14 +13,12 @@ export default function App() {
     const themeWithLocale = useMemo(() => createTheme(plPL, dataGridPlPL), []);
 
     return (
-        <StrictMode>
-            <ThemeProvider theme={themeWithLocale}>
-                <MemoryRouter>
-                    <Routes>
-                        <Route element={<MainPage />} path="/" />
-                    </Routes>
-                </MemoryRouter>
-            </ThemeProvider>
-        </StrictMode>
+        <ThemeProvider theme={themeWithLocale}>
+            <MemoryRouter>
+                <Routes>
+                    <Route element={<MainPage />} path="/" />
+                </Routes>
+            </MemoryRouter>
+        </ThemeProvider>
     );
 }

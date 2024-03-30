@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
+import api from '@/preload/api';
+
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
     on(...args: Parameters<typeof ipcRenderer.on>) {
@@ -17,12 +19,14 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
     },
     invoke(...args: Parameters<typeof ipcRenderer.invoke>) {
         const [channel, ...omit] = args;
-        ipcRenderer.invoke(channel, ...omit);
+        return ipcRenderer.invoke(channel, ...omit);
     }
 
     // You can expose other APTs you need here.
     // ...
 });
+
+contextBridge.exposeInMainWorld('api', api);
 
 // --------- Preload scripts loading ---------
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
