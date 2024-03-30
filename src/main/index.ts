@@ -3,6 +3,8 @@ import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { setupBackend } from '@/main/backend';
+
 import { update } from './update';
 
 globalThis.__filename = fileURLToPath(import.meta.url);
@@ -125,3 +127,5 @@ ipcMain.handle('open-win', (_, arg) => {
         childWindow.loadFile(indexHtml, { hash: arg });
     }
 });
+
+setupBackend();

@@ -1,12 +1,10 @@
 import Papa from 'papaparse';
 import { read, utils } from 'xlsx';
 
-import { Patient } from '@/type/common';
-import { Pesel } from '@/util/parse-pesel';
+import { parsePesel, Patient } from '@/common/models/patient';
 
 export class ImportService {
-    static async parseExcelFile(file: File) {
-        const fileData = await file.arrayBuffer();
+    static async parseExcelFile(fileData: Uint8Array) {
         const workBook = read(fileData);
         const workSheet = workBook.Sheets[workBook.SheetNames[0]];
 
@@ -18,8 +16,7 @@ export class ImportService {
         return this.parsePatientData(rawSheetData);
     }
 
-    static async parseCsvFile(file: File) {
-        const fileData = await file.text();
+    static async parseCsvFile(fileData: string) {
         let rawSheetData = Papa.parse<string[]>(fileData, {
             header: false,
             skipEmptyLines: true
@@ -43,7 +40,7 @@ export class ImportService {
                     id: id,
                     cardNumber: data[0],
                     name: data[1],
-                    pesel: Pesel.parse(data[2])
+                    pesel: parsePesel(data[2])
                 };
             } catch (e) {
                 console.error(`Error parsing patient data: ${data}`);

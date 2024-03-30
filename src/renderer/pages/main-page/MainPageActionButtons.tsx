@@ -1,10 +1,8 @@
 import { ChangeEvent, useCallback } from 'react';
 
-import VisuallyHiddenInput from '@/components/VisuallyHiddenInput';
-import ExportService from '@/services/export.service';
-import { ImportService } from '@/services/import.service';
-import { Patient } from '@/type/common';
-import { MimeType, saveFile } from '@/util/util';
+import { Patient } from '@/common/models/patient';
+import VisuallyHiddenInput from '@/renderer/components/VisuallyHiddenInput';
+import { MimeType, saveFile } from '@/renderer/util/file-util';
 import { Button, Grid } from '@mui/material';
 
 interface MainPageActionButtonsProps {
@@ -23,9 +21,11 @@ export default function MainPageActionButtons(props: MainPageActionButtonsProps)
             // if file is excel
             let patientData: Patient[] = [];
             if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
-                patientData = await ImportService.parseExcelFile(file);
+                const fileData = new Uint8Array(await file.arrayBuffer());
+                patientData = await api.parseExcelFile(fileData);
             } else {
-                patientData = await ImportService.parseCsvFile(file);
+                const fileData = await file.text();
+                patientData = await api.parseCsvFile(fileData);
             }
 
             props.onFileImport(patientData);
@@ -40,7 +40,8 @@ export default function MainPageActionButtons(props: MainPageActionButtonsProps)
                 return;
             }
 
-            const zipData = await ExportService.generateReport(file, props.patientData);
+            const fileData = new Uint8Array(await file.arrayBuffer());
+            const zipData = await api.renderReportPackage(fileData, props.patientData);
             const filename = `${file.name}-${new Date().toLocaleDateString()}.zip`;
             saveFile(zipData, filename, MimeType.zip);
         },

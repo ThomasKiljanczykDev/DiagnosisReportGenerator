@@ -1,19 +1,6 @@
-import { Sex } from '@/util/parse-pesel';
-
 export enum MimeType {
     docx = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     zip = 'application/zip'
-}
-
-export function sexToPolishString(sex: Sex): string {
-    switch (sex) {
-        case Sex.Male:
-            return 'Mężczyzna';
-        case Sex.Female:
-            return 'Kobieta';
-        default:
-            return 'Nieznana';
-    }
 }
 
 export function saveFile(

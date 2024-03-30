@@ -1,12 +1,19 @@
 import { rmSync } from 'node:fs';
 import path from 'node:path';
-import { defineConfig } from 'vite';
+import { AliasOptions, defineConfig, ResolveOptions } from 'vite';
 import electron from 'vite-plugin-electron/simple';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 import react from '@vitejs/plugin-react';
 
 import pkg from './package.json';
+
+const resolve: ResolveOptions & {
+    alias?: AliasOptions;
+} = {
+    alias: {
+        '@': path.join(__dirname, 'src')
+    }
+};
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command }) => {
@@ -17,18 +24,13 @@ export default defineConfig(({ command }) => {
     const sourcemap = isServe || !!process.env.VSCODE_DEBUG;
 
     return {
-        resolve: {
-            alias: {
-                '@': path.join(__dirname, 'src')
-            }
-        },
+        resolve: resolve,
         plugins: [
-            nodePolyfills(),
             react(),
             electron({
                 main: {
                     // Shortcut of `build.lib.entry`
-                    entry: 'electron/main/index.ts',
+                    entry: 'src/main/index.ts',
                     onstart(args) {
                         if (process.env.VSCODE_DEBUG) {
                             console.log(
@@ -39,6 +41,7 @@ export default defineConfig(({ command }) => {
                         }
                     },
                     vite: {
+                        resolve: resolve,
                         build: {
                             sourcemap,
                             minify: isBuild,
@@ -52,8 +55,9 @@ export default defineConfig(({ command }) => {
                 preload: {
                     // Shortcut of `build.rollupOptions.input`.
                     // Preload scripts may contain Web assets, so use the `build.rollupOptions.input` instead `build.lib.entry`.
-                    input: 'electron/preload/index.ts',
+                    input: 'src/preload/index.ts',
                     vite: {
+                        resolve: resolve,
                         build: {
                             sourcemap: sourcemap ? 'inline' : undefined, // #332
                             minify: isBuild,
@@ -64,8 +68,8 @@ export default defineConfig(({ command }) => {
                         }
                     }
                 },
-                // Ployfill the Electron and Node.js API for Renderer process.
-                // If you want use Node.js in Renderer process, the `nodeIntegration` needs to be enabled in the Main process.
+                // Polyfill the Electron and Node.js API for Renderer process.
+                // If you want to use Node.js in Renderer process, the `nodeIntegration` needs to be enabled in the Main process.
                 // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
                 renderer: {}
             })
