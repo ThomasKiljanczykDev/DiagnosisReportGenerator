@@ -5,6 +5,7 @@ import { Api } from '@/common/types/api';
 import ExportService from '@/main/backend/services/export.service';
 import { ImportService } from '@/main/backend/services/import.service';
 
+// noinspection JSUnusedLocalSymbols
 const apiStub: Api = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     parseCsvFile(fileData: string): Promise<Patient[]> {

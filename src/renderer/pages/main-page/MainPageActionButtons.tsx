@@ -19,7 +19,7 @@ export default function MainPageActionButtons(props: MainPageActionButtonsProps)
             }
 
             // if file is excel
-            let patientData: Patient[] = [];
+            let patientData: Patient[];
             if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
                 const fileData = new Uint8Array(await file.arrayBuffer());
                 patientData = await api.parseExcelFile(fileData);
