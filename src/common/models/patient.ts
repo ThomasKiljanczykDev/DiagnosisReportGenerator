@@ -5,20 +5,27 @@ export enum Sex {
 
 export interface Pesel {
     string: string;
-    sex: Sex;
-    birthdate: Date;
-    age: number;
+    sex?: Sex;
+    birthdate?: Date;
+    age?: number;
+    error?: string;
 }
 
 export function parsePesel(peselString: string): Pesel {
     peselString = peselString.trim();
 
     if (peselString.length !== 11) {
-        throw new Error('provided pesel is not 11 characters long');
+        return {
+            string: peselString,
+            error: 'Podany nr PESEL nie ma 11 znaków'
+        };
     }
 
-    if (!parseInt(peselString, 10)) {
-        throw new Error('provided pesel is not a integer number');
+    if (!/^\d+$/.test(peselString)) {
+        return {
+            string: peselString,
+            error: 'Podany nr PESEL zawiera nieprawidłowe znaki'
+        };
     }
 
     let codifiedMonth = parseInt(peselString.slice(2, 4), 10);
@@ -57,7 +64,12 @@ export function parsePesel(peselString: string): Pesel {
 
 export interface Patient {
     id: number;
+    date: Date;
     cardNumber: string;
     name: string;
     pesel: Pesel;
+    doctor: string;
+    assistants: string[];
+    technicians?: string[];
+    consultants: string[];
 }

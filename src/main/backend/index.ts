@@ -25,7 +25,6 @@ export function setupBackend() {
     ipcMain.handle(
         apiStub.parseExcelFile.name,
         async (_, ...args: Parameters<typeof apiStub.parseExcelFile>) => {
-            console.log(args);
             try {
                 return await ImportService.parseExcelFile(args[0]);
             } catch (e) {

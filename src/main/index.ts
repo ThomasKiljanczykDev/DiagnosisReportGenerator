@@ -1,4 +1,5 @@
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron';
+import contextMenu from 'electron-context-menu';
 import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -27,10 +28,14 @@ process.env.VITE_PUBLIC = process.env.VITE_DEV_SERVER_URL
     : process.env.DIST;
 
 // Disable GPU Acceleration for Windows 7
-if (release().startsWith('6.1')) app.disableHardwareAcceleration();
+if (release().startsWith('6.1')) {
+    app.disableHardwareAcceleration();
+}
 
 // Set application name for Windows 10+ notifications
-if (process.platform === 'win32') app.setAppUserModelId(app.getName());
+if (process.platform === 'win32') {
+    app.setAppUserModelId(app.getName());
+}
 
 if (!app.requestSingleInstanceLock()) {
     app.quit();
@@ -48,10 +53,19 @@ const preload = join(__dirname, '../preload/index.mjs');
 const devServerUrl = process.env.VITE_DEV_SERVER_URL;
 const indexHtml = join(process.env.DIST, 'index.html');
 
+// Force light theme
+nativeTheme.themeSource = 'light';
+
+if (devServerUrl) {
+    contextMenu({});
+}
+
 async function createWindow() {
     win = new BrowserWindow({
         title: 'Main window',
         icon: join(process.env.VITE_PUBLIC, 'favicon.ico'),
+        width: 1600,
+        height: 900,
         webPreferences: {
             preload
             // Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
