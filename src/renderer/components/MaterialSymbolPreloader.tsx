@@ -12,7 +12,6 @@ const MaterialSymbolPreloader = memo(function MaterialSymbolPreloader(
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
-            console.log('endPreload');
             setEndPreload(true);
         }, 50);
 

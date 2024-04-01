@@ -25,14 +25,19 @@ const PATIENT_COLUMNS: GridColDef<Patient>[] = [
             return newPatient;
         },
         renderCell: params => {
+            const hasError = params.row.pesel.error !== undefined;
+            function CellErrorTooltip() {
+                return (
+                    <Tooltip title={params.row.pesel.error} arrow={true}>
+                        <div>{params.value || ''}</div>
+                    </Tooltip>
+                );
+            }
+
             return (
-                <div className={params.row.pesel.error ? 'cell-error' : ''}>
-                    {params.row.pesel.error && (
-                        <Tooltip title={params.row.pesel.error}>
-                            <>{params.value || ''}</>
-                        </Tooltip>
-                    )}
-                    {!params.row.pesel.error && <> {params.value || ''} </>}
+                <div className={hasError ? 'cell-error' : ''}>
+                    {hasError && <CellErrorTooltip />}
+                    {!hasError && <> {params.value || ''} </>}
                 </div>
             );
         }
