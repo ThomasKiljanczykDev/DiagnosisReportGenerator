@@ -1,17 +1,18 @@
-import { useMemo } from 'react';
+import { lazy, Suspense, useMemo } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 
 import MainDrawer from '@/renderer/components/drawer/MainDrawer';
 import SettingsDrawer from '@/renderer/components/drawer/SettingsDrawer';
 import MainAppBar from '@/renderer/components/MainAppBar';
 import Redirect from '@/renderer/components/Redirect';
-import Reports from '@/renderer/pages/reports/Reports';
-import Settings from '@/renderer/pages/settings/Settings';
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 import { plPL } from '@mui/material/locale';
 import { plPL as dataGridPlPL } from '@mui/x-data-grid/locales';
 
 import './App.css';
+
+const Reports = lazy(() => import('@/renderer/features/Reports'));
+const Settings = lazy(() => import('@/renderer/features/Settings'));
 
 export default function App() {
     const themeWithLocale = useMemo(() => createTheme(plPL, dataGridPlPL), []);
@@ -42,11 +43,13 @@ export default function App() {
                         backgroundColor: 'white'
                     }}
                 >
-                    <Routes>
-                        <Route element={<Redirect to="/reports" />} path="/" />
-                        <Route element={<Reports />} path="/reports" />
-                        <Route element={<Settings />} path="/settings/*" />
-                    </Routes>
+                    <Suspense>
+                        <Routes>
+                            <Route element={<Redirect to="/reports" />} path="/" />
+                            <Route element={<Reports />} path="/reports" />
+                            <Route element={<Settings />} path="/settings/*" />
+                        </Routes>
+                    </Suspense>
                 </Box>
             </Box>
         </ThemeProvider>
