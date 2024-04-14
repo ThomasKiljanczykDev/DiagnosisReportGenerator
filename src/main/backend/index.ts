@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import Store from 'electron-store';
 
 import { Api } from '@/common/types/api';
@@ -14,10 +14,14 @@ function handle<T extends keyof Api>(
     });
 }
 
-export function setupBackend(cwd: string) {
-    const store = new Store({
-        cwd: cwd
+export function createElectronStore() {
+    return new Store({
+        cwd: app.getAppPath()
     });
+}
+
+export function setupBackend() {
+    const store = createElectronStore();
 
     handle('setStoreValue', async (...args) => {
         store.set(args[0], args[1]);

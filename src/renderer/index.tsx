@@ -1,8 +1,11 @@
 import { lazy, StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import MaterialSymbolPreloader from '@/renderer/components/MaterialSymbolPreloader';
+import { rendererPersistor, rendererStore } from '@/renderer/redux/store';
 
 import './index.css';
 
@@ -13,11 +16,15 @@ const App = lazy(() => import('@/renderer/App'));
 const Index = () => {
     return (
         <StrictMode>
-            <HashRouter>
-                <Suspense>
-                    <App />
-                </Suspense>
-            </HashRouter>
+            <Provider store={rendererStore}>
+                <PersistGate loading={null} persistor={rendererPersistor}>
+                    <HashRouter>
+                        <Suspense>
+                            <App />
+                        </Suspense>
+                    </HashRouter>
+                </PersistGate>
+            </Provider>
             <MaterialSymbolPreloader icons={['genetics']} />
         </StrictMode>
     );

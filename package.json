@@ -30,6 +30,7 @@
         "@mui/material": "^5.15.15",
         "@mui/system": "^5.15.15",
         "@mui/x-data-grid": "^7.2.0",
+        "@reduxjs/toolkit": "^2.2.3",
         "date-fns": "^3.6.0",
         "docx-templates": "^4.12.0",
         "electron-context-menu": "^3.6.1",
@@ -40,7 +41,10 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-material-symbols": "^4.4.0",
+        "react-redux": "^9.1.0",
         "react-router-dom": "^6.22.3",
+        "redux": "^5.0.1",
+        "redux-persist": "^6.0.0",
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
     },
     "devDependencies": {
