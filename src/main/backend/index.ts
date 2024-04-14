@@ -5,64 +5,41 @@ import { Api } from '@/common/types/api';
 import ExportService from '@/main/backend/services/export.service';
 import { ImportService } from '@/main/backend/services/import.service';
 
+function handle<T extends keyof Api>(
+    channel: T,
+    listener: (...args: Parameters<Api[T]>) => ReturnType<Api[T]>
+) {
+    ipcMain.handle(channel, async (_, ...args: Parameters<Api[T]>) => {
+        return listener(...args);
+    });
+}
+
 export function setupBackend(cwd: string) {
     const store = new Store({
         cwd: cwd
     });
 
-    ipcMain.handle(
-        'setStoreValue' satisfies keyof Api,
-        async (_, ...args: Parameters<Api['setStoreValue']>): ReturnType<Api['setStoreValue']> => {
-            store.set(args[0], args[1]);
-        }
-    );
+    handle('setStoreValue', async (...args) => {
+        store.set(args[0], args[1]);
+    });
 
-    ipcMain.handle(
-        'getStoreValue' satisfies keyof Api,
-        async (_, ...args: Parameters<Api['getStoreValue']>): ReturnType<Api['getStoreValue']> => {
-            return store.get(args[0]);
-        }
-    );
+    handle('getStoreValue', async (...args) => {
+        return store.get(args[0]);
+    });
 
-    ipcMain.handle(
-        'deleteStoreValue' satisfies keyof Api,
-        async (
-            _,
-            ...args: Parameters<Api['deleteStoreValue']>
-        ): ReturnType<Api['deleteStoreValue']> => {
-            store.delete(args[0]);
-        }
-    );
+    handle('deleteStoreValue', async (...args) => {
+        store.delete(args[0]);
+    });
 
-    ipcMain.handle(
-        'parseExcelFile' satisfies keyof Api,
-        async (
-            _,
-            ...args: Parameters<Api['parseExcelFile']>
-        ): ReturnType<Api['parseExcelFile']> => {
-            try {
-                return await ImportService.parseExcelFile(args[0]);
-            } catch (e) {
-                console.error(`Error parsing Excel file: ${e}`);
-                throw e;
-            }
-        }
-    );
+    handle('parseExcelFile', async (...args) => {
+        return await ImportService.parseExcelFile(args[0]);
+    });
 
-    ipcMain.handle(
-        'parseCsvFile' satisfies keyof Api,
-        async (_, ...args: Parameters<Api['parseCsvFile']>): ReturnType<Api['parseCsvFile']> => {
-            return await ImportService.parseCsvFile(args[0]);
-        }
-    );
+    handle('parseCsvFile', async (...args) => {
+        return await ImportService.parseCsvFile(args[0]);
+    });
 
-    ipcMain.handle(
-        'renderReportPackage' satisfies keyof Api,
-        async (
-            _,
-            ...args: Parameters<Api['renderReportPackage']>
-        ): ReturnType<Api['renderReportPackage']> => {
-            return await ExportService.generateReport(args[0], args[1]);
-        }
-    );
+    handle('renderReportPackage', async (...args) => {
+        return await ExportService.generateReport(args[0], args[1]);
+    });
 }
