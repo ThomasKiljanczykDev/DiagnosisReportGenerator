@@ -1,8 +1,8 @@
 {
-    "name": "electron-vite-react",
+    "name": "diagnosis-report-generator",
     "version": "1.0.0",
     "main": "dist-electron/main/index.js",
-    "description": "Electron Vite React boilerplate.",
+    "description": "A application used to generate patient diagnosis reports.",
     "author": "Tomasz Kiljańczyk <asz.czyk.dev.com>",
     "license": "MIT",
     "private": true,
@@ -33,6 +33,7 @@
         "date-fns": "^3.6.0",
         "docx-templates": "^4.12.0",
         "electron-context-menu": "^3.6.1",
+        "electron-store": "^8.2.0",
         "electron-updater": "^6.1.8",
         "fflate": "^0.8.2",
         "papaparse": "^5.4.1",

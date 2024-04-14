@@ -142,4 +142,5 @@ ipcMain.handle('open-win', (_, arg) => {
     }
 });
 
-setupBackend();
+const cwd = join(__dirname, '../../');
+setupBackend(cwd);
