@@ -13,13 +13,13 @@
     },
     "type": "module",
     "scripts": {
-        "lint": "tsc && eslint .",
-        "lint:fix": "tsc && eslint --fix .",
+        "lint": "tsc --noEmit && eslint .",
+        "lint:fix": "tsc --noEmit && eslint --fix .",
         "format": "prettier --write .",
         "dev": "vite",
-        "build": "tsc && vite build && electron-builder",
+        "build": "vite build && electron-builder",
         "preview": "vite preview",
-        "pree2e": "tsc && vite build --mode=test",
+        "pree2e": "vite build --mode=test",
         "e2e": "playwright test"
     },
     "dependencies": {
