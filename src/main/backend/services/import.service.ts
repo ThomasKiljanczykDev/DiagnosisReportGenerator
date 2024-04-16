@@ -32,15 +32,17 @@ export class ImportService {
             .filter(row => row.some(cell => cell))
             .filter(row => row.length > 0);
 
-        console.log(rawSheetData);
-
         function parsePatient(id: number, data: string[]): Patient | null {
             try {
                 return {
                     id: id,
+                    date: new Date(),
                     cardNumber: data[0],
                     name: data[1],
-                    pesel: parsePesel(data[2])
+                    pesel: parsePesel(data[2]),
+                    assistants: [data[5]],
+                    consultants: [data[6]],
+                    doctor: data[7]
                 };
             } catch (e) {
                 console.error(`Error parsing patient data: ${data}`);

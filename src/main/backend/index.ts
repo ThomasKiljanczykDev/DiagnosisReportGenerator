@@ -1,51 +1,49 @@
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
+import Store from 'electron-store';
 
-import { Patient } from '@/common/models/patient';
 import { Api } from '@/common/types/api';
 import ExportService from '@/main/backend/services/export.service';
 import { ImportService } from '@/main/backend/services/import.service';
 
-// noinspection JSUnusedLocalSymbols
-const apiStub: Api = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    parseCsvFile(fileData: string): Promise<Patient[]> {
-        throw new Error('Method not implemented.');
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    parseExcelFile(fileData: Uint8Array): Promise<Patient[]> {
-        throw new Error('Method not implemented.');
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    renderReportPackage(templateFileData: Uint8Array, patientData: Patient[]): Promise<Uint8Array> {
-        throw new Error('Method not implemented.');
-    }
-};
+function handle<T extends keyof Api>(
+    channel: T,
+    listener: (...args: Parameters<Api[T]>) => ReturnType<Api[T]>
+) {
+    ipcMain.handle(channel, async (_, ...args: Parameters<Api[T]>) => {
+        return listener(...args);
+    });
+}
+
+export function createElectronStore() {
+    return new Store({
+        cwd: app.getAppPath()
+    });
+}
 
 export function setupBackend() {
-    ipcMain.handle(
-        apiStub.parseExcelFile.name,
-        async (_, ...args: Parameters<typeof apiStub.parseExcelFile>) => {
-            console.log(args);
-            try {
-                return await ImportService.parseExcelFile(args[0]);
-            } catch (e) {
-                console.error(`Error parsing Excel file: ${e}`);
-                throw e;
-            }
-        }
-    );
+    const store = createElectronStore();
 
-    ipcMain.handle(
-        apiStub.parseCsvFile.name,
-        async (_, ...args: Parameters<typeof apiStub.parseCsvFile>) => {
-            return await ImportService.parseCsvFile(args[0]);
-        }
-    );
+    handle('setStoreValue', async (...args) => {
+        store.set(args[0], args[1]);
+    });
 
-    ipcMain.handle(
-        apiStub.renderReportPackage.name,
-        async (_, ...args: Parameters<typeof apiStub.renderReportPackage>) => {
-            return await ExportService.generateReport(args[0], args[1]);
-        }
-    );
+    handle('getStoreValue', async (...args) => {
+        return store.get(args[0]);
+    });
+
+    handle('deleteStoreValue', async (...args) => {
+        store.delete(args[0]);
+    });
+
+    handle('parseExcelFile', async (...args) => {
+        return await ImportService.parseExcelFile(args[0]);
+    });
+
+    handle('parseCsvFile', async (...args) => {
+        return await ImportService.parseCsvFile(args[0]);
+    });
+
+    handle('renderReportPackage', async (...args) => {
+        return await ExportService.generateReport(args[0], args[1]);
+    });
 }

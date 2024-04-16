@@ -10,7 +10,7 @@ interface MainPageActionButtonsProps {
     onFileImport: (patients: Patient[]) => void;
 }
 
-export default function MainPageActionButtons(props: MainPageActionButtonsProps) {
+export default function ReportsActionButtons(props: MainPageActionButtonsProps) {
     const handleFileChange = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
@@ -42,7 +42,8 @@ export default function MainPageActionButtons(props: MainPageActionButtonsProps)
 
             const fileData = new Uint8Array(await file.arrayBuffer());
             const zipData = await api.renderReportPackage(fileData, props.patientData);
-            const filename = `${file.name}-${new Date().toLocaleDateString()}.zip`;
+            const filenameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
+            const filename = `${filenameWithoutExtension}-${new Date().toLocaleDateString()}.zip`;
             saveFile(zipData, filename, MimeType.zip);
         },
         [props.patientData]
@@ -70,6 +71,7 @@ export default function MainPageActionButtons(props: MainPageActionButtonsProps)
                     Generuj raporty
                     <VisuallyHiddenInput
                         accept=".docx"
+                        title={'Wybierz plik szablonu raportu'}
                         onChange={handleReportGeneration}
                         type="file"
                     />
