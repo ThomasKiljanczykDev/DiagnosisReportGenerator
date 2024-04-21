@@ -54,6 +54,7 @@ export class ImportService {
             .slice(1)
             .map((row, index) => parsePatient(index, row))
             .filter(patient => patient !== null)
+            .filter(patient => patient?.cardNumber)
             .map(patient => patient as Patient);
     }
 }
