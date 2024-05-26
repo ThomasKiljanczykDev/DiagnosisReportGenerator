@@ -3,17 +3,17 @@ import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import settingsSlice from './slices/settings';
+import settingsReducer from './slices/settings';
 
 const reducers = combineReducers({
-    settings: settingsSlice.reducer
+    settings: settingsReducer
 });
 
 export function createAppStore(storage: WebStorage) {
     const persistConfig = {
         key: 'root',
         storage,
-        whitelist: [settingsSlice.name]
+        whitelist: ['settings']
     };
 
     const persistedReducer = persistReducer(persistConfig, reducers);

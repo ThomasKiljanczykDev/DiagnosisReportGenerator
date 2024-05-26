@@ -25,14 +25,14 @@
     "dependencies": {
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.5",
-        "@fontsource/roboto": "^5.0.12",
+        "@fontsource-variable/roboto-flex": "^5.0.15",
         "@mui/icons-material": "^5.15.15",
         "@mui/material": "^5.15.15",
         "@mui/system": "^5.15.15",
-        "@mui/x-data-grid": "^7.2.0",
+        "@mui/x-data-grid": "^7.3.0",
         "@reduxjs/toolkit": "^2.2.3",
         "date-fns": "^3.6.0",
-        "docx-templates": "^4.12.0",
+        "docx-templates": "^4.13.0",
         "electron-context-menu": "^3.6.1",
         "electron-store": "^8.2.0",
         "electron-updater": "^6.1.8",
@@ -58,7 +58,7 @@
         "@typescript-eslint/parser": "^7.7.0",
         "@vitejs/plugin-react": "^4.2.1",
         "autoprefixer": "^10.4.18",
-        "electron": "^29.3.0",
+        "electron": "^30.0.1",
         "electron-builder": "^24.13.3",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
@@ -69,8 +69,9 @@
         "prettier": "^3.2.5",
         "tailwindcss": "^3.4.3",
         "typescript": "^5.4.5",
-        "vite": "^5.2.9",
-        "vite-plugin-electron": "^0.28.4",
+        "vite": "^5.2.10",
+        "vite-plugin-electron": "^0.28.6",
         "vite-plugin-electron-renderer": "^0.14.5"
-    }
+    },
+    "packageManager": "yarn@1.22.21+sha256.dbed5b7e10c552ba0e1a545c948d5473bc6c5a28ce22a8fd27e493e3e5eb6370"
 }

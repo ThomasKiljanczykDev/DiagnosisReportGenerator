@@ -1,37 +1,71 @@
-import { ReducerCreators } from '@reduxjs/toolkit';
+import staff from '@/common/redux/slices/settings/staff';
+import { combineReducers } from '@reduxjs/toolkit';
 
 import { createAppSlice } from '../redux-common';
 
-interface SettingsState {
-    test: string;
-    testObj: {
-        test1: string;
-        test2: string;
+type RecommendationId = string;
+type MutationId = string;
+
+interface Diagnosis {
+    id: string;
+    name: string;
+}
+
+interface Mutation {
+    id: MutationId;
+    name: string;
+}
+
+interface Recommendation {
+    id: RecommendationId;
+    name: string;
+    content: string;
+    level: 1 | 2 | 3;
+    priority: number;
+    ageRange: {
+        from: number;
+        to: number;
     };
 }
 
-function reducers(create: ReducerCreators<SettingsState>) {
-    const setTest = create.reducer<string>((state, action) => {
-        state.test = action.payload;
-    });
+interface Genes {
+    id: string;
+    name: string;
+    testMethods: string[];
+    mutationIds: MutationId[];
+}
 
-    return {
-        setTest
-    };
+interface Illness {
+    id: string;
+    name: string;
+    recommendationIds: RecommendationId[];
+}
+
+interface SettingsState {
+    diagnoses: Diagnosis[];
+    mutations: Mutation[];
+    recommendations: Recommendation[];
+    genes: Genes[];
+    illnesses: Illness[];
 }
 
 const settingsSlice = createAppSlice({
     name: 'settings',
     initialState: {
-        test: 'init',
-        testObj: {
-            test1: 'init1',
-            test2: 'init2'
-        }
+        diagnoses: [],
+        mutations: [],
+        recommendations: [],
+        genes: [],
+        illnesses: []
     } as SettingsState,
-    reducers
+    reducers: {}
 });
 
-export default settingsSlice;
+const settingsReducer = combineReducers({
+    [settingsSlice.name]: settingsSlice.reducer,
+    [staff.name]: staff.reducer
+});
 
-export const { setTest } = settingsSlice.actions;
+export default settingsReducer;
+
+export const settingsActions = settingsSlice.actions;

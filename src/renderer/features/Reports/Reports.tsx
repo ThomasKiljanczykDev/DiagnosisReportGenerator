@@ -26,6 +26,7 @@ const PATIENT_COLUMNS: GridColDef<Patient>[] = [
         },
         renderCell: params => {
             const hasError = params.row.pesel.error !== undefined;
+
             function CellErrorTooltip() {
                 return (
                     <Tooltip title={params.row.pesel.error} arrow={true}>
