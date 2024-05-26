@@ -5,6 +5,7 @@ import { createAppSlice } from '../../redux-common';
 import diagnoses from './diagnoses';
 import mutations from './mutations';
 import staff from './staff';
+import testMethods from './test-methods';
 
 type RecommendationId = string;
 type MutationId = string;
@@ -55,7 +56,8 @@ const settingsReducer = combineReducers({
     [settingsSlice.name]: settingsSlice.reducer,
     [diagnoses.name]: diagnoses.reducer,
     [mutations.name]: mutations.reducer,
-    [staff.name]: staff.reducer
+    [staff.name]: staff.reducer,
+    [testMethods.name]: testMethods.reducer
 });
 
 export default settingsReducer;
