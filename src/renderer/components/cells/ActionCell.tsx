@@ -1,26 +1,25 @@
 import { useCallback } from 'react';
 
-import { StaffMember } from '@/common/redux/slices/settings/staff';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { IconButton, Tooltip } from '@mui/material';
 
-interface ActionsCellProps {
-    onAdd: (staffMember: StaffMember) => void;
+interface ActionCellProps<T> {
+    onAdd: (entity: T) => void;
     onRemove: (id: string) => void;
-    staffMember: StaffMember;
+    entity: T;
 }
 
-export default function ActionsCell(props: ActionsCellProps) {
+export default function ActionCell<T extends { id: string }>(props: ActionCellProps<T>) {
     const handleAdd = useCallback(() => {
-        props.onAdd(props.staffMember);
-    }, [props.onAdd, props.staffMember]);
+        props.onAdd(props.entity);
+    }, [props.onAdd, props.entity]);
 
     const handleRemove = useCallback(() => {
-        props.onRemove(props.staffMember.id);
-    }, [props.onRemove, props.staffMember.id]);
+        props.onRemove(props.entity.id);
+    }, [props.onRemove, props.entity.id]);
 
-    const isNewRow = !props.staffMember.id;
+    const isNewRow = !props.entity.id;
     return isNewRow ? (
         <Tooltip title="Dodaj" arrow={true}>
             <IconButton onClick={handleAdd}>

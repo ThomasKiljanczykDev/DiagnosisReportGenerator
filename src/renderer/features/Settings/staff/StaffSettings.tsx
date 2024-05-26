@@ -8,7 +8,7 @@ import {
     staffSelectors
 } from '@/common/redux/slices/settings/staff';
 import AppPageContent from '@/renderer/components/AppPageContent';
-import ActionsCell from '@/renderer/features/Settings/staff/ActionsCell';
+import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
@@ -38,8 +38,8 @@ export default function StaffSettings() {
                 hideable: false,
                 disableColumnMenu: true,
                 renderCell: params => (
-                    <ActionsCell
-                        staffMember={params.row}
+                    <ActionCell
+                        entity={params.row}
                         onAdd={handleAddStaffMember}
                         onRemove={handleRemoveStaffMember}
                     />

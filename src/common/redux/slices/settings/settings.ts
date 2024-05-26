@@ -1,15 +1,12 @@
-import staff from '@/common/redux/slices/settings/staff';
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { createAppSlice } from '../redux-common';
+import { createAppSlice } from '../../redux-common';
+
+import diagnoses from './diagnoses';
+import staff from './staff';
 
 type RecommendationId = string;
 type MutationId = string;
-
-interface Diagnosis {
-    id: string;
-    name: string;
-}
 
 interface Mutation {
     id: MutationId;
@@ -42,7 +39,6 @@ interface Illness {
 }
 
 interface SettingsState {
-    diagnoses: Diagnosis[];
     mutations: Mutation[];
     recommendations: Recommendation[];
     genes: Genes[];
@@ -52,7 +48,6 @@ interface SettingsState {
 const settingsSlice = createAppSlice({
     name: 'settings',
     initialState: {
-        diagnoses: [],
         mutations: [],
         recommendations: [],
         genes: [],
@@ -63,6 +58,7 @@ const settingsSlice = createAppSlice({
 
 const settingsReducer = combineReducers({
     [settingsSlice.name]: settingsSlice.reducer,
+    [diagnoses.name]: diagnoses.reducer,
     [staff.name]: staff.reducer
 });
 

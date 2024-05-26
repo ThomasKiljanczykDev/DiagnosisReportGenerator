@@ -1,7 +1,7 @@
 @import '@fontsource-variable/roboto-flex';
 
 :root {
-    font-family: "Roboto Flex Variable", sans-serif;
+    font-family: 'Roboto Flex Variable', sans-serif;
     line-height: 1.5;
     font-weight: 400;
 
@@ -35,7 +35,7 @@ body {
         lightseagreen 51.77%,
         darkturquoise 129.35%
     );
-    font-family: "Roboto Flex Variable", sans-serif;
+    font-family: 'Roboto Flex Variable', sans-serif;
 }
 
 #root {
