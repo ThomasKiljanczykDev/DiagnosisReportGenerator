@@ -2,6 +2,7 @@ import { memo } from 'react';
 import { MaterialSymbol } from 'react-material-symbols';
 
 import DrawerListItem from '@/renderer/components/drawer/DrawerListItem';
+import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import CoronavirusRoundedIcon from '@mui/icons-material/CoronavirusRounded';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import MedicalInformationRoundedIcon from '@mui/icons-material/MedicalInformationRounded';
@@ -48,6 +49,17 @@ const SettingsDrawer = memo(function SettingsDrawer() {
                     text="Zalecenia"
                     navigateTo="/settings/recommendations"
                     icon={<MedicationRoundedIcon />}
+                />
+                <DrawerListItem
+                    text="Metody Badań"
+                    navigateTo="/settings/test-methods"
+                    icon={<BiotechRoundedIcon />}
+                />
+                {/* TODO: Find a better icon in the future */}
+                <DrawerListItem
+                    text="Mutacje"
+                    navigateTo="/settings/mutations"
+                    icon={<MaterialSymbol icon="genetics" size={24} />}
                 />
                 <DrawerListItem
                     text="Geny"
