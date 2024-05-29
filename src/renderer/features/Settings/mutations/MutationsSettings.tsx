@@ -65,8 +65,17 @@ export default function MutationsSettings() {
                 columns={MUTATIONS_COLUMNS}
                 rows={mutations}
                 rowSelection={false}
-                onCellEditStop={e => {
-                    console.log(e);
+                processRowUpdate={newRow => {
+                    if (newRow.id) {
+                        dispatch(
+                            mutationsActions.updateMutation({
+                                id: newRow.id,
+                                changes: newRow
+                            })
+                        );
+                    }
+
+                    return newRow;
                 }}
             />
         </AppPageContent>

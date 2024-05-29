@@ -65,8 +65,17 @@ export default function DiagnosesSettings() {
                 columns={DIAGNOSES_COLUMNS}
                 rows={diagnoses}
                 rowSelection={false}
-                onCellEditStop={e => {
-                    console.log(e);
+                processRowUpdate={newRow => {
+                    if (newRow.id) {
+                        dispatch(
+                            diagnosesActions.updateDiagnosis({
+                                id: newRow.id,
+                                changes: newRow
+                            })
+                        );
+                    }
+
+                    return newRow;
                 }}
             />
         </AppPageContent>

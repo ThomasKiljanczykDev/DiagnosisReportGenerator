@@ -65,8 +65,17 @@ export default function TestMethodsSettings() {
                 columns={METODY_COLUMNS}
                 rows={testMethods}
                 rowSelection={false}
-                onCellEditStop={e => {
-                    console.log(e);
+                processRowUpdate={newRow => {
+                    if (newRow.id) {
+                        dispatch(
+                            testMethodsActions.updateTestMethods({
+                                id: newRow.id,
+                                changes: newRow
+                            })
+                        );
+                    }
+
+                    return newRow;
                 }}
             />
         </AppPageContent>

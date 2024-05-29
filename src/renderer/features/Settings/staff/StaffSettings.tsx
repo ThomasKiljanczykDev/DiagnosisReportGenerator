@@ -77,8 +77,17 @@ export default function StaffSettings() {
                 columns={STAFF_COLUMNS}
                 rows={staff}
                 rowSelection={false}
-                onCellEditStop={e => {
-                    console.log(e);
+                processRowUpdate={newRow => {
+                    if (newRow.id) {
+                        dispatch(
+                            staffActions.updateStaffMember({
+                                id: newRow.id,
+                                changes: newRow
+                            })
+                        );
+                    }
+
+                    return newRow;
                 }}
             />
         </AppPageContent>
