@@ -4,23 +4,12 @@ import { createAppSlice } from '../../redux-common';
 
 import diagnoses from './diagnoses';
 import mutations from './mutations';
+import recommendations from './recommendations';
 import staff from './staff';
 import testMethods from './test-methods';
 
 type RecommendationId = string;
 type MutationId = string;
-
-interface Recommendation {
-    id: RecommendationId;
-    name: string;
-    content: string;
-    level: 1 | 2 | 3;
-    priority: number;
-    ageRange: {
-        from: number;
-        to: number;
-    };
-}
 
 interface Genes {
     id: string;
@@ -36,7 +25,6 @@ interface Illness {
 }
 
 interface SettingsState {
-    recommendations: Recommendation[];
     genes: Genes[];
     illnesses: Illness[];
 }
@@ -44,8 +32,6 @@ interface SettingsState {
 const settingsSlice = createAppSlice({
     name: 'settings',
     initialState: {
-        mutations: [],
-        recommendations: [],
         genes: [],
         illnesses: []
     } as SettingsState,
@@ -56,6 +42,7 @@ const settingsReducer = combineReducers({
     [settingsSlice.name]: settingsSlice.reducer,
     [diagnoses.name]: diagnoses.reducer,
     [mutations.name]: mutations.reducer,
+    [recommendations.name]: recommendations.reducer,
     [staff.name]: staff.reducer,
     [testMethods.name]: testMethods.reducer
 });

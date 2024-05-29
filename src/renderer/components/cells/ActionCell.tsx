@@ -4,7 +4,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
 import { IconButton, Tooltip } from '@mui/material';
 
-interface ActionCellProps<T> {
+interface ActionCellProps<T extends { id: string }> {
     onAdd: (entity: T) => void;
     onRemove: (id: string) => void;
     entity: T;
