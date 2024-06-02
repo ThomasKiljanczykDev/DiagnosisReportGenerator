@@ -29,7 +29,7 @@
         "@mui/icons-material": "^5.15.19",
         "@mui/material": "^5.15.19",
         "@mui/system": "^5.15.15",
-        "@mui/x-data-grid": "^7.5.1",
+        "@mui/x-data-grid": "^7.6.1",
         "@reduxjs/toolkit": "^2.2.5",
         "date-fns": "^3.6.0",
         "docx-templates": "^4.13.0",
@@ -66,12 +66,12 @@
         "eslint-plugin-simple-import-sort": "^12.1.0",
         "postcss": "^8.4.35",
         "postcss-import": "^16.0.1",
-        "prettier": "^3.2.5",
+        "prettier": "^3.3.0",
         "tailwindcss": "^3.4.3",
         "typescript": "^5.4.5",
         "vite": "^5.2.12",
         "vite-plugin-electron": "^0.28.7",
         "vite-plugin-electron-renderer": "^0.14.5"
     },
-    "packageManager": "yarn@1.22.21+sha256.dbed5b7e10c552ba0e1a545c948d5473bc6c5a28ce22a8fd27e493e3e5eb6370"
+    "packageManager": "yarn@4.2.2"
 }
