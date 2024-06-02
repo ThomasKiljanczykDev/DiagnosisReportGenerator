@@ -47,3 +47,12 @@ release/build
 /playwright-report/
 /playwright/.cache/
 config.json
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
