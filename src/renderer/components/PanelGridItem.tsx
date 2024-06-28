@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react';
 
-import Panel from '@/renderer/components/Panel';
 import { Grid } from '@mui/material';
+
+import Panel from '@/renderer/components/Panel';
 
 interface PanelGridItemProps {
     children?: ReactNode;

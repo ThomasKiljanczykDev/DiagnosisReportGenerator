@@ -1,9 +1,10 @@
 import { memo } from 'react';
 
-import DrawerListItem from '@/renderer/components/drawer/DrawerListItem';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import { Divider, Drawer, List, Toolbar } from '@mui/material';
+
+import DrawerListItem from '@/renderer/components/drawer/DrawerListItem';
 
 const drawerWidth = 240;
 

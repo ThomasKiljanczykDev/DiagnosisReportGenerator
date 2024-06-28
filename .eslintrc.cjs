@@ -9,11 +9,5 @@ module.exports = {
             files: ['*.jsx', '*.js', '*.tsx', '*.ts']
         }
     ],
-    extends: [
-        'eslint:recommended',
-        './eslint/typescript.cjs',
-        './eslint/react.cjs',
-        './eslint/import-sort.cjs',
-        'prettier'
-    ]
+    extends: ['eslint:recommended', './eslint/typescript.cjs', './eslint/react.cjs', 'prettier']
 };

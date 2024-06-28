@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { v4 as uuidv4 } from 'uuid';
 
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+
 import {
-    staffActions,
     type StaffMember,
     StaffRole,
+    staffActions,
     staffSelectors
 } from '@/common/redux/slices/settings/staff';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 export default function StaffSettings() {
     const dispatch = useAppDispatch();

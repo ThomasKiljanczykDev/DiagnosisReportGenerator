@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import { v4 as uuidv4 } from 'uuid';
+
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 import {
     type Recommendation,
-    recommendationActions,
     RecommendationLevel,
+    recommendationActions,
     recommendationSelectors
 } from '@/common/redux/slices/settings/recommendations';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/renderer/components/cells';
 import { type Range } from '@/renderer/components/cells/RangeEditCell';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 export default function RecommendationsSettings() {
     const dispatch = useAppDispatch();

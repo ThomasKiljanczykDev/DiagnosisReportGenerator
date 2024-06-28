@@ -1,4 +1,4 @@
-import { persistReducer, type WebStorage } from 'redux-persist';
+import { type WebStorage, persistReducer } from 'redux-persist';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE } from 'redux-persist/es/constants';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';

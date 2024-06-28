@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 
-import { parsePesel, type Patient, type Pesel } from '@/common/models/patient';
-import AppPageContent from '@/renderer/components/AppPageContent';
 import { Grid, Tooltip } from '@mui/material';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import ReportsActionButtons from './ReportsActionButtons';
+import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
+import AppPageContent from '@/renderer/components/AppPageContent';
 
 import './Reports.css';
+import ReportsActionButtons from './ReportsActionButtons';
 
 const PATIENT_COLUMNS: GridColDef<Patient>[] = [
     { field: 'cardNumber', headerName: 'Numer karty', editable: true, flex: 1 },

@@ -1,7 +1,7 @@
 import { memo } from 'react';
+
 import { MaterialSymbol } from 'react-material-symbols';
 
-import DrawerListItem from '@/renderer/components/drawer/DrawerListItem';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import CoronavirusRoundedIcon from '@mui/icons-material/CoronavirusRounded';
 import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
@@ -9,6 +9,8 @@ import MedicalInformationRoundedIcon from '@mui/icons-material/MedicalInformatio
 import MedicationRoundedIcon from '@mui/icons-material/MedicationRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import { Divider, Drawer, List } from '@mui/material';
+
+import DrawerListItem from '@/renderer/components/drawer/DrawerListItem';
 
 const drawerWidth = 240;
 

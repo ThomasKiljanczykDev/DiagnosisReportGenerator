@@ -1,7 +1,7 @@
 import Papa from 'papaparse';
 import { read, utils } from 'xlsx';
 
-import { parsePesel, type Patient } from '@/common/models/patient';
+import { type Patient, parsePesel } from '@/common/models/patient';
 
 export class ImportService {
     static async parseExcelFile(fileData: Uint8Array) {

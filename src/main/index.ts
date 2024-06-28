@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron';
+import { BrowserWindow, app, ipcMain, nativeTheme, shell } from 'electron';
 import contextMenu from 'electron-context-menu';
 import { release } from 'node:os';
 import { dirname, join } from 'node:path';

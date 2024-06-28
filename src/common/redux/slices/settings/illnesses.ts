@@ -1,7 +1,8 @@
+import { createEntityAdapter } from '@reduxjs/toolkit';
+
 import { createAppSlice } from '@/common/redux/redux-common';
 import { recommendationActions } from '@/common/redux/slices/settings/recommendations';
 import { type RootState } from '@/common/redux/store';
-import { createEntityAdapter } from '@reduxjs/toolkit';
 
 export interface Illness {
     id: string;
