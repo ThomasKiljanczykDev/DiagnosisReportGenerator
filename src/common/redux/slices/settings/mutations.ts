@@ -1,5 +1,5 @@
 import { createAppSlice } from '@/common/redux/redux-common';
-import { RootState } from '@/common/redux/store';
+import { type RootState } from '@/common/redux/store';
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
 export interface Mutation {

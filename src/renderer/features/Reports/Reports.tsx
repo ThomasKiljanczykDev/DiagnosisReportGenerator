@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 
-import { parsePesel, Patient, Pesel } from '@/common/models/patient';
+import { parsePesel, type Patient, type Pesel } from '@/common/models/patient';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { Grid, Tooltip } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 import ReportsActionButtons from './ReportsActionButtons';
 

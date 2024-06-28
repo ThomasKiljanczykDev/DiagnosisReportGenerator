@@ -1,11 +1,11 @@
 import { format } from 'date-fns';
 import { createReport } from 'docx-templates';
 import { zip as zipCb } from 'fflate';
-import { AsyncZippable } from 'fflate';
+import { type AsyncZippable } from 'fflate';
 import { promisify } from 'util';
 
-import { Patient } from '@/common/models/patient';
-import { Report } from '@/common/models/report';
+import { type Patient } from '@/common/models/patient';
+import { type Report } from '@/common/models/report';
 
 const zip = promisify(zipCb);
 

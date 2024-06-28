@@ -1,4 +1,4 @@
-import { memo, ReactNode, useCallback, useMemo } from 'react';
+import { memo, type ReactNode, useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';

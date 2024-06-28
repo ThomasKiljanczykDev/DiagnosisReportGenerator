@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
 import Panel from '@/renderer/components/Panel';
 import { Grid } from '@mui/material';

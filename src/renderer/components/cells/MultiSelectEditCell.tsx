@@ -1,7 +1,7 @@
-import { Key, ReactNode, useCallback, useEffect, useState } from 'react';
+import { type Key, type ReactNode, useCallback, useEffect, useState } from 'react';
 
-import { Box, Chip, MenuItem, OutlinedInput, Select, SelectChangeEvent } from '@mui/material';
-import { GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
+import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
+import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
 
 type ItemKey = Key | null | undefined;
 

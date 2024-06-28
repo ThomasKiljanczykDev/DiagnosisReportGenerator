@@ -1,4 +1,4 @@
-import { WebStorage } from 'redux-persist';
+import { type WebStorage } from 'redux-persist';
 
 import { createElectronStore } from '@/main/backend';
 

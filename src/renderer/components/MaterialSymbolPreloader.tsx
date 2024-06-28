@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from 'react';
-import { MaterialSymbol, SymbolCodepoints } from 'react-material-symbols';
+import { MaterialSymbol, type SymbolCodepoints } from 'react-material-symbols';
 
 interface MaterialSymbolPreloaderProps {
     icons: SymbolCodepoints[];

@@ -1,6 +1,6 @@
 import { createAppSlice } from '@/common/redux/redux-common';
-import { RootState } from '@/common/redux/store';
-import { Range } from '@/renderer/components/cells/RangeEditCell';
+import { type RootState } from '@/common/redux/store';
+import { type Range } from '@/renderer/components/cells/RangeEditCell';
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
 export enum RecommendationLevel {

@@ -1,6 +1,6 @@
-import { ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent, useCallback } from 'react';
 
-import { Patient } from '@/common/models/patient';
+import { type Patient } from '@/common/models/patient';
 import VisuallyHiddenInput from '@/renderer/components/VisuallyHiddenInput';
 import { MimeType, saveFile } from '@/renderer/util/file-util';
 import { Button, Grid } from '@mui/material';

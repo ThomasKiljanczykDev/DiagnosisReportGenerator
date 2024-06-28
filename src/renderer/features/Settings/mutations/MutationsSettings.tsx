@@ -2,14 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import {
-    Mutation,
+    type Mutation,
     mutationsActions,
     mutationsSelectors
 } from '@/common/redux/slices/settings/mutations';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 export default function MutationsSettings() {
     const dispatch = useAppDispatch();

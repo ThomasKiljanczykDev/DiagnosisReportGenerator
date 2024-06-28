@@ -1,4 +1,4 @@
-import { Patient } from '@/common/models/patient';
+import { type Patient } from '@/common/models/patient';
 
 export interface Api {
     setStoreValue: (key: string, value: unknown) => Promise<void>;

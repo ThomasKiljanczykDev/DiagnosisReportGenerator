@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { TextField } from '@mui/material';
-import { GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
+import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
 
 export interface Range {
     from: number | null;
