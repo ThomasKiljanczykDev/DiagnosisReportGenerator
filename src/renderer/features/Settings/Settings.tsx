@@ -8,8 +8,8 @@ import TestMethodsSettings from '@/renderer/features/Settings/test-methods/TestM
 const DiagnosesSettings = lazy(
     () => import('@/renderer/features/Settings/diagnoses/DiagnosesSettings')
 );
-const DiseasesSettings = lazy(
-    () => import('@/renderer/features/Settings/diseases/DiseasesSettings')
+const IllnessesSettings = lazy(
+    () => import('@/renderer/features/Settings/diseases/IllnessesSettings')
 );
 const GenesSettings = lazy(() => import('@/renderer/features/Settings/genes/GenesSettings'));
 const RecommendationsSettings = lazy(
@@ -28,7 +28,7 @@ export default function Settings() {
                 <Route element={<TestMethodsSettings />} path="/test-methods" />
                 <Route element={<MutationsSettings />} path="/mutations" />
                 <Route element={<GenesSettings />} path="/genes" />
-                <Route element={<DiseasesSettings />} path="/diseases" />
+                <Route element={<IllnessesSettings />} path="/diseases" />
             </Routes>
         </Suspense>
     );

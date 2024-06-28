@@ -8,8 +8,8 @@ import {
     recommendationSelectors
 } from '@/common/redux/slices/settings/recommendations';
 import AppPageContent from '@/renderer/components/AppPageContent';
-import { ActionCell, RangeCell } from '@/renderer/components/cells';
-import { Range } from '@/renderer/components/cells/RangeCell';
+import { ActionCell, RangeEditCell } from '@/renderer/components/cells';
+import { Range } from '@/renderer/components/cells/RangeEditCell';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
@@ -78,7 +78,7 @@ export default function RecommendationsSettings() {
                     }
                 },
                 renderEditCell: params => (
-                    <RangeCell params={params} defaultValue={params.row.ageRange} />
+                    <RangeEditCell params={params} defaultValue={params.row.ageRange} />
                 )
             }
         ],

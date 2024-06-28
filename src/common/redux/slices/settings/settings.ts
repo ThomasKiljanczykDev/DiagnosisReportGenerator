@@ -3,6 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { createAppSlice } from '../../redux-common';
 
 import diagnoses from './diagnoses';
+import illnesses from './illnesses';
 import mutations from './mutations';
 import recommendations from './recommendations';
 import staff from './staff';
@@ -18,6 +19,7 @@ interface Genes {
     mutationIds: MutationId[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Illness {
     id: string;
     name: string;
@@ -26,14 +28,12 @@ interface Illness {
 
 interface SettingsState {
     genes: Genes[];
-    illnesses: Illness[];
 }
 
 const settingsSlice = createAppSlice({
     name: 'settings',
     initialState: {
-        genes: [],
-        illnesses: []
+        genes: []
     } as SettingsState,
     reducers: {}
 });
@@ -42,6 +42,7 @@ const settingsReducer = combineReducers({
     [settingsSlice.name]: settingsSlice.reducer,
     [diagnoses.name]: diagnoses.reducer,
     [mutations.name]: mutations.reducer,
+    [illnesses.name]: illnesses.reducer,
     [recommendations.name]: recommendations.reducer,
     [staff.name]: staff.reducer,
     [testMethods.name]: testMethods.reducer

@@ -1,4 +1,4 @@
 import ActionCell from './ActionCell';
-import RangeCell from './RangeCell';
+import RangeEditCell from './RangeEditCell';
 
-export { ActionCell, RangeCell };
+export { ActionCell, RangeEditCell };

@@ -8,12 +8,12 @@ export interface Range {
     to: number | null;
 }
 
-interface RangeCellProps {
+interface RangeEditCellProps {
     params: GridRenderEditCellParams<any, Range>;
     defaultValue: Range;
 }
 
-export default function RangeCell(props: RangeCellProps) {
+export default function RangeEditCell(props: RangeEditCellProps) {
     const apiRef = useGridApiContext();
 
     const [value, setValue] = useState<Range>(props.defaultValue);

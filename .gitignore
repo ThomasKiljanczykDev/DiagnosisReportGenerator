@@ -32,8 +32,9 @@ release/app/dist
 release/build
 .erb/dll
 
-.idea
-.vscode
+.idea/
+.vscode/
+.cache/
 *.suo
 *.ntvs*
 *.njsproj
