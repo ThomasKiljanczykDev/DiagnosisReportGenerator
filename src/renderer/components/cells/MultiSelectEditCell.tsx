@@ -1,25 +1,25 @@
-import { type Key, type ReactNode, useCallback, useEffect, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
 
-type ItemKey = Key | null | undefined;
+type ItemValue = string | number;
 
 interface MultiSelectEditCellProps<I extends object> {
     params: GridRenderEditCellParams<any, I>;
     items: I[];
-    defaultValue: ItemKey[];
-    keyFn: (item: I) => ItemKey;
-    valueFn: (item: I) => ReactNode;
+    initialValue: ItemValue[];
+    keyFn: (item: I) => ItemValue;
+    displayFn: (item: I) => ReactNode;
 }
 
 export default function MultiSelectEditCell<I extends object>(props: MultiSelectEditCellProps<I>) {
     const apiRef = useGridApiContext();
 
-    const [value, setValue] = useState<ItemKey[]>(props.defaultValue);
+    const [value, setValue] = useState<ItemValue[]>(props.initialValue);
 
     const handleValueChange = useCallback(
-        (e: SelectChangeEvent<ItemKey[]>) => {
+        (e: SelectChangeEvent<ItemValue[]>) => {
             let newValue = e.target.value;
             if (!Array.isArray(newValue)) {
                 newValue = [];
@@ -33,29 +33,28 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                 debounceMs: 250
             });
         },
-        [props.params.id, props.params.field, apiRef.current]
+        [apiRef, props.params.id, props.params.field]
     );
 
     useEffect(() => {
-        setValue(props.defaultValue);
-    }, [props.defaultValue]);
+        setValue(props.initialValue);
+    }, [props.initialValue]);
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexGrow: 1 }}>
             <Select
                 multiple
-                defaultValue={value}
+                value={value}
                 onChange={handleValueChange}
-                input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                input={<OutlinedInput label="Chip" />}
+                style={{
+                    flexGrow: 1
+                }}
                 renderValue={selectedKeys => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                         {selectedKeys.map(key => {
-                            console.log('props.items', props.items);
-                            console.log('key', key);
                             const selectedItem = props.items.find(item => props.keyFn(item) == key);
-                            console.log('item', selectedItem);
-                            const label = props.valueFn(selectedItem!);
-                            console.log('label', label);
+                            const label = props.displayFn(selectedItem!);
 
                             return <Chip key={key} label={label} />;
                         })}
@@ -63,7 +62,9 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                 )}
             >
                 {props.items.map(item => (
-                    <MenuItem key={props.keyFn(item)}>{props.valueFn(item)}</MenuItem>
+                    <MenuItem key={props.keyFn(item)} value={props.keyFn(item)}>
+                        {props.displayFn(item)}
+                    </MenuItem>
                 ))}
             </Select>
         </div>

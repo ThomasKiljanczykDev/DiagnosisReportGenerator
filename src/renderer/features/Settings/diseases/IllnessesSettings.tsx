@@ -23,14 +23,20 @@ export default function IllnessesSettings() {
 
     const [illnesses, setIllnesses] = useState<Illness[]>([]);
 
-    const handleAddIllnesses = useCallback((illness: Illness) => {
-        illness.id = uuidv4();
-        dispatch(illnessesActions.addIllness(illness));
-    }, []);
+    const handleAddIllnesses = useCallback(
+        (illness: Illness) => {
+            illness.id = uuidv4();
+            dispatch(illnessesActions.addIllness(illness));
+        },
+        [dispatch]
+    );
 
-    const handleRemoveIllnesses = useCallback((id: string) => {
-        dispatch(illnessesActions.removeIllness(id));
-    }, []);
+    const handleRemoveIllnesses = useCallback(
+        (id: string) => {
+            dispatch(illnessesActions.removeIllness(id));
+        },
+        [dispatch]
+    );
 
     const ILLNESSES_COLUMNS: GridColDef<Illness>[] = useMemo(
         () => [
@@ -59,9 +65,9 @@ export default function IllnessesSettings() {
                     <MultiSelectEditCell
                         params={params}
                         items={recommendations}
-                        defaultValue={params.value}
+                        initialValue={params.value}
                         keyFn={item => item.id}
-                        valueFn={item => item.name}
+                        displayFn={item => item.name}
                     />
                 ),
                 flex: 1
