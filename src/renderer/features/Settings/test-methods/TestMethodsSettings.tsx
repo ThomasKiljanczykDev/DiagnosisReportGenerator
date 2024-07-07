@@ -20,14 +20,36 @@ export default function TestMethodsSettings() {
 
     const [testMethods, setTestMethods] = useState<TestMethod[]>([]);
 
-    const handleAddTestMethod = useCallback((testMethod: TestMethod) => {
-        testMethod.id = uuidv4();
-        dispatch(testMethodsActions.addTestMethods(testMethod));
-    }, []);
+    const handleAddTestMethod = useCallback(
+        (testMethod: TestMethod) => {
+            testMethod.id = uuidv4();
+            dispatch(testMethodsActions.addTestMethods(testMethod));
+        },
+        [dispatch]
+    );
 
-    const handleRemoveTestMethod = useCallback((id: string) => {
-        dispatch(testMethodsActions.removeTestMethods(id));
-    }, []);
+    const handleRemoveTestMethod = useCallback(
+        (id: string) => {
+            dispatch(testMethodsActions.removeTestMethods(id));
+        },
+        [dispatch]
+    );
+
+    const processRowUpdate = useCallback(
+        (newRow: TestMethod) => {
+            if (newRow.id) {
+                dispatch(
+                    testMethodsActions.updateTestMethods({
+                        id: newRow.id,
+                        changes: newRow
+                    })
+                );
+            }
+
+            return newRow;
+        },
+        [dispatch]
+    );
 
     const METODY_COLUMNS: GridColDef<TestMethod>[] = useMemo(
         () => [
@@ -67,18 +89,8 @@ export default function TestMethodsSettings() {
                 columns={METODY_COLUMNS}
                 rows={testMethods}
                 rowSelection={false}
-                processRowUpdate={newRow => {
-                    if (newRow.id) {
-                        dispatch(
-                            testMethodsActions.updateTestMethods({
-                                id: newRow.id,
-                                changes: newRow
-                            })
-                        );
-                    }
-
-                    return newRow;
-                }}
+                processRowUpdate={processRowUpdate}
+                getRowClassName={row => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

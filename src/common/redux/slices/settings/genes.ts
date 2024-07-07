@@ -30,9 +30,11 @@ const genesSlice = createAppSlice({
             const testMethodId = action.payload;
             for (const gene of Object.values(state.entities)) {
                 const index = gene.testMethodIds.indexOf(testMethodId);
-                if (index !== -1) {
-                    gene.testMethodIds.splice(index, 1);
+                if (index === -1) {
+                    continue;
                 }
+
+                gene.testMethodIds.splice(index, 1);
             }
         });
 
@@ -40,9 +42,11 @@ const genesSlice = createAppSlice({
             const mutationId = action.payload;
             for (const gene of Object.values(state.entities)) {
                 const index = gene.mutationIds.indexOf(mutationId);
-                if (index !== -1) {
-                    gene.mutationIds.splice(index, 1);
+                if (index === -1) {
+                    continue;
                 }
+
+                gene.mutationIds.splice(index, 1);
             }
         });
     }

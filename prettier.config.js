@@ -14,7 +14,7 @@ const prettierConfig = {
     singleQuote: true,
     jsxSingleQuote: false,
     trailingComma: 'none',
-    arrowParens: 'avoid',
+    arrowParens: 'always',
     bracketSameLine: false,
     // Import sort
     importOrder: [

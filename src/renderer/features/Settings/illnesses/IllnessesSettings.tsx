@@ -4,44 +4,46 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import { type Gene, genesActions, genesSelectors } from '@/common/redux/slices/settings/genes';
-import { mutationsSelectors } from '@/common/redux/slices/settings/mutations';
-import { testMethodsSelectors } from '@/common/redux/slices/settings/test-methods';
+import {
+    type Illness,
+    illnessesActions,
+    illnessesSelectors
+} from '@/common/redux/slices/settings/illnesses';
+import { recommendationSelectors } from '@/common/redux/slices/settings/recommendations';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import MultiSelectCell from '@/renderer/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/renderer/components/cells/MultiSelectEditCell';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
-export default function GenesSettings() {
+export default function IllnessesSettings() {
     const dispatch = useAppDispatch();
 
-    const genesState = useAppSelector(genesSelectors.selectAll);
-    const testMethods = useAppSelector(testMethodsSelectors.selectAll);
-    const mutations = useAppSelector(mutationsSelectors.selectAll);
+    const illnessesState = useAppSelector(illnessesSelectors.selectAll);
+    const recommendations = useAppSelector(recommendationSelectors.selectAll);
 
-    const [genes, setGenes] = useState<Gene[]>([]);
+    const [illnesses, setIllnesses] = useState<Illness[]>([]);
 
-    const handleAddGene = useCallback(
-        (gene: Gene) => {
-            gene.id = uuidv4();
-            dispatch(genesActions.addGene(gene));
+    const handleAddIllnesses = useCallback(
+        (illness: Illness) => {
+            illness.id = uuidv4();
+            dispatch(illnessesActions.addIllness(illness));
         },
         [dispatch]
     );
 
-    const handleRemoveGene = useCallback(
+    const handleRemoveIllnesses = useCallback(
         (id: string) => {
-            dispatch(genesActions.removeGene(id));
+            dispatch(illnessesActions.removeIllness(id));
         },
         [dispatch]
     );
 
     const processRowUpdate = useCallback(
-        (newRow: Gene) => {
+        (newRow: Illness) => {
             if (newRow.id) {
                 dispatch(
-                    genesActions.updateGene({
+                    illnessesActions.updateIllness({
                         id: newRow.id,
                         changes: newRow
                     })
@@ -53,7 +55,7 @@ export default function GenesSettings() {
         [dispatch]
     );
 
-    const GENES_COLUMNS = useMemo(
+    const ILLNESSES_COLUMNS = useMemo(
         () =>
             [
                 {
@@ -66,21 +68,21 @@ export default function GenesSettings() {
                     renderCell: params => (
                         <ActionCell
                             entity={params.row}
-                            onAdd={handleAddGene}
-                            onRemove={handleRemoveGene}
+                            onAdd={handleAddIllnesses}
+                            onRemove={handleRemoveIllnesses}
                         />
                     )
                 },
                 { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 },
                 {
-                    field: 'testMethodIds',
-                    headerName: 'Metody Badań',
+                    field: 'recommendationIds',
+                    headerName: 'Zalecenia',
                     editable: true,
                     type: 'custom',
                     renderEditCell: params => (
                         <MultiSelectEditCell
                             params={params}
-                            items={testMethods}
+                            items={recommendations}
                             initialValue={params.value}
                             keyFn={item => item.id}
                             displayFn={item => item.name}
@@ -89,32 +91,7 @@ export default function GenesSettings() {
                     renderCell: params => (
                         <MultiSelectCell
                             params={params}
-                            items={testMethods}
-                            keys={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
-                        />
-                    ),
-                    flex: 1
-                },
-                {
-                    field: 'mutationIds',
-                    headerName: 'Mutacje',
-                    editable: true,
-                    type: 'custom',
-                    renderEditCell: params => (
-                        <MultiSelectEditCell
-                            params={params}
-                            items={mutations}
-                            initialValue={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
-                        />
-                    ),
-                    renderCell: params => (
-                        <MultiSelectCell
-                            params={params}
-                            items={mutations}
+                            items={recommendations}
                             keys={params.value}
                             keyFn={item => item.id}
                             displayFn={item => item.name}
@@ -122,27 +99,26 @@ export default function GenesSettings() {
                     ),
                     flex: 1
                 }
-            ] as GridColDef<Gene>[],
-        [handleAddGene, handleRemoveGene, testMethods, mutations]
+            ] as GridColDef<Illness>[],
+        [handleAddIllnesses, handleRemoveIllnesses, recommendations]
     );
 
     useEffect(() => {
-        setGenes([
-            ...genesState,
+        setIllnesses([
+            ...illnessesState,
             {
                 id: '',
                 name: '',
-                testMethodIds: [],
-                mutationIds: []
+                recommendationIds: []
             }
         ]);
-    }, [genesState]);
+    }, [illnessesState]);
 
     return (
-        <AppPageContent title="Geny">
+        <AppPageContent title="Choroby">
             <DataGrid
-                columns={GENES_COLUMNS}
-                rows={genes}
+                columns={ILLNESSES_COLUMNS}
+                rows={illnesses}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={row => (row.id ? '' : 'new-row')}

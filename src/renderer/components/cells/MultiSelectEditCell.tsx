@@ -54,6 +54,10 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                         {selectedKeys.map(key => {
                             const selectedItem = props.items.find(item => props.keyFn(item) == key);
+                            if (!selectedItem) {
+                                return null;
+                            }
+
                             const label = props.displayFn(selectedItem!);
 
                             return <Chip key={key} label={label} />;

@@ -61,7 +61,7 @@ const SettingsDrawer = memo(function SettingsDrawer() {
                 <DrawerListItem
                     text="Mutacje"
                     navigateTo="/settings/mutations"
-                    icon={<MaterialSymbol icon="genetics" size={24} />}
+                    icon={<MaterialSymbol icon="microbiology" size={24} />}
                 />
                 <DrawerListItem
                     text="Geny"
@@ -70,7 +70,7 @@ const SettingsDrawer = memo(function SettingsDrawer() {
                 />
                 <DrawerListItem
                     text="Choroby"
-                    navigateTo="/settings/diseases"
+                    navigateTo="/settings/illnesses"
                     icon={<CoronavirusRoundedIcon />}
                 />
             </List>

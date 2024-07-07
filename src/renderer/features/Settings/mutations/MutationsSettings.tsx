@@ -20,34 +20,57 @@ export default function MutationsSettings() {
 
     const [mutations, setMutations] = useState<Mutation[]>([]);
 
-    const handleAddMutation = useCallback((mutation: Mutation) => {
-        mutation.id = uuidv4();
-        dispatch(mutationsActions.addMutation(mutation));
-    }, []);
+    const handleAddMutation = useCallback(
+        (mutation: Mutation) => {
+            mutation.id = uuidv4();
+            dispatch(mutationsActions.addMutation(mutation));
+        },
+        [dispatch]
+    );
 
-    const handleRemoveMutation = useCallback((id: string) => {
-        dispatch(mutationsActions.removeMutation(id));
-    }, []);
+    const handleRemoveMutation = useCallback(
+        (id: string) => {
+            dispatch(mutationsActions.removeMutation(id));
+        },
+        [dispatch]
+    );
 
-    const MUTATIONS_COLUMNS: GridColDef<Mutation>[] = useMemo(
-        () => [
-            {
-                field: 'action',
-                headerName: 'Akcje',
-                sortable: false,
-                filterable: false,
-                hideable: false,
-                disableColumnMenu: true,
-                renderCell: params => (
-                    <ActionCell
-                        entity={params.row}
-                        onAdd={handleAddMutation}
-                        onRemove={handleRemoveMutation}
-                    />
-                )
-            },
-            { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 }
-        ],
+    const processRowUpdate = useCallback(
+        (newRow: Mutation) => {
+            if (newRow.id) {
+                dispatch(
+                    mutationsActions.updateMutation({
+                        id: newRow.id,
+                        changes: newRow
+                    })
+                );
+            }
+
+            return newRow;
+        },
+        [dispatch]
+    );
+
+    const MUTATIONS_COLUMNS = useMemo(
+        () =>
+            [
+                {
+                    field: 'action',
+                    headerName: 'Akcje',
+                    sortable: false,
+                    filterable: false,
+                    hideable: false,
+                    disableColumnMenu: true,
+                    renderCell: params => (
+                        <ActionCell
+                            entity={params.row}
+                            onAdd={handleAddMutation}
+                            onRemove={handleRemoveMutation}
+                        />
+                    )
+                },
+                { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 }
+            ] as GridColDef<Mutation>[],
         [handleAddMutation, handleRemoveMutation]
     );
 
@@ -67,18 +90,8 @@ export default function MutationsSettings() {
                 columns={MUTATIONS_COLUMNS}
                 rows={mutations}
                 rowSelection={false}
-                processRowUpdate={newRow => {
-                    if (newRow.id) {
-                        dispatch(
-                            mutationsActions.updateMutation({
-                                id: newRow.id,
-                                changes: newRow
-                            })
-                        );
-                    }
-
-                    return newRow;
-                }}
+                processRowUpdate={processRowUpdate}
+                getRowClassName={row => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

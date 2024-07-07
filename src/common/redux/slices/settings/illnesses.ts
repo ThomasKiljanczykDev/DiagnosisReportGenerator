@@ -27,9 +27,11 @@ const illnessesSlice = createAppSlice({
             const recommendationId = action.payload;
             for (const illness of Object.values(state.entities)) {
                 const index = illness.recommendationIds.indexOf(recommendationId);
-                if (index !== -1) {
-                    illness.recommendationIds.splice(index, 1);
+                if (index === -1) {
+                    continue;
                 }
+
+                illness.recommendationIds.splice(index, 1);
             }
         });
     }

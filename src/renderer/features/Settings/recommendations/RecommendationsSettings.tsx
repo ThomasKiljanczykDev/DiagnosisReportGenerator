@@ -22,68 +22,91 @@ export default function RecommendationsSettings() {
 
     const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 
-    const handleAddRecommendation = useCallback((recommendation: Recommendation) => {
-        recommendation.id = uuidv4();
-        dispatch(recommendationActions.addRecommendation(recommendation));
-    }, []);
+    const handleAddRecommendation = useCallback(
+        (recommendation: Recommendation) => {
+            recommendation.id = uuidv4();
+            dispatch(recommendationActions.addRecommendation(recommendation));
+        },
+        [dispatch]
+    );
 
-    const handleRemoveRecommendation = useCallback((id: string) => {
-        dispatch(recommendationActions.removeRecommendation(id));
-    }, []);
+    const handleRemoveRecommendation = useCallback(
+        (id: string) => {
+            dispatch(recommendationActions.removeRecommendation(id));
+        },
+        [dispatch]
+    );
 
-    const RECOMMENDATIONS_COLUMNS: GridColDef<Recommendation>[] = useMemo(
-        () => [
-            {
-                field: 'action',
-                headerName: 'Akcje',
-                sortable: false,
-                filterable: false,
-                hideable: false,
-                disableColumnMenu: true,
-                renderCell: params => (
-                    <ActionCell
-                        entity={params.row}
-                        onAdd={handleAddRecommendation}
-                        onRemove={handleRemoveRecommendation}
-                    />
-                )
-            },
-            { field: 'name', headerName: 'Nazwa', editable: true, flex: 1 },
-            { field: 'content', headerName: 'Opis', editable: true, flex: 1 },
-            {
-                field: 'recommendationLevel',
-                headerName: 'Poziom zalecenia',
-                editable: true,
-                type: 'singleSelect',
-                valueOptions: [
-                    RecommendationLevel.I,
-                    RecommendationLevel.II,
-                    RecommendationLevel.III
-                ],
-                flex: 1
-            },
-            {
-                field: 'ageRange',
-                headerName: 'Zakres wiekowy',
-                editable: true,
-                type: 'custom',
-                flex: 1,
-                valueFormatter: (range: Range) => {
-                    if (range.from != null && range.to != null) {
-                        return `od ${range.from} lat do ${range.to} lat`;
-                    } else if (range.from != null) {
-                        return `od ${range.from} lat`;
-                    } else if (range.to != null) {
-                        return `do ${range.to} lat`;
-                    } else {
-                        return '';
-                    }
-                },
-                renderEditCell: params => (
-                    <RangeEditCell params={params} defaultValue={params.row.ageRange} />
-                )
+    const processRowUpdate = useCallback(
+        (newRow: Recommendation) => {
+            if (newRow.id) {
+                dispatch(
+                    recommendationActions.updateRecommendation({
+                        id: newRow.id,
+                        changes: newRow
+                    })
+                );
             }
-        ],
+
+            return newRow;
+        },
+        [dispatch]
+    );
+
+    const RECOMMENDATIONS_COLUMNS = useMemo(
+        () =>
+            [
+                {
+                    field: 'action',
+                    headerName: 'Akcje',
+                    sortable: false,
+                    filterable: false,
+                    hideable: false,
+                    disableColumnMenu: true,
+                    renderCell: params => (
+                        <ActionCell
+                            entity={params.row}
+                            onAdd={handleAddRecommendation}
+                            onRemove={handleRemoveRecommendation}
+                        />
+                    )
+                },
+                { field: 'name', headerName: 'Nazwa', editable: true, flex: 1 },
+                { field: 'content', headerName: 'Opis', editable: true, flex: 1 },
+                {
+                    field: 'recommendationLevel',
+                    headerName: 'Poziom zalecenia',
+                    editable: true,
+                    type: 'singleSelect',
+                    valueOptions: [
+                        RecommendationLevel.I,
+                        RecommendationLevel.II,
+                        RecommendationLevel.III
+                    ],
+                    flex: 1
+                },
+                {
+                    field: 'ageRange',
+                    headerName: 'Zakres wiekowy',
+                    editable: true,
+                    type: 'custom',
+                    flex: 1,
+                    valueFormatter: (range: Range) => {
+                        if (range.from != null && range.to != null) {
+                            return `od ${range.from} lat do ${range.to} lat`;
+                        } else if (range.from != null) {
+                            return `od ${range.from} lat`;
+                        } else if (range.to != null) {
+                            return `do ${range.to} lat`;
+                        } else {
+                            return '';
+                        }
+                    },
+                    renderEditCell: params => (
+                        <RangeEditCell params={params} defaultValue={params.row.ageRange} />
+                    )
+                }
+            ] as GridColDef<Recommendation>[],
         [handleAddRecommendation, handleRemoveRecommendation]
     );
 
@@ -110,18 +133,8 @@ export default function RecommendationsSettings() {
                 columns={RECOMMENDATIONS_COLUMNS}
                 rows={recommendations}
                 rowSelection={false}
-                processRowUpdate={newRow => {
-                    if (newRow.id) {
-                        dispatch(
-                            recommendationActions.updateRecommendation({
-                                id: newRow.id,
-                                changes: newRow
-                            })
-                        );
-                    }
-
-                    return newRow;
-                }}
+                processRowUpdate={processRowUpdate}
+                getRowClassName={row => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );
