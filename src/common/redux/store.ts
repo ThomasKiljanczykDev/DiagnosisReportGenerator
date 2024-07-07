@@ -21,7 +21,7 @@ export function createAppStore(storage: WebStorage) {
     return configureStore({
         reducer: persistedReducer,
         devTools: import.meta.env.VITE_NODE_ENV !== 'production',
-        middleware: getDefaultMiddleware => {
+        middleware: (getDefaultMiddleware) => {
             return getDefaultMiddleware({
                 serializableCheck: {
                     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]

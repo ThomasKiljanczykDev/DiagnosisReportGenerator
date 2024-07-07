@@ -50,10 +50,12 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                 style={{
                     flexGrow: 1
                 }}
-                renderValue={selectedKeys => (
+                renderValue={(selectedKeys) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selectedKeys.map(key => {
-                            const selectedItem = props.items.find(item => props.keyFn(item) == key);
+                        {selectedKeys.map((key) => {
+                            const selectedItem = props.items.find(
+                                (item) => props.keyFn(item) == key
+                            );
                             if (!selectedItem) {
                                 return null;
                             }
@@ -65,7 +67,7 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                     </Box>
                 )}
             >
-                {props.items.map(item => (
+                {props.items.map((item) => (
                     <MenuItem key={props.keyFn(item)} value={props.keyFn(item)}>
                         {props.displayFn(item)}
                     </MenuItem>

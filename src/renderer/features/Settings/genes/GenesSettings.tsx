@@ -63,7 +63,7 @@ export default function GenesSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <ActionCell
                             entity={params.row}
                             onAdd={handleAddGene}
@@ -77,22 +77,22 @@ export default function GenesSettings() {
                     headerName: 'Metody Badań',
                     editable: true,
                     type: 'custom',
-                    renderEditCell: params => (
+                    renderEditCell: (params) => (
                         <MultiSelectEditCell
                             params={params}
                             items={testMethods}
                             initialValue={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <MultiSelectCell
                             params={params}
                             items={testMethods}
                             keys={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
                     flex: 1
@@ -102,22 +102,22 @@ export default function GenesSettings() {
                     headerName: 'Mutacje',
                     editable: true,
                     type: 'custom',
-                    renderEditCell: params => (
+                    renderEditCell: (params) => (
                         <MultiSelectEditCell
                             params={params}
                             items={mutations}
                             initialValue={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <MultiSelectCell
                             params={params}
                             items={mutations}
                             keys={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
                     flex: 1
@@ -145,7 +145,7 @@ export default function GenesSettings() {
                 rows={genes}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
-                getRowClassName={row => (row.id ? '' : 'new-row')}
+                getRowClassName={(row) => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

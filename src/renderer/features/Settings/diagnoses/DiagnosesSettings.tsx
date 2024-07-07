@@ -38,7 +38,7 @@ export default function DiagnosesSettings() {
                 filterable: false,
                 hideable: false,
                 disableColumnMenu: true,
-                renderCell: params => (
+                renderCell: (params) => (
                     <ActionCell
                         entity={params.row}
                         onAdd={handleAddDiagnosis}
@@ -67,7 +67,7 @@ export default function DiagnosesSettings() {
                 columns={DIAGNOSES_COLUMNS}
                 rows={diagnoses}
                 rowSelection={false}
-                processRowUpdate={newRow => {
+                processRowUpdate={(newRow) => {
                     if (newRow.id) {
                         dispatch(
                             diagnosesActions.updateDiagnosis({

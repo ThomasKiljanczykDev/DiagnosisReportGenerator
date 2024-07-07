@@ -30,10 +30,10 @@ body {
 
     color: white;
     background: linear-gradient(
-            200deg,
-            ghostwhite -29.09%,
-            lightseagreen 51.77%,
-            darkturquoise 129.35%
+        200deg,
+        ghostwhite -29.09%,
+        lightseagreen 51.77%,
+        darkturquoise 129.35%
     );
     font-family: 'Roboto Flex Variable', sans-serif;
 }

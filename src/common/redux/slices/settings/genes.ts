@@ -25,7 +25,7 @@ const genesSlice = createAppSlice({
         removeGene: genesAdapter.removeOne
     },
     // TODO: Add reducers for removing test methods and mutations
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder.addCase(testMethodsActions.removeTestMethods, (state, action) => {
             const testMethodId = action.payload;
             for (const gene of Object.values(state.entities)) {

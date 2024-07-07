@@ -28,9 +28,9 @@ export class ImportService {
 
     private static parsePatientData(rawSheetData: string[][]): Patient[] {
         rawSheetData = rawSheetData
-            .map(row => row.map(cell => cell.trim()))
-            .filter(row => row.some(cell => cell))
-            .filter(row => row.length > 0);
+            .map((row) => row.map((cell) => cell.trim()))
+            .filter((row) => row.some((cell) => cell))
+            .filter((row) => row.length > 0);
 
         function parsePatient(id: number, data: string[]): Patient | null {
             try {
@@ -53,8 +53,8 @@ export class ImportService {
         return rawSheetData
             .slice(1)
             .map((row, index) => parsePatient(index, row))
-            .filter(patient => patient !== null)
-            .filter(patient => patient?.cardNumber)
-            .map(patient => patient as Patient);
+            .filter((patient) => patient !== null)
+            .filter((patient) => patient?.cardNumber)
+            .map((patient) => patient as Patient);
     }
 }

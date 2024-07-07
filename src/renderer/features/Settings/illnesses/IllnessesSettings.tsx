@@ -65,7 +65,7 @@ export default function IllnessesSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <ActionCell
                             entity={params.row}
                             onAdd={handleAddIllnesses}
@@ -79,22 +79,22 @@ export default function IllnessesSettings() {
                     headerName: 'Zalecenia',
                     editable: true,
                     type: 'custom',
-                    renderEditCell: params => (
+                    renderEditCell: (params) => (
                         <MultiSelectEditCell
                             params={params}
                             items={recommendations}
                             initialValue={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <MultiSelectCell
                             params={params}
                             items={recommendations}
                             keys={params.value}
-                            keyFn={item => item.id}
-                            displayFn={item => item.name}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
                         />
                     ),
                     flex: 1
@@ -121,7 +121,7 @@ export default function IllnessesSettings() {
                 rows={illnesses}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
-                getRowClassName={row => (row.id ? '' : 'new-row')}
+                getRowClassName={(row) => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

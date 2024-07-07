@@ -22,7 +22,7 @@ const illnessesSlice = createAppSlice({
         updateIllness: illnessesAdapter.updateOne,
         removeIllness: illnessesAdapter.removeOne
     },
-    extraReducers: builder => {
+    extraReducers: (builder) => {
         builder.addCase(recommendationActions.removeRecommendation, (state, action) => {
             const recommendationId = action.payload;
             for (const illness of Object.values(state.entities)) {

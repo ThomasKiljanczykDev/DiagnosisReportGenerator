@@ -36,18 +36,21 @@ export default function StaffSettings() {
         [dispatch]
     );
 
-    const processRowUpdate = useCallback((newRow: StaffMember) => {
-        if (newRow.id) {
-            dispatch(
-                staffActions.updateStaffMember({
-                    id: newRow.id,
-                    changes: newRow
-                })
-            );
-        }
+    const processRowUpdate = useCallback(
+        (newRow: StaffMember) => {
+            if (newRow.id) {
+                dispatch(
+                    staffActions.updateStaffMember({
+                        id: newRow.id,
+                        changes: newRow
+                    })
+                );
+            }
 
-        return newRow;
-    }, [dispatch]);
+            return newRow;
+        },
+        [dispatch]
+    );
 
     const STAFF_COLUMNS = useMemo(
         () =>
@@ -59,7 +62,7 @@ export default function StaffSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <ActionCell
                             entity={params.row}
                             onAdd={handleAddStaffMember}
@@ -100,7 +103,7 @@ export default function StaffSettings() {
                 rows={staff}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
-                getRowClassName={row => (row.id ? '' : 'new-row')}
+                getRowClassName={(row) => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

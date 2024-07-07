@@ -63,7 +63,7 @@ export default function RecommendationsSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <ActionCell
                             entity={params.row}
                             onAdd={handleAddRecommendation}
@@ -102,7 +102,7 @@ export default function RecommendationsSettings() {
                             return '';
                         }
                     },
-                    renderEditCell: params => (
+                    renderEditCell: (params) => (
                         <RangeEditCell params={params} defaultValue={params.row.ageRange} />
                     )
                 }
@@ -134,7 +134,7 @@ export default function RecommendationsSettings() {
                 rows={recommendations}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
-                getRowClassName={row => (row.id ? '' : 'new-row')}
+                getRowClassName={(row) => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );

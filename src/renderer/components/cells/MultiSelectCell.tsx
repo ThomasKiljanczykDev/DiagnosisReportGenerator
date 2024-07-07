@@ -22,8 +22,8 @@ export default function MultiSelectCell<I extends object>(props: MultiSelectCell
                 alignItems: 'center'
             }}
         >
-            {props.keys.map(key => {
-                const selectedItem = props.items.find(item => props.keyFn(item) == key);
+            {props.keys.map((key) => {
+                const selectedItem = props.items.find((item) => props.keyFn(item) == key);
                 if (!selectedItem) {
                     return null;
                 }

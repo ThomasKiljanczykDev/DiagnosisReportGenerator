@@ -61,7 +61,7 @@ export default function MutationsSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: params => (
+                    renderCell: (params) => (
                         <ActionCell
                             entity={params.row}
                             onAdd={handleAddMutation}
@@ -91,7 +91,7 @@ export default function MutationsSettings() {
                 rows={mutations}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
-                getRowClassName={row => (row.id ? '' : 'new-row')}
+                getRowClassName={(row) => (row.id ? '' : 'new-row')}
             />
         </AppPageContent>
     );
