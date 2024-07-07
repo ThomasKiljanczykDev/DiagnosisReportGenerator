@@ -4,12 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type StaffMember,
-    StaffRole,
-    staffActions,
-    staffSelectors
-} from '@/common/redux/slices/settings/staff';
+import { staffSelectors } from '@/common/redux/selectors';
+import { staffActions } from '@/common/redux/slices/settings/staff';
+import { type StaffMember, StaffRole } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';

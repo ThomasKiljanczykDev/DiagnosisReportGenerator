@@ -4,12 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type Illness,
-    illnessesActions,
-    illnessesSelectors
-} from '@/common/redux/slices/settings/illnesses';
-import { recommendationSelectors } from '@/common/redux/slices/settings/recommendations';
+import { illnessesSelectors, recommendationSelectors } from '@/common/redux/selectors';
+import { illnessesActions } from '@/common/redux/slices/settings/illnesses';
+import type { Illness } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import MultiSelectCell from '@/renderer/components/cells/MultiSelectCell';
@@ -92,7 +89,7 @@ export default function IllnessesSettings() {
                         <MultiSelectCell
                             params={params}
                             items={recommendations}
-                            keys={params.value}
+                            value={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
                         />

@@ -4,11 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type TestMethod,
-    testMethodsActions,
-    testMethodsSelectors
-} from '@/common/redux/slices/settings/test-methods';
+import { testMethodsSelectors } from '@/common/redux/selectors';
+import { testMethodsActions } from '@/common/redux/slices/settings/test-methods';
+import type { TestMethod } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';

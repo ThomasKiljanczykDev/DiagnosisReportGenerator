@@ -4,7 +4,7 @@ import { Button, Grid } from '@mui/material';
 
 import { type Patient } from '@/common/models/patient';
 import VisuallyHiddenInput from '@/renderer/components/VisuallyHiddenInput';
-import { MimeType, saveFile } from '@/renderer/util/file-util';
+import { MimeType, saveFile } from '@/renderer/utils/file-util';
 
 interface MainPageActionButtonsProps {
     patientData: Patient[];

@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import { type Gene, genesActions, genesSelectors } from '@/common/redux/slices/settings/genes';
-import { mutationsSelectors } from '@/common/redux/slices/settings/mutations';
-import { testMethodsSelectors } from '@/common/redux/slices/settings/test-methods';
+import { genesSelectors, mutationsSelectors, testMethodsSelectors } from '@/common/redux/selectors';
+import { genesActions } from '@/common/redux/slices/settings/genes';
+import type { Gene } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import MultiSelectCell from '@/renderer/components/cells/MultiSelectCell';
@@ -76,6 +76,7 @@ export default function GenesSettings() {
                     field: 'testMethodIds',
                     headerName: 'Metody Badań',
                     editable: true,
+                    flex: 1,
                     type: 'custom',
                     renderEditCell: (params) => (
                         <MultiSelectEditCell
@@ -90,12 +91,11 @@ export default function GenesSettings() {
                         <MultiSelectCell
                             params={params}
                             items={testMethods}
-                            keys={params.value}
+                            value={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
                         />
-                    ),
-                    flex: 1
+                    )
                 },
                 {
                     field: 'mutationIds',
@@ -115,7 +115,7 @@ export default function GenesSettings() {
                         <MultiSelectCell
                             params={params}
                             items={mutations}
-                            keys={params.value}
+                            value={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
                         />

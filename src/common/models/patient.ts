@@ -1,3 +1,5 @@
+import type { StaffMember } from '@/common/types/entities';
+
 export enum Sex {
     Male = 'M',
     Female = 'F'
@@ -68,8 +70,8 @@ export interface Patient {
     cardNumber: string;
     name: string;
     pesel: Pesel;
-    doctor: string;
-    assistants: string[];
-    technicians?: string[];
-    consultants: string[];
+    doctor: StaffMember | null;
+    assistants: StaffMember[];
+    technicians: StaffMember[];
+    consultants: StaffMember[];
 }

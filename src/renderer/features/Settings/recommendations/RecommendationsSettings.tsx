@@ -4,12 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type Recommendation,
-    RecommendationLevel,
-    recommendationActions,
-    recommendationSelectors
-} from '@/common/redux/slices/settings/recommendations';
+import { recommendationSelectors } from '@/common/redux/selectors';
+import { recommendationActions } from '@/common/redux/slices/settings/recommendations';
+import { type Recommendation, RecommendationLevel } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/renderer/components/cells';
 import { type Range } from '@/renderer/components/cells/RangeEditCell';

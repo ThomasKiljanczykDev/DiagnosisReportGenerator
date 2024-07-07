@@ -1,6 +1,7 @@
 import { rmSync } from 'node:fs';
 import path from 'node:path';
 import { AliasOptions, ResolveOptions, defineConfig } from 'vite';
+import circularDependency from 'vite-plugin-circular-dependency';
 import electron from 'vite-plugin-electron/simple';
 
 import react from '@vitejs/plugin-react-swc';
@@ -26,6 +27,7 @@ export default defineConfig(({ command }) => {
     return {
         resolve: resolve,
         plugins: [
+            circularDependency(),
             react(),
             electron({
                 main: {

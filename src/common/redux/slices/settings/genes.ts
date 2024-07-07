@@ -3,16 +3,9 @@ import { createEntityAdapter } from '@reduxjs/toolkit';
 import { createAppSlice } from '@/common/redux/redux-common';
 import { mutationsActions } from '@/common/redux/slices/settings/mutations';
 import { testMethodsActions } from '@/common/redux/slices/settings/test-methods';
-import { type RootState } from '@/common/redux/store';
+import type { Gene } from '@/common/types/entities';
 
-export interface Gene {
-    id: string;
-    name: string;
-    testMethodIds: string[];
-    mutationIds: string[];
-}
-
-const genesAdapter = createEntityAdapter<Gene>({
+export const genesAdapter = createEntityAdapter<Gene>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
 
@@ -53,7 +46,5 @@ const genesSlice = createAppSlice({
 });
 
 export default genesSlice;
-
-export const genesSelectors = genesAdapter.getSelectors((state: RootState) => state.settings.genes);
 
 export const genesActions = genesSlice.actions;

@@ -3,10 +3,10 @@ import { type ReactNode, useCallback, useEffect, useState } from 'react';
 import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
 
-type ItemValue = string | number;
+export type ItemValue = string | number | undefined;
 
 interface MultiSelectEditCellProps<I extends object> {
-    params: GridRenderEditCellParams<any, I>;
+    params: GridRenderEditCellParams<any, I[]>;
     items: I[];
     initialValue: ItemValue[];
     keyFn: (item: I) => ItemValue;
@@ -25,15 +25,19 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                 newValue = [];
             }
 
+            const valueItems = newValue.map((key) =>
+                props.items.find((item) => props.keyFn(item) == key)
+            );
+
             setValue(newValue);
             apiRef.current.setEditCellValue({
                 id: props.params.id,
                 field: props.params.field,
-                value: newValue,
+                value: valueItems,
                 debounceMs: 250
             });
         },
-        [apiRef, props.params.id, props.params.field]
+        [apiRef, props]
     );
 
     useEffect(() => {

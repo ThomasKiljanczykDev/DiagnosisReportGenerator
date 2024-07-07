@@ -20,7 +20,7 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
 
     const handleClick = useCallback(() => {
         navigate(props.navigateTo);
-    }, [props.navigateTo]);
+    }, [navigate, props.navigateTo]);
 
     return (
         <ListItem disablePadding>

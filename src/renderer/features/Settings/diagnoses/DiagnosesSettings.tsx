@@ -4,11 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type Diagnosis,
-    diagnosesActions,
-    diagnosesSelectors
-} from '@/common/redux/slices/settings/diagnoses';
+import { diagnosesSelectors } from '@/common/redux/selectors';
+import { diagnosesActions } from '@/common/redux/slices/settings/diagnoses';
+import type { Diagnosis } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
@@ -20,14 +18,20 @@ export default function DiagnosesSettings() {
 
     const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
 
-    const handleAddDiagnosis = useCallback((diagnosis: Diagnosis) => {
-        diagnosis.id = uuidv4();
-        dispatch(diagnosesActions.addDiagnosis(diagnosis));
-    }, []);
+    const handleAddDiagnosis = useCallback(
+        (diagnosis: Diagnosis) => {
+            diagnosis.id = uuidv4();
+            dispatch(diagnosesActions.addDiagnosis(diagnosis));
+        },
+        [dispatch]
+    );
 
-    const handleRemoveDiagnosis = useCallback((id: string) => {
-        dispatch(diagnosesActions.removeDiagnosis(id));
-    }, []);
+    const handleRemoveDiagnosis = useCallback(
+        (id: string) => {
+            dispatch(diagnosesActions.removeDiagnosis(id));
+        },
+        [dispatch]
+    );
 
     const DIAGNOSES_COLUMNS: GridColDef<Diagnosis>[] = useMemo(
         () => [

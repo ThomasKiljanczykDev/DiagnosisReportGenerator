@@ -924,6 +924,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mui/private-theming@npm:^5.16.0":
+  version: 5.16.0
+  resolution: "@mui/private-theming@npm:5.16.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    "@mui/utils": "npm:^5.16.0"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/cd7c1888f45da3db701806a1d127010514815bb4acf502c3cf711e63d2307b18387bdc7a9f3815031210814b6a1fd977722e5cef2133e077e9bc2ac0bdb5504f
+  languageName: node
+  linkType: hard
+
 "@mui/styled-engine@npm:^5.15.14":
   version: 5.15.14
   resolution: "@mui/styled-engine@npm:5.15.14"
@@ -970,6 +987,34 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/7561d14d613e882cbe8959cbb779e6641542242e5a79974bad306c59c1505b5924cb2b866619b55d064aae1a1e8421dc3a613ad1a4cf330be7eebd1881170cff
+  languageName: node
+  linkType: hard
+
+"@mui/system@npm:^5.16.0":
+  version: 5.16.0
+  resolution: "@mui/system@npm:5.16.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    "@mui/private-theming": "npm:^5.16.0"
+    "@mui/styled-engine": "npm:^5.15.14"
+    "@mui/types": "npm:^7.2.14"
+    "@mui/utils": "npm:^5.16.0"
+    clsx: "npm:^2.1.0"
+    csstype: "npm:^3.1.3"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    "@emotion/react": ^11.5.0
+    "@emotion/styled": ^11.3.0
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@emotion/styled":
+      optional: true
+    "@types/react":
+      optional: true
+  checksum: 10c0/b5db097ba432653eba723424264204d3037ab1cdb30acc63b2d2fbcb98bae8999cbfd7ffff54173593dc2a4771558177602f01377da6f4134e7017f93a3624bf
   languageName: node
   linkType: hard
 
@@ -1021,13 +1066,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/x-data-grid@npm:^7.8.0":
-  version: 7.8.0
-  resolution: "@mui/x-data-grid@npm:7.8.0"
+"@mui/utils@npm:^5.16.0":
+  version: 5.16.0
+  resolution: "@mui/utils@npm:5.16.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.9"
+    "@types/prop-types": "npm:^15.7.11"
+    prop-types: "npm:^15.8.1"
+    react-is: "npm:^18.2.0"
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/0b56f9265a8ea686b50195448f1dea41c637d504c30da44c5f3f315bc81d24598f3b2acb281dd24d15831f7756dcaab285b7b891883bbec5809c54ef24affb49
+  languageName: node
+  linkType: hard
+
+"@mui/x-data-grid@npm:^7.9.0":
+  version: 7.9.0
+  resolution: "@mui/x-data-grid@npm:7.9.0"
   dependencies:
     "@babel/runtime": "npm:^7.24.7"
-    "@mui/system": "npm:^5.15.20"
-    "@mui/utils": "npm:^5.15.20"
+    "@mui/system": "npm:^5.16.0"
+    "@mui/utils": "npm:^5.16.0"
+    "@mui/x-internals": "npm:7.9.0"
     clsx: "npm:^2.1.1"
     prop-types: "npm:^15.8.1"
     reselect: "npm:^4.1.8"
@@ -1035,7 +1099,19 @@ __metadata:
     "@mui/material": ^5.15.14
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
-  checksum: 10c0/d3e1c4d07363e5e1f90aa7e66a46f3d1c8b788b14e90997c035519d8419ca44258a1950dc97db395b61ebc699d5c028f879b6c066bc3186c2b3dc49f7d17b519
+  checksum: 10c0/11d72b15768fd94056d2df628ae29cf03405d6c50ddbef0bf2b972277bcb8ad90a1f98c2ac6a2b9cc51fe1d98f99ebd99114836454f747d5bbd5eae36bcb2aa6
+  languageName: node
+  linkType: hard
+
+"@mui/x-internals@npm:7.9.0":
+  version: 7.9.0
+  resolution: "@mui/x-internals@npm:7.9.0"
+  dependencies:
+    "@babel/runtime": "npm:^7.24.7"
+    "@mui/utils": "npm:^5.16.0"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+  checksum: 10c0/a36013673272c7418d73f54941a3c57090e5ef9faf65bbaa0884bd04578021b63a7bb6dce75ce2c76abb7ff7557b3c002eb6e601f2055fed1494effb96d571b2
   languageName: node
   linkType: hard
 
@@ -1137,6 +1213,22 @@ __metadata:
   version: 1.17.0
   resolution: "@remix-run/router@npm:1.17.0"
   checksum: 10c0/6f39cb81c5dec3d3cb901cfc05ef1c745d23192def7d83e6d1a53c43cbb5d7ff488055fd1418ac72f904ff41b3d3ca339d223677994150f276c648123ce166f7
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "@rollup/pluginutils@npm:5.1.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+    estree-walker: "npm:^2.0.2"
+    picomatch: "npm:^2.3.1"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 10c0/c7bed15711f942d6fdd3470fef4105b73991f99a478605e13d41888963330a6f9e32be37e6ddb13f012bc7673ff5e54f06f59fd47109436c1c513986a8a7612d
   languageName: node
   linkType: hard
 
@@ -1448,7 +1540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:1.0.5":
+"@types/estree@npm:1.0.5, @types/estree@npm:^1.0.0":
   version: 1.0.5
   resolution: "@types/estree@npm:1.0.5"
   checksum: 10c0/b3b0e334288ddb407c7b3357ca67dbee75ee22db242ca7c56fe27db4e1a31989cb8af48a84dd401deb787fe10cc6b2ab1ee82dc4783be87ededbe3d53c79c70d
@@ -2804,7 +2896,7 @@ __metadata:
     "@mui/icons-material": "npm:^5.15.21"
     "@mui/material": "npm:^5.15.21"
     "@mui/system": "npm:^5.15.20"
-    "@mui/x-data-grid": "npm:^7.8.0"
+    "@mui/x-data-grid": "npm:^7.9.0"
     "@playwright/test": "npm:^1.45.0"
     "@reduxjs/toolkit": "npm:^2.2.5"
     "@trivago/prettier-plugin-sort-imports": "npm:^4.3.0"
@@ -2843,6 +2935,7 @@ __metadata:
     typescript: "npm:^5.5.2"
     uuid: "npm:^10.0.0"
     vite: "npm:^5.3.2"
+    vite-plugin-circular-dependency: "npm:^0.4.1"
     vite-plugin-electron: "npm:^0.28.7"
     vite-plugin-electron-renderer: "npm:^0.14.5"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
@@ -3578,6 +3671,13 @@ __metadata:
   version: 5.3.0
   resolution: "estraverse@npm:5.3.0"
   checksum: 10c0/1ff9447b96263dec95d6d67431c5e0771eb9776427421260a3e2f0fdd5d6bd4f8e37a7338f5ad2880c9f143450c9b1e4fc2069060724570a49cf9cf0312bd107
+  languageName: node
+  linkType: hard
+
+"estree-walker@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "estree-walker@npm:2.0.2"
+  checksum: 10c0/53a6c54e2019b8c914dc395890153ffdc2322781acf4bd7d1a32d7aedc1710807bdcd866ac133903d5629ec601fbb50abe8c2e5553c7f5a0afdd9b6af6c945af
   languageName: node
   linkType: hard
 
@@ -7149,6 +7249,16 @@ __metadata:
     core-util-is: "npm:1.0.2"
     extsprintf: "npm:^1.2.0"
   checksum: 10c0/293fb060a4c9b07965569a0c3e45efa954127818707995a8a4311f691b5d6687be99f972c759838ba6eecae717f9af28e3c49d2afc7bbdf5f0b675238f1426e8
+  languageName: node
+  linkType: hard
+
+"vite-plugin-circular-dependency@npm:^0.4.1":
+  version: 0.4.1
+  resolution: "vite-plugin-circular-dependency@npm:0.4.1"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.1.0"
+    chalk: "npm:^4.1.2"
+  checksum: 10c0/aefc55957eae60b2d55b12222a814fd242d7258ef5455b2b9b927f040726854284e1cb7094d560aee1765c171852b299b8d0dcf9a3d07773d53d846b6a10df0a
   languageName: node
   linkType: hard
 

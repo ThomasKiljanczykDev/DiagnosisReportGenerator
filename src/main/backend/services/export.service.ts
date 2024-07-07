@@ -19,11 +19,18 @@ export default class ExportService {
                 cardNumber: patient.cardNumber,
                 name: patient.name,
                 pesel: patient.pesel.string,
-                doctor: patient.doctor,
-                assistants: patient.assistants.join(', '),
+                doctor: formatStaffMember(patient.doctor),
+                assistants: patient.assistants
+                    .map((assistant) => formatStaffMember(assistant))
+                    .join(', '),
                 // TODO: How to handle undefined technicians?
-                technicians: patient.technicians?.join(', ') ?? '',
-                consultants: patient.consultants.join(', ')
+                technicians:
+                    patient.technicians
+                        ?.map((technician) => formatStaffMember(technician))
+                        .join(', ') ?? '',
+                consultants: patient.consultants
+                    .map((consultant) => formatStaffMember(consultant))
+                    .join(', ')
             };
 
             const report = await createReport({
@@ -39,4 +46,10 @@ export default class ExportService {
 
         return zip(reports);
     }
+}
+
+function formatStaffMember(
+    doctor: import('../../../common/types/entities').StaffMember | null
+): string {
+    throw new Error('Function not implemented.');
 }
