@@ -1,9 +1,9 @@
 import { rmSync } from 'node:fs';
 import path from 'node:path';
-import { AliasOptions, defineConfig, ResolveOptions } from 'vite';
+import { AliasOptions, ResolveOptions, defineConfig } from 'vite';
 import electron from 'vite-plugin-electron/simple';
 
-import react from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react-swc';
 
 import pkg from './package.json';
 

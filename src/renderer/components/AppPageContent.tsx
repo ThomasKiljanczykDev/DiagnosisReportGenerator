@@ -1,4 +1,4 @@
-import { memo, ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 import { Grid } from '@mui/material';
 

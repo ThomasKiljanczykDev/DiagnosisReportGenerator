@@ -1,7 +1,7 @@
 import { app, ipcMain } from 'electron';
 import Store from 'electron-store';
 
-import { Api } from '@/common/types/api';
+import { type Api } from '@/common/types/api';
 import ExportService from '@/main/backend/services/export.service';
 import { ImportService } from '@/main/backend/services/import.service';
 

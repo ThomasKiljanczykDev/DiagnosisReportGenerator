@@ -1,4 +1,4 @@
-import { WebStorage } from 'redux-persist';
+import { type WebStorage } from 'redux-persist';
 
 class InterProcessStorage implements WebStorage {
     async getItem(key: string): Promise<string | null> {

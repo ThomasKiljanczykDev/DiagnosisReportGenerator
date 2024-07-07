@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes, memo } from 'react';
+import { type DetailedHTMLProps, type InputHTMLAttributes, memo } from 'react';
 
 const VisuallyHiddenInput = memo(function VisuallyHiddenInput(
     props: DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>

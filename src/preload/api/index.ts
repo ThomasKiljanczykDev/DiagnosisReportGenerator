@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 
-import { Patient } from '@/common/models/patient';
-import { Api } from '@/common/types/api';
+import { type Patient } from '@/common/models/patient';
+import { type Api } from '@/common/types/api';
 
 function setStoreValue(key: string, value: unknown) {
     return ipcRenderer.invoke(setStoreValue.name, key, value);

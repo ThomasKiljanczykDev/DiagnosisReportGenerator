@@ -1,5 +1,7 @@
-import { lazy, StrictMode, Suspense } from 'react';
+import { StrictMode, Suspense, lazy } from 'react';
+
 import ReactDOM from 'react-dom/client';
+import 'react-material-symbols/rounded';
 import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -8,8 +10,6 @@ import MaterialSymbolPreloader from '@/renderer/components/MaterialSymbolPreload
 import { rendererPersistor, rendererStore } from '@/renderer/redux/store';
 
 import './index.css';
-
-import 'react-material-symbols/rounded';
 
 const App = lazy(() => import('@/renderer/App'));
 

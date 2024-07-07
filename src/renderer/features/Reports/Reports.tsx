@@ -1,13 +1,13 @@
 import { useCallback, useState } from 'react';
 
-import { parsePesel, Patient, Pesel } from '@/common/models/patient';
-import AppPageContent from '@/renderer/components/AppPageContent';
 import { Grid, Tooltip } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import ReportsActionButtons from './ReportsActionButtons';
+import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
+import AppPageContent from '@/renderer/components/AppPageContent';
 
 import './Reports.css';
+import ReportsActionButtons from './ReportsActionButtons';
 
 const PATIENT_COLUMNS: GridColDef<Patient>[] = [
     { field: 'cardNumber', headerName: 'Numer karty', editable: true, flex: 1 },
@@ -24,8 +24,9 @@ const PATIENT_COLUMNS: GridColDef<Patient>[] = [
 
             return newPatient;
         },
-        renderCell: params => {
+        renderCell: (params) => {
             const hasError = params.row.pesel.error !== undefined;
+
             function CellErrorTooltip() {
                 return (
                     <Tooltip title={params.row.pesel.error} arrow={true}>
