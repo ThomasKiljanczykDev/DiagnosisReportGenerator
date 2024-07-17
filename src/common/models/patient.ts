@@ -1,4 +1,4 @@
-import type { StaffMember } from '@/common/types/entities';
+import type { Gene, Illness, StaffMember } from '@/common/types/entities';
 
 export enum Sex {
     Male = 'M',
@@ -74,4 +74,6 @@ export interface Patient {
     assistants: StaffMember[];
     technicians: StaffMember[];
     consultants: StaffMember[];
+    genes: Gene[];
+    illness: Illness | null;
 }

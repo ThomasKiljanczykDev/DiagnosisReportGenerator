@@ -11,6 +11,7 @@ interface MultiSelectEditCellProps<I extends object> {
     initialValue: ItemValue[];
     keyFn: (item: I) => ItemValue;
     displayFn: (item: I) => ReactNode;
+    valueFn?: (item: I) => any;
 }
 
 export default function MultiSelectEditCell<I extends object>(props: MultiSelectEditCellProps<I>) {
@@ -25,11 +26,14 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
                 newValue = [];
             }
 
-            const valueItems = newValue.map((key) =>
-                props.items.find((item) => props.keyFn(item) == key)
-            );
-
             setValue(newValue);
+
+            const valueItems = newValue
+                .map((key) => props.items.find((item) => props.keyFn(item) == key))
+                .filter((item) => item !== undefined)
+                .map((item) => item!)
+                .map((item) => (props.valueFn ? props.valueFn(item) : item));
+
             apiRef.current.setEditCellValue({
                 id: props.params.id,
                 field: props.params.field,

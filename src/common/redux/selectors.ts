@@ -19,7 +19,7 @@ export const testMethodsSelectors = testMethodsAdapter.getSelectors(
     (state: RootState) => state.settings.testMethods
 );
 
-export const recommendationSelectors = recommendationAdapter.getSelectors(
+export const recommendationsSelectors = recommendationAdapter.getSelectors(
     (state: RootState) => state.settings.recommendations
 );
 

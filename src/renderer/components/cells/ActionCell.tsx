@@ -13,11 +13,11 @@ interface ActionCellProps<T extends { id: string }> {
 export default function ActionCell<T extends { id: string }>(props: ActionCellProps<T>) {
     const handleAdd = useCallback(() => {
         props.onAdd(props.entity);
-    }, [props.onAdd, props.entity]);
+    }, [props]);
 
     const handleRemove = useCallback(() => {
         props.onRemove(props.entity.id);
-    }, [props.onRemove, props.entity.id]);
+    }, [props]);
 
     const isNewRow = !props.entity.id;
     return isNewRow ? (

@@ -4,8 +4,8 @@ import { Grid, Tooltip } from '@mui/material';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
-import { staffSelectors } from '@/common/redux/selectors';
-import type { StaffMember } from '@/common/types/entities';
+import { genesSelectors, illnessesSelectors, staffSelectors } from '@/common/redux/selectors';
+import type { Gene, Illness, StaffMember } from '@/common/types/entities';
 import { formatStaffMember } from '@/common/utils/formatting';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { useAppSelector } from '@/renderer/hooks/redux';
@@ -19,6 +19,8 @@ import ReportsActionButtons from './ReportsActionButtons';
 
 export default function Reports() {
     const staff = useAppSelector(staffSelectors.selectAll);
+    const illnesses = useAppSelector(illnessesSelectors.selectAll);
+    const genes = useAppSelector(genesSelectors.selectAll);
 
     const [patientData, setPatientData] = useState<Patient[]>([]);
 
@@ -34,10 +36,8 @@ export default function Reports() {
                     flex: 1,
                     valueGetter: (pesel: Pesel) => pesel.string,
                     valueSetter: (peselString, patient) => {
-                        const newPatient = structuredClone(patient);
-                        newPatient.pesel = parsePesel(peselString);
-
-                        return newPatient;
+                        patient.pesel = parsePesel(peselString);
+                        return patient;
                     },
                     renderCell: (params) => {
                         const hasError = params.row.pesel.error !== undefined;
@@ -66,10 +66,10 @@ export default function Reports() {
                     ...createSingleSelectDefinition(
                         'doctor',
                         staff,
-                        (staffMember) => staffMember.id,
+                        (staffMember) => staffMember?.id ?? '',
                         (staffMember) => formatStaffMember(staffMember)
                     )
-                },
+                } as GridColDef<Patient, StaffMember | null>,
                 {
                     field: 'assistants',
                     headerName: 'Asystenci',
@@ -93,7 +93,7 @@ export default function Reports() {
                         (technician) => technician.id,
                         (technician) => formatStaffMember(technician)
                     )
-                },
+                } as GridColDef<Patient, StaffMember[]>,
                 {
                     field: 'consultants',
                     headerName: 'Konsultanci',
@@ -107,6 +107,30 @@ export default function Reports() {
                     )
                 },
                 {
+                    field: 'genes',
+                    headerName: 'Geny',
+                    editable: true,
+                    flex: 1,
+                    ...createMultiSelectDefinition(
+                        'genes',
+                        genes,
+                        (gene) => gene.id,
+                        (gene) => gene.name
+                    )
+                } as GridColDef<Patient, Gene[]>,
+                {
+                    field: 'illness',
+                    headerName: 'Choroba',
+                    editable: true,
+                    flex: 1,
+                    ...createSingleSelectDefinition(
+                        'illness',
+                        illnesses,
+                        (illness) => illness?.id ?? '',
+                        (illness) => illness?.name ?? ''
+                    )
+                } as GridColDef<Patient, Illness | null>,
+                {
                     field: 'date',
                     headerName: 'Data',
                     editable: true,
@@ -114,8 +138,18 @@ export default function Reports() {
                     flex: 1
                 }
             ] as GridColDef<Patient>[],
-        [staff]
+        [genes, illnesses, staff]
     );
+
+    const processRowUpdate = useCallback((newRow: Patient) => {
+        setPatientData((prevPatientData) =>
+            prevPatientData.map((patient) =>
+                patient.id === newRow.id ? { ...patient, ...newRow } : patient
+            )
+        );
+
+        return newRow;
+    }, []);
 
     const onFileImport = useCallback((newPatientData: Patient[]) => {
         setPatientData(newPatientData);
@@ -128,7 +162,12 @@ export default function Reports() {
                     <ReportsActionButtons onFileImport={onFileImport} patientData={patientData} />
                 </Grid>
                 <Grid flex={1} item minHeight={0} minWidth={0}>
-                    <DataGrid columns={PATIENT_COLUMNS} rows={patientData} rowSelection={false} />
+                    <DataGrid
+                        columns={PATIENT_COLUMNS}
+                        rows={patientData}
+                        rowSelection={false}
+                        processRowUpdate={processRowUpdate}
+                    />
                 </Grid>
             </Grid>
         </AppPageContent>

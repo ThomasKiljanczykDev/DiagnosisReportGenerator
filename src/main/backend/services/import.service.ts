@@ -28,7 +28,7 @@ export class ImportService {
         return this.parsePatientData(rawSheetData);
     }
 
-    private static async parsePatientData(rawSheetData: string[][]) {
+    private static async parsePatientData(rawSheetData: string[][]): Promise<Patient[]> {
         const staff = staffSelectors.selectAll(backendStore.getState());
 
         rawSheetData = rawSheetData
@@ -63,8 +63,10 @@ export class ImportService {
                     doctor: doctor ?? null,
                     assistants: assistants,
                     consultants: consultants,
-                    technicians: []
-                };
+                    technicians: [],
+                    genes: [],
+                    illness: null
+                } as Patient;
             } catch (e) {
                 console.error(`Error parsing patient data: ${data}`);
                 return null;
@@ -74,6 +76,7 @@ export class ImportService {
         return rawSheetData
             .slice(1)
             .map((row, index) => parsePatient(index, row))
-            .filter((patient) => patient !== null && patient?.cardNumber);
+            .filter((patient) => patient !== null && patient?.cardNumber)
+            .map((patient) => patient!);
     }
 }

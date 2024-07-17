@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import { recommendationSelectors } from '@/common/redux/selectors';
+import { recommendationsSelectors } from '@/common/redux/selectors';
 import { recommendationActions } from '@/common/redux/slices/settings/recommendations';
 import { type Recommendation, RecommendationLevel } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 export default function RecommendationsSettings() {
     const dispatch = useAppDispatch();
 
-    const recommendationsState = useAppSelector(recommendationSelectors.selectAll);
+    const recommendationsState = useAppSelector(recommendationsSelectors.selectAll);
 
     const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
 

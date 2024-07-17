@@ -85,6 +85,7 @@ export default function GenesSettings() {
                             initialValue={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
+                            valueFn={(item) => item.id}
                         />
                     ),
                     renderCell: (params) => (
@@ -109,6 +110,7 @@ export default function GenesSettings() {
                             initialValue={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
+                            valueFn={(item) => item.id}
                         />
                     ),
                     renderCell: (params) => (

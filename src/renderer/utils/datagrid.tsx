@@ -6,10 +6,11 @@ import MultiSelectEditCell from '@/renderer/components/cells/MultiSelectEditCell
 export function createSingleSelectDefinition<
     R extends Record<string, any>,
     V extends R[P],
-    P extends keyof R
+    P extends keyof R,
+    O extends V
 >(
     property: P,
-    options: V[],
+    options: O[],
     idGetter: (option: V) => string,
     labelGetter: (option: V) => string
 ): Partial<GridColDef<R, string>> {
@@ -18,15 +19,13 @@ export function createSingleSelectDefinition<
         valueOptions: options,
         valueGetter: (value: V) => idGetter(value),
         valueSetter: (optionValue: string, row: R) => {
-            const updatedRow = structuredClone(row);
-
             const selectedOption = options.find((option) => idGetter(option) === optionValue);
             if (!selectedOption) {
-                return updatedRow;
+                return row;
             }
 
-            updatedRow[property] = selectedOption;
-            return updatedRow;
+            row[property] = selectedOption;
+            return row;
         },
         // TODO: Should be of type V, but MUI X Data Grid accepts only ValueOptions
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -43,10 +42,11 @@ export function createSingleSelectDefinition<
 export function createMultiSelectDefinition<
     R extends Record<string, any>,
     V extends R[P] & Array<any>,
-    P extends keyof R
+    P extends keyof R,
+    O extends V
 >(
     _property: P,
-    options: V,
+    options: O,
     idGetter: (option: V[0]) => string,
     labelGetter: (option: V[0]) => string
 ) {
