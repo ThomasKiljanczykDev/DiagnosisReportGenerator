@@ -3,14 +3,15 @@ import { type ReactNode, useCallback, useEffect, useState } from 'react';
 import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
 
-type ItemValue = string | number;
+export type ItemValue = string | number | undefined;
 
 interface MultiSelectEditCellProps<I extends object> {
-    params: GridRenderEditCellParams<any, I>;
+    params: GridRenderEditCellParams<any, I[]>;
     items: I[];
     initialValue: ItemValue[];
     keyFn: (item: I) => ItemValue;
     displayFn: (item: I) => ReactNode;
+    valueFn?: (item: I) => any;
 }
 
 export default function MultiSelectEditCell<I extends object>(props: MultiSelectEditCellProps<I>) {
@@ -26,14 +27,21 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
             }
 
             setValue(newValue);
+
+            const valueItems = newValue
+                .map((key) => props.items.find((item) => props.keyFn(item) == key))
+                .filter((item) => item !== undefined)
+                .map((item) => item!)
+                .map((item) => (props.valueFn ? props.valueFn(item) : item));
+
             apiRef.current.setEditCellValue({
                 id: props.params.id,
                 field: props.params.field,
-                value: newValue,
+                value: valueItems,
                 debounceMs: 250
             });
         },
-        [apiRef, props.params.id, props.params.field]
+        [apiRef, props]
     );
 
     useEffect(() => {

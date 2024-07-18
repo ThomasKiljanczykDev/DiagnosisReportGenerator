@@ -11,6 +11,7 @@ const Redirect = memo(function Redirect(props: RedirectProps) {
 
     useEffect(() => {
         navigate(props.to);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return null;

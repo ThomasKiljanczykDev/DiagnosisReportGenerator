@@ -4,12 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
-import {
-    type Illness,
-    illnessesActions,
-    illnessesSelectors
-} from '@/common/redux/slices/settings/illnesses';
-import { recommendationSelectors } from '@/common/redux/slices/settings/recommendations';
+import { illnessesSelectors, recommendationsSelectors } from '@/common/redux/selectors';
+import { illnessesActions } from '@/common/redux/slices/settings/illnesses';
+import type { Illness } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import MultiSelectCell from '@/renderer/components/cells/MultiSelectCell';
@@ -20,7 +17,7 @@ export default function IllnessesSettings() {
     const dispatch = useAppDispatch();
 
     const illnessesState = useAppSelector(illnessesSelectors.selectAll);
-    const recommendations = useAppSelector(recommendationSelectors.selectAll);
+    const recommendations = useAppSelector(recommendationsSelectors.selectAll);
 
     const [illnesses, setIllnesses] = useState<Illness[]>([]);
 
@@ -78,6 +75,7 @@ export default function IllnessesSettings() {
                     field: 'recommendationIds',
                     headerName: 'Zalecenia',
                     editable: true,
+                    flex: 1,
                     type: 'custom',
                     renderEditCell: (params) => (
                         <MultiSelectEditCell
@@ -86,18 +84,18 @@ export default function IllnessesSettings() {
                             initialValue={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
+                            valueFn={(item) => item.id}
                         />
                     ),
                     renderCell: (params) => (
                         <MultiSelectCell
                             params={params}
                             items={recommendations}
-                            keys={params.value}
+                            value={params.value}
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
                         />
-                    ),
-                    flex: 1
+                    )
                 }
             ] as GridColDef<Illness>[],
         [handleAddIllnesses, handleRemoveIllnesses, recommendations]

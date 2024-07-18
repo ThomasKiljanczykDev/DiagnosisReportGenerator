@@ -1,14 +1,9 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
 import { createAppSlice } from '@/common/redux/redux-common';
-import { type RootState } from '@/common/redux/store';
+import type { Mutation } from '@/common/types/entities';
 
-export interface Mutation {
-    id: string;
-    name: string;
-}
-
-const mutationsAdapter = createEntityAdapter<Mutation>({
+export const mutationsAdapter = createEntityAdapter<Mutation>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
 
@@ -23,9 +18,5 @@ const mutationsSlice = createAppSlice({
 });
 
 export default mutationsSlice;
-
-export const mutationsSelectors = mutationsAdapter.getSelectors(
-    (state: RootState) => state.settings.mutations
-);
 
 export const mutationsActions = mutationsSlice.actions;

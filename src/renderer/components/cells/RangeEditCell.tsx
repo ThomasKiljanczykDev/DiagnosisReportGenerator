@@ -38,7 +38,7 @@ export default function RangeEditCell(props: RangeEditCellProps) {
                 debounceMs: 250
             });
         },
-        [props.params.id, props.params.field, apiRef.current]
+        [value, apiRef, props.params.id, props.params.field]
     );
 
     const handleFromValueChange = useCallback(

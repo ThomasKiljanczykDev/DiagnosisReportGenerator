@@ -1,14 +1,9 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
 import { createAppSlice } from '@/common/redux/redux-common';
-import { type RootState } from '@/common/redux/store';
+import type { TestMethod } from '@/common/types/entities';
 
-export interface TestMethod {
-    id: string;
-    name: string;
-}
-
-const testMethodsAdapter = createEntityAdapter<TestMethod>({
+export const testMethodsAdapter = createEntityAdapter<TestMethod>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
 
@@ -23,9 +18,5 @@ const testMethodsSlice = createAppSlice({
 });
 
 export default testMethodsSlice;
-
-export const testMethodsSelectors = testMethodsAdapter.getSelectors(
-    (state: RootState) => state.settings.testMethods
-);
 
 export const testMethodsActions = testMethodsSlice.actions;

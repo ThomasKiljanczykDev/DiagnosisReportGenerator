@@ -4,7 +4,7 @@ import { Button, Grid } from '@mui/material';
 
 import { type Patient } from '@/common/models/patient';
 import VisuallyHiddenInput from '@/renderer/components/VisuallyHiddenInput';
-import { MimeType, saveFile } from '@/renderer/util/file-util';
+import { MimeType, saveFile } from '@/renderer/utils/file-util';
 
 interface MainPageActionButtonsProps {
     patientData: Patient[];
@@ -15,6 +15,7 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
     const handleFileChange = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
+
             if (!file) {
                 return;
             }
@@ -31,12 +32,15 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
 
             props.onFileImport(patientData);
         },
-        [props.onFileImport]
+        [props]
     );
 
     const handleReportGeneration = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
+            // Reset the input value to allow the same file to be selected again
+            event.target.value = '';
+
             if (!file || !props.patientData.length) {
                 return;
             }
@@ -73,6 +77,7 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                     <VisuallyHiddenInput
                         accept=".docx"
                         title={'Wybierz plik szablonu raportu'}
+                        value={undefined}
                         onChange={handleReportGeneration}
                         type="file"
                     />

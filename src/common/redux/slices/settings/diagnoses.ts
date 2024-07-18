@@ -1,14 +1,9 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
 import { createAppSlice } from '@/common/redux/redux-common';
-import { type RootState } from '@/common/redux/store';
+import type { Diagnosis } from '@/common/types/entities';
 
-export interface Diagnosis {
-    id: string;
-    name: string;
-}
-
-const diagnosesAdapter = createEntityAdapter<Diagnosis>({
+export const diagnosesAdapter = createEntityAdapter<Diagnosis>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)
 });
 
@@ -23,9 +18,5 @@ const diagnosesSlice = createAppSlice({
 });
 
 export default diagnosesSlice;
-
-export const diagnosesSelectors = diagnosesAdapter.getSelectors(
-    (state: RootState) => state.settings.diagnoses
-);
 
 export const diagnosesActions = diagnosesSlice.actions;

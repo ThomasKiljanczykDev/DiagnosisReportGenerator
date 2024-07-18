@@ -1,12 +1,12 @@
 import { Chip } from '@mui/material';
 import { type GridRenderCellParams } from '@mui/x-data-grid';
 
-type ItemValue = string | number;
+type ItemValue = string | number | undefined;
 
 interface MultiSelectCellProps<I extends object> {
-    params: GridRenderCellParams<any, I>;
+    params: GridRenderCellParams<any, I[]>;
     items: I[];
-    keys: ItemValue[];
+    value: ItemValue[];
 
     keyFn: (item: I) => ItemValue;
     displayFn: (item: I) => string;
@@ -22,7 +22,7 @@ export default function MultiSelectCell<I extends object>(props: MultiSelectCell
                 alignItems: 'center'
             }}
         >
-            {props.keys.map((key) => {
+            {props.value.map((key) => {
                 const selectedItem = props.items.find((item) => props.keyFn(item) == key);
                 if (!selectedItem) {
                     return null;

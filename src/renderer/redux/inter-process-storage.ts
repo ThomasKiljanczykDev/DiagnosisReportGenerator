@@ -1,6 +1,6 @@
 import { type WebStorage } from 'redux-persist';
 
-class InterProcessStorage implements WebStorage {
+export class InterProcessStorage implements WebStorage {
     async getItem(key: string): Promise<string | null> {
         const item = await api.getStoreValue(key);
         if (item === undefined || item === null) {
@@ -29,5 +29,3 @@ class InterProcessStorage implements WebStorage {
         await api.deleteStoreValue(key);
     }
 }
-
-export const interProcessStorage = new InterProcessStorage();
