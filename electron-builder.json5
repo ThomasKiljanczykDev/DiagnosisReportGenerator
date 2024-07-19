@@ -2,7 +2,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-    appId: 'pl.gunock.${name}',
+    appId: 'pl.gunock.diagnosisreportgenerator',
     asar: true,
     directories: {
         output: 'release/${version}'

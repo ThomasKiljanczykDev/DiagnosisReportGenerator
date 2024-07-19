@@ -51,6 +51,9 @@ export default defineConfig(({ command }) => {
                             rollupOptions: {
                                 external: Object.keys('dependencies' in pkg ? pkg.dependencies : {})
                             }
+                        },
+                        esbuild: {
+                            keepNames: true
                         }
                     }
                 },
@@ -67,6 +70,9 @@ export default defineConfig(({ command }) => {
                             rollupOptions: {
                                 external: Object.keys('dependencies' in pkg ? pkg.dependencies : {})
                             }
+                        },
+                        esbuild: {
+                            keepNames: true
                         }
                     }
                 },
@@ -76,6 +82,9 @@ export default defineConfig(({ command }) => {
                 renderer: {}
             })
         ],
+        esbuild: {
+            keepNames: true
+        },
         server:
             process.env.VSCODE_DEBUG &&
             (() => {
