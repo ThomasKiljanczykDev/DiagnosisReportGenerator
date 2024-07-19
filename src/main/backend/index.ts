@@ -1,9 +1,9 @@
-import {app, ipcMain} from 'electron';
+import { app, ipcMain } from 'electron';
 import Store from 'electron-store';
 
-import {type Api} from '@/common/types/api';
+import { type Api } from '@/common/types/api';
 import ExportService from '@/main/backend/services/export.service';
-import {ImportService} from '@/main/backend/services/import.service';
+import { ImportService } from '@/main/backend/services/import.service';
 
 function handle<T extends keyof Api>(
     channel: T,
@@ -19,7 +19,7 @@ export function createElectronStore() {
     const path = import.meta.env.DEV ? app.getAppPath() : process.cwd();
 
     return new Store({
-        cwd: path,
+        cwd: path
     });
 }
 
