@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { genesSelectors, mutationsSelectors, testMethodsSelectors } from '@/common/redux/selectors';
 import { genesActions } from '@/common/redux/slices/settings/genes';
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function GenesSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const genesState = useAppSelector(genesSelectors.selectAll);
     const testMethods = useAppSelector(testMethodsSelectors.selectAll);
@@ -71,12 +72,16 @@ export default function GenesSettings() {
                         />
                     )
                 },
-                { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 },
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    hideable: false,
+                    editable: true
+                },
                 {
                     field: 'testMethodIds',
                     headerName: 'Metody Badań',
                     editable: true,
-                    flex: 1,
                     type: 'custom',
                     renderEditCell: (params) => (
                         <MultiSelectEditCell
@@ -121,8 +126,7 @@ export default function GenesSettings() {
                             keyFn={(item) => item.id}
                             displayFn={(item) => item.name}
                         />
-                    ),
-                    flex: 1
+                    )
                 }
             ] as GridColDef<Gene>[],
         [handleAddGene, handleRemoveGene, testMethods, mutations]
@@ -140,14 +144,22 @@ export default function GenesSettings() {
         ]);
     }, [genesState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [genes, apiRef]);
+
     return (
         <AppPageContent title="Geny">
             <DataGrid
+                apiRef={apiRef}
                 columns={GENES_COLUMNS}
                 rows={genes}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

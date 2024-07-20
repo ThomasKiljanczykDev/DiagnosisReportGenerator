@@ -19,6 +19,7 @@ const SettingsDrawer = memo(function SettingsDrawer() {
         <Drawer
             sx={{
                 width: drawerWidth,
+                minWidth: drawerWidth,
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,

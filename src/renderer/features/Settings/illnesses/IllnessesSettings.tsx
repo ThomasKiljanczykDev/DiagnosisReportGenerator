@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { illnessesSelectors, recommendationsSelectors } from '@/common/redux/selectors';
 import { illnessesActions } from '@/common/redux/slices/settings/illnesses';
@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function IllnessesSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const illnessesState = useAppSelector(illnessesSelectors.selectAll);
     const recommendations = useAppSelector(recommendationsSelectors.selectAll);
@@ -70,12 +71,16 @@ export default function IllnessesSettings() {
                         />
                     )
                 },
-                { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 },
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    hideable: false,
+                    editable: true
+                },
                 {
                     field: 'recommendationIds',
                     headerName: 'Zalecenia',
                     editable: true,
-                    flex: 1,
                     type: 'custom',
                     renderEditCell: (params) => (
                         <MultiSelectEditCell
@@ -112,14 +117,22 @@ export default function IllnessesSettings() {
         ]);
     }, [illnessesState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [illnesses, apiRef]);
+
     return (
         <AppPageContent title="Choroby">
             <DataGrid
+                apiRef={apiRef}
                 columns={ILLNESSES_COLUMNS}
                 rows={illnesses}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

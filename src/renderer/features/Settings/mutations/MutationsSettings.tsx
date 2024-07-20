@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { mutationsSelectors } from '@/common/redux/selectors';
 import { mutationsActions } from '@/common/redux/slices/settings/mutations';
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function MutationsSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const mutationsState = useAppSelector(mutationsSelectors.selectAll);
 
@@ -67,7 +68,12 @@ export default function MutationsSettings() {
                         />
                     )
                 },
-                { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 }
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    hideable: false,
+                    editable: true
+                }
             ] as GridColDef<Mutation>[],
         [handleAddMutation, handleRemoveMutation]
     );
@@ -82,14 +88,22 @@ export default function MutationsSettings() {
         ]);
     }, [mutationsState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [mutations, apiRef]);
+
     return (
         <AppPageContent title="Mutacje">
             <DataGrid
+                apiRef={apiRef}
                 columns={MUTATIONS_COLUMNS}
                 rows={mutations}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

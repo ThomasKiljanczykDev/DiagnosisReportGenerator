@@ -14,6 +14,7 @@ const MainDrawer = memo(function MainDrawer() {
             sx={{
                 flexShrink: 0,
                 width: drawerWidth,
+                minWidth: drawerWidth,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box'
