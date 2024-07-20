@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { diagnosesSelectors } from '@/common/redux/selectors';
 import { diagnosesActions } from '@/common/redux/slices/settings/diagnoses';
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function DiagnosesSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const diagnosesState = useAppSelector(diagnosesSelectors.selectAll);
 
@@ -50,7 +51,12 @@ export default function DiagnosesSettings() {
                     />
                 )
             },
-            { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 }
+            {
+                field: 'name',
+                headerName: 'Nazwa',
+                hideable: false,
+                editable: true
+            }
         ],
         [handleAddDiagnosis, handleRemoveDiagnosis]
     );
@@ -65,9 +71,16 @@ export default function DiagnosesSettings() {
         ]);
     }, [diagnosesState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [diagnoses, apiRef]);
+
     return (
         <AppPageContent title="Rozpoznania">
             <DataGrid
+                apiRef={apiRef}
                 columns={DIAGNOSES_COLUMNS}
                 rows={diagnoses}
                 rowSelection={false}
@@ -83,6 +96,7 @@ export default function DiagnosesSettings() {
 
                     return newRow;
                 }}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

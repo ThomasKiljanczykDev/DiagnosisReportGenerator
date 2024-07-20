@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { testMethodsSelectors } from '@/common/redux/selectors';
 import { testMethodsActions } from '@/common/redux/slices/settings/test-methods';
@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function TestMethodsSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const testMethodsState = useAppSelector(testMethodsSelectors.selectAll);
 
@@ -66,7 +67,12 @@ export default function TestMethodsSettings() {
                     />
                 )
             },
-            { field: 'name', headerName: 'Nazwa', hideable: false, editable: true, flex: 1 }
+            {
+                field: 'name',
+                headerName: 'Nazwa',
+                hideable: false,
+                editable: true
+            }
         ],
         [handleAddTestMethod, handleRemoveTestMethod]
     );
@@ -81,14 +87,22 @@ export default function TestMethodsSettings() {
         ]);
     }, [testMethodsState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [testMethods, apiRef]);
+
     return (
         <AppPageContent title="Metody Badań">
             <DataGrid
+                apiRef={apiRef}
                 columns={METODY_COLUMNS}
                 rows={testMethods}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

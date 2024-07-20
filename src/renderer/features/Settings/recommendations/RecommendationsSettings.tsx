@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { recommendationsSelectors } from '@/common/redux/selectors';
 import { recommendationActions } from '@/common/redux/slices/settings/recommendations';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 
 export default function RecommendationsSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const recommendationsState = useAppSelector(recommendationsSelectors.selectAll);
 
@@ -68,8 +69,16 @@ export default function RecommendationsSettings() {
                         />
                     )
                 },
-                { field: 'name', headerName: 'Nazwa', editable: true, flex: 1 },
-                { field: 'content', headerName: 'Opis', editable: true, flex: 1 },
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    editable: true
+                },
+                {
+                    field: 'content',
+                    headerName: 'Opis',
+                    editable: true
+                },
                 {
                     field: 'recommendationLevel',
                     headerName: 'Poziom zalecenia',
@@ -79,15 +88,13 @@ export default function RecommendationsSettings() {
                         RecommendationLevel.I,
                         RecommendationLevel.II,
                         RecommendationLevel.III
-                    ],
-                    flex: 1
+                    ]
                 },
                 {
                     field: 'ageRange',
                     headerName: 'Zakres wiekowy',
                     editable: true,
                     type: 'custom',
-                    flex: 1,
                     valueFormatter: (range: Range) => {
                         if (range.from != null && range.to != null) {
                             return `od ${range.from} lat do ${range.to} lat`;
@@ -124,14 +131,22 @@ export default function RecommendationsSettings() {
         ]);
     }, [recommendationsState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [recommendations, apiRef]);
+
     return (
         <AppPageContent title="Zalecenia">
             <DataGrid
+                apiRef={apiRef}
                 columns={RECOMMENDATIONS_COLUMNS}
                 rows={recommendations}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount={true}
             />
         </AppPageContent>
     );

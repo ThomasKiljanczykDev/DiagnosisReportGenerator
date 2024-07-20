@@ -29,6 +29,8 @@ export default function App() {
         <ThemeProvider theme={themeWithLocale}>
             <MainAppBar />
             <Box
+                minWidth={0}
+                minHeight={0}
                 sx={{
                     display: 'flex',
                     width: '100%',
@@ -42,6 +44,8 @@ export default function App() {
                     sx={{
                         flexGrow: 1,
                         padding: 3,
+                        minWidth: 0,
+                        minHeight: 0,
                         backgroundColor: 'white'
                     }}
                 >

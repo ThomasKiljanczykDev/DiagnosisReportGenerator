@@ -49,14 +49,16 @@ export default function MultiSelectEditCell<I extends object>(props: MultiSelect
     }, [props.initialValue]);
 
     return (
-        <div style={{ display: 'flex', flexGrow: 1 }}>
+        <div style={{ display: 'flex', flexGrow: 1, minWidth: 0, minHeight: 0 }}>
             <Select
                 multiple
                 value={value}
                 onChange={handleValueChange}
                 input={<OutlinedInput label="Chip" />}
                 style={{
-                    flexGrow: 1
+                    flexGrow: 1,
+                    minWidth: 0,
+                    minHeight: 0
                 }}
                 renderValue={(selectedKeys) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>

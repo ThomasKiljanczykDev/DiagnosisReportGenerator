@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 
 import { Grid, Tooltip } from '@mui/material';
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
 import { genesSelectors, illnessesSelectors, staffSelectors } from '@/common/redux/selectors';
@@ -18,6 +18,8 @@ import './Reports.css';
 import ReportsActionButtons from './ReportsActionButtons';
 
 export default function Reports() {
+    const apiRef = useGridApiRef();
+
     const staff = useAppSelector(staffSelectors.selectAll);
     const illnesses = useAppSelector(illnessesSelectors.selectAll);
     const genes = useAppSelector(genesSelectors.selectAll);
@@ -27,13 +29,20 @@ export default function Reports() {
     const PATIENT_COLUMNS = useMemo(
         () =>
             [
-                { field: 'cardNumber', headerName: 'Numer karty', editable: true, flex: 1 },
-                { field: 'name', headerName: 'Nazwisko i imię', editable: true, flex: 1 },
+                {
+                    field: 'cardNumber',
+                    headerName: 'Numer karty',
+                    editable: true
+                },
+                {
+                    field: 'name',
+                    headerName: 'Nazwisko i imię',
+                    editable: true
+                },
                 {
                     field: 'pesel',
                     headerName: 'PESEL',
                     editable: true,
-                    flex: 1,
                     valueGetter: (pesel: Pesel) => pesel.string,
                     valueSetter: (peselString, patient) => {
                         patient.pesel = parsePesel(peselString);
@@ -62,7 +71,7 @@ export default function Reports() {
                     field: 'doctor',
                     headerName: 'Lekarz prowadzący',
                     editable: true,
-                    flex: 1,
+                    width: 100,
                     ...createSingleSelectDefinition(
                         'doctor',
                         staff,
@@ -74,7 +83,6 @@ export default function Reports() {
                     field: 'assistants',
                     headerName: 'Asystenci',
                     editable: true,
-                    flex: 1,
                     ...createMultiSelectDefinition(
                         'assistants',
                         staff,
@@ -86,7 +94,6 @@ export default function Reports() {
                     field: 'technicians',
                     headerName: 'Technicy',
                     editable: true,
-                    flex: 1,
                     ...createMultiSelectDefinition(
                         'technicians',
                         staff,
@@ -98,7 +105,6 @@ export default function Reports() {
                     field: 'consultants',
                     headerName: 'Konsultanci',
                     editable: true,
-                    flex: 1,
                     ...createMultiSelectDefinition(
                         'consultants',
                         staff,
@@ -110,7 +116,6 @@ export default function Reports() {
                     field: 'genes',
                     headerName: 'Geny',
                     editable: true,
-                    flex: 1,
                     ...createMultiSelectDefinition(
                         'genes',
                         genes,
@@ -122,7 +127,6 @@ export default function Reports() {
                     field: 'illness',
                     headerName: 'Choroba',
                     editable: true,
-                    flex: 1,
                     ...createSingleSelectDefinition(
                         'illness',
                         illnesses,
@@ -133,9 +137,8 @@ export default function Reports() {
                 {
                     field: 'date',
                     headerName: 'Data',
-                    editable: true,
                     type: 'date',
-                    flex: 1
+                    editable: true
                 }
             ] as GridColDef<Patient>[],
         [genes, illnesses, staff]
@@ -151,22 +154,42 @@ export default function Reports() {
         return newRow;
     }, []);
 
-    const onFileImport = useCallback((newPatientData: Patient[]) => {
-        setPatientData(newPatientData);
-    }, []);
+    const onFileImport = useCallback(
+        (newPatientData: Patient[]) => {
+            setPatientData(newPatientData);
+            window.setTimeout(async () => {
+                await apiRef.current.autosizeColumns();
+            }, 100);
+        },
+        [apiRef]
+    );
 
     return (
         <AppPageContent title="Pacjenci">
-            <Grid container flexDirection="column" height="100%" width="100%" spacing={3}>
-                <Grid item flexShrink={0}>
+            <Grid
+                container
+                flexDirection="column"
+                height="100%"
+                width="100%"
+                spacing={3}
+                minWidth={0}
+                minHeight={0}
+                maxWidth="100%"
+            >
+                <Grid item flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
                     <ReportsActionButtons onFileImport={onFileImport} patientData={patientData} />
                 </Grid>
-                <Grid flex={1} item minHeight={0} minWidth={0}>
+                <Grid item flex={1} minWidth={0} minHeight={0} maxWidth="100%">
                     <DataGrid
+                        apiRef={apiRef}
                         columns={PATIENT_COLUMNS}
                         rows={patientData}
                         rowSelection={false}
+                        autosizeOnMount={true}
                         processRowUpdate={processRowUpdate}
+                        style={{
+                            overflowX: 'scroll'
+                        }}
                     />
                 </Grid>
             </Grid>

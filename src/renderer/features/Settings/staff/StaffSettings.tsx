@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-import { DataGrid, type GridColDef } from '@mui/x-data-grid';
+import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { staffSelectors } from '@/common/redux/selectors';
 import { staffActions } from '@/common/redux/slices/settings/staff';
@@ -10,9 +10,11 @@ import { type StaffMember, StaffRole } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { staffRoleToPolishString } from '@/renderer/utils/text-util';
 
 export default function StaffSettings() {
     const dispatch = useAppDispatch();
+    const apiRef = useGridApiRef();
 
     const staffState = useAppSelector(staffSelectors.selectAll);
 
@@ -67,15 +69,23 @@ export default function StaffSettings() {
                         />
                     )
                 },
-                { field: 'name', headerName: 'Imię i nazwisko', editable: true, flex: 1 },
-                { field: 'title', headerName: 'Tytuł', editable: true, flex: 1 },
+                {
+                    field: 'name',
+                    headerName: 'Imię i nazwisko',
+                    editable: true
+                },
+                {
+                    field: 'title',
+                    headerName: 'Tytuł',
+                    editable: true
+                },
                 {
                     field: 'role',
                     headerName: 'Rola',
                     editable: true,
                     type: 'singleSelect',
                     valueOptions: Object.values(StaffRole),
-                    flex: 1
+                    getOptionLabel: (staffRole: StaffRole) => staffRoleToPolishString(staffRole)
                 }
             ] as GridColDef<StaffMember>[],
         [handleAddStaffMember, handleRemoveStaffMember]
@@ -93,14 +103,22 @@ export default function StaffSettings() {
         ]);
     }, [staffState]);
 
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns();
+        }, 100);
+    }, [staff, apiRef]);
+
     return (
         <AppPageContent title="Personel">
             <DataGrid
+                apiRef={apiRef}
                 columns={STAFF_COLUMNS}
                 rows={staff}
                 rowSelection={false}
                 processRowUpdate={processRowUpdate}
                 getRowClassName={(row) => (row.id ? '' : 'new-row')}
+                autosizeOnMount
             />
         </AppPageContent>
     );
