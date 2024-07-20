@@ -1,4 +1,4 @@
-import type { Mutation, TestMethod } from '@/common/types/entities';
+import type { Illness, Mutation, TestMethod } from '@/common/types/entities';
 
 export interface ReportGene {
     id: string;
@@ -17,6 +17,7 @@ export interface Report {
     technicians: string;
     consultants: string;
     genes: ReportGene[];
+    illness: Illness | null;
     level1Recommendations: string[];
     level2Recommendations: string[];
 }

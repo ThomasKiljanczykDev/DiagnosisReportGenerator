@@ -48,8 +48,11 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
 
             const fileData = new Uint8Array(await file.arrayBuffer());
             const zipData = await api.renderReportPackage(fileData, props.patientData);
+
             const filenameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
+
             const filename = `${filenameWithoutExtension}-${new Date().toLocaleDateString()}.zip`;
+
             saveFile(zipData, filename, MimeType.zip);
         },
         [props.patientData]

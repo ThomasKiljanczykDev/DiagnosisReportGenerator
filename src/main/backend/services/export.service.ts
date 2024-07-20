@@ -88,6 +88,7 @@ export default class ExportService {
                     .map((consultant) => formatStaffMember(consultant))
                     .join(', '),
                 genes: genes,
+                illness: patient.illness,
                 level1Recommendations: [...patientLevel1Recommendations],
                 level2Recommendations: [...patientLevel2Recommendations]
             };
