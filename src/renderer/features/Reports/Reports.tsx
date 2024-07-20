@@ -19,8 +19,6 @@ export default function Reports() {
                 patient.id === newRow.id ? { ...patient, ...newRow } : patient
             )
         );
-
-        return newRow;
     }, []);
 
     const onFileImport = useCallback((newPatientData: Patient[]) => {

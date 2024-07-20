@@ -27,16 +27,16 @@ const MainDrawer = memo(function MainDrawer() {
             <Divider />
             <List>
                 <DrawerListItem
-                    navigateTo={'/reports'}
-                    text={'Raporty'}
+                    navigateTo="/reports"
+                    text="Raporty"
                     icon={<ArticleRoundedIcon />}
                 />
             </List>
             <Divider />
             <List>
                 <DrawerListItem
-                    navigateTo={'/settings/genes'}
-                    text={'Ustawienia'}
+                    navigateTo="/settings/staff"
+                    text="Ustawienia"
                     icon={<SettingsRoundedIcon />}
                 />
             </List>

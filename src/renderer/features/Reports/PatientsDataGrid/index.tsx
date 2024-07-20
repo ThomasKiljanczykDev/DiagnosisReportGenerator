@@ -1,10 +1,15 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
-import { genesSelectors, illnessesSelectors, staffSelectors } from '@/common/redux/selectors';
-import type { Gene, Illness, StaffMember } from '@/common/types/entities';
+import {
+    diagnosesSelectors,
+    genesSelectors,
+    illnessesSelectors,
+    staffSelectors
+} from '@/common/redux/selectors';
+import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
 import { formatStaffMember } from '@/common/utils/formatting';
 import PeselCellRenderer from '@/renderer/features/Reports/PatientsDataGrid/PeselCellRenderer';
 import { useAppSelector } from '@/renderer/hooks/redux';
@@ -15,7 +20,7 @@ import {
 
 interface PatientsDataGridProps {
     patients: Patient[];
-    onRowUpdate: (newRow: Patient) => Patient;
+    onRowUpdate: (newRow: Patient) => void;
 }
 
 export default function PatientsDataGrid(props: PatientsDataGridProps) {
@@ -24,6 +29,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
     const staff = useAppSelector(staffSelectors.selectAll);
     const illnesses = useAppSelector(illnessesSelectors.selectAll);
     const genes = useAppSelector(genesSelectors.selectAll);
+    const diagnoses = useAppSelector(diagnosesSelectors.selectAll);
 
     const PATIENT_COLUMNS = useMemo(
         () =>
@@ -117,13 +123,32 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                     )
                 } as GridColDef<Patient, Illness | null>,
                 {
+                    field: 'diagnosis',
+                    headerName: 'Rozpoznanie',
+                    editable: true,
+                    ...createSingleSelectDefinition(
+                        'diagnosis',
+                        diagnoses,
+                        (diagnosis) => diagnosis?.id ?? '',
+                        (diagnosis) => diagnosis?.name ?? ''
+                    )
+                } as GridColDef<Patient, Diagnosis | null>,
+                {
                     field: 'date',
                     headerName: 'Data',
                     type: 'date',
                     editable: true
                 }
             ] as GridColDef<Patient>[],
-        [genes, illnesses, staff]
+        [diagnoses, genes, illnesses, staff]
+    );
+
+    const processRowUpdate = useCallback(
+        (newRow: Patient) => {
+            props.onRowUpdate(newRow);
+            return newRow;
+        },
+        [props]
     );
 
     return (
@@ -133,7 +158,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
             rows={props.patients}
             rowSelection={false}
             autosizeOnMount={true}
-            processRowUpdate={props.onRowUpdate}
+            processRowUpdate={processRowUpdate}
             style={{
                 overflowX: 'scroll'
             }}
