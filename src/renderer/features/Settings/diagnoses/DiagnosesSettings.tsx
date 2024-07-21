@@ -9,7 +9,9 @@ import { diagnosesActions } from '@/common/redux/slices/settings/diagnoses';
 import type { Diagnosis } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function DiagnosesSettings() {
     const dispatch = useAppDispatch();
@@ -34,31 +36,37 @@ export default function DiagnosesSettings() {
         [dispatch]
     );
 
-    const DIAGNOSES_COLUMNS: GridColDef<Diagnosis>[] = useMemo(
-        () => [
-            {
-                field: 'action',
-                headerName: 'Akcje',
-                sortable: false,
-                filterable: false,
-                hideable: false,
-                disableColumnMenu: true,
-                renderCell: (params) => (
-                    <ActionCell
-                        entity={params.row}
-                        onAdd={handleAddDiagnosis}
-                        onRemove={handleRemoveDiagnosis}
-                    />
-                )
-            },
-            {
-                field: 'name',
-                headerName: 'Nazwa',
-                hideable: false,
-                editable: true
-            }
-        ],
-        [handleAddDiagnosis, handleRemoveDiagnosis]
+    const DIAGNOSES_COLUMNS = useMemo(
+        () =>
+            [
+                {
+                    field: 'action',
+                    headerName: 'Akcje',
+                    sortable: false,
+                    filterable: false,
+                    hideable: false,
+                    disableColumnMenu: true,
+                    renderCell: (params) => (
+                        <ActionCell
+                            params={params}
+                            onAdd={handleAddDiagnosis}
+                            onRemove={handleRemoveDiagnosis}
+                        />
+                    )
+                },
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    hideable: false,
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, diagnoses);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
+                }
+            ] as GridColDef<Diagnosis>[],
+        [diagnoses, handleAddDiagnosis, handleRemoveDiagnosis]
     );
 
     useEffect(() => {

@@ -9,7 +9,9 @@ import { testMethodsActions } from '@/common/redux/slices/settings/test-methods'
 import type { TestMethod } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function TestMethodsSettings() {
     const dispatch = useAppDispatch();
@@ -50,31 +52,37 @@ export default function TestMethodsSettings() {
         [dispatch]
     );
 
-    const METODY_COLUMNS: GridColDef<TestMethod>[] = useMemo(
-        () => [
-            {
-                field: 'action',
-                headerName: 'Akcje',
-                sortable: false,
-                filterable: false,
-                hideable: false,
-                disableColumnMenu: true,
-                renderCell: (params) => (
-                    <ActionCell
-                        entity={params.row}
-                        onAdd={handleAddTestMethod}
-                        onRemove={handleRemoveTestMethod}
-                    />
-                )
-            },
-            {
-                field: 'name',
-                headerName: 'Nazwa',
-                hideable: false,
-                editable: true
-            }
-        ],
-        [handleAddTestMethod, handleRemoveTestMethod]
+    const METODY_COLUMNS = useMemo(
+        () =>
+            [
+                {
+                    field: 'action',
+                    headerName: 'Akcje',
+                    sortable: false,
+                    filterable: false,
+                    hideable: false,
+                    disableColumnMenu: true,
+                    renderCell: (params) => (
+                        <ActionCell
+                            params={params}
+                            onAdd={handleAddTestMethod}
+                            onRemove={handleRemoveTestMethod}
+                        />
+                    )
+                },
+                {
+                    field: 'name',
+                    headerName: 'Nazwa',
+                    hideable: false,
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, testMethods);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
+                }
+            ] as GridColDef<TestMethod>[],
+        [handleAddTestMethod, handleRemoveTestMethod, testMethods]
     );
 
     useEffect(() => {

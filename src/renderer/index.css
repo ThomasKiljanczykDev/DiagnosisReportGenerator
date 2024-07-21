@@ -49,3 +49,7 @@ body {
 .new-row {
     background-color: rgba(0, 0, 0, 0.1);
 }
+
+.MuiDataGrid-cell:has(.Mui-error) {
+    outline-color: #750f0f !important;
+}

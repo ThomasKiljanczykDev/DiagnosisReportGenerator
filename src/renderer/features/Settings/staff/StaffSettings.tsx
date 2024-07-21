@@ -9,8 +9,10 @@ import { staffActions } from '@/common/redux/slices/settings/staff';
 import { type StaffMember, StaffRole } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
 import { staffRoleToPolishString } from '@/renderer/utils/text-util';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function StaffSettings() {
     const dispatch = useAppDispatch();
@@ -63,7 +65,7 @@ export default function StaffSettings() {
                     disableColumnMenu: true,
                     renderCell: (params) => (
                         <ActionCell
-                            entity={params.row}
+                            params={params}
                             onAdd={handleAddStaffMember}
                             onRemove={handleRemoveStaffMember}
                         />
@@ -72,7 +74,12 @@ export default function StaffSettings() {
                 {
                     field: 'name',
                     headerName: 'Imię i nazwisko',
-                    editable: true
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, staff);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
                 },
                 {
                     field: 'title',
@@ -88,7 +95,7 @@ export default function StaffSettings() {
                     getOptionLabel: (staffRole: StaffRole) => staffRoleToPolishString(staffRole)
                 }
             ] as GridColDef<StaffMember>[],
-        [handleAddStaffMember, handleRemoveStaffMember]
+        [handleAddStaffMember, handleRemoveStaffMember, staff]
     );
 
     useEffect(() => {

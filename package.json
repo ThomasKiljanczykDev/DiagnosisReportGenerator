@@ -24,8 +24,8 @@
         "e2e": "playwright test"
     },
     "dependencies": {
-        "@emotion/react": "^11.12.0",
-        "@emotion/styled": "^11.12.0",
+        "@emotion/react": "^11.13.0",
+        "@emotion/styled": "^11.13.0",
         "@fontsource-variable/roboto-flex": "^5.0.15",
         "@mui/icons-material": "^5.16.4",
         "@mui/material": "^5.16.4",
@@ -64,7 +64,7 @@
         "electron-builder": "^24.13.3",
         "eslint": "^8.57.0",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-react": "^7.34.4",
+        "eslint-plugin-react": "^7.35.0",
         "eslint-plugin-react-hooks": "^4.6.2",
         "postcss": "^8.4.39",
         "postcss-import": "^16.1.0",

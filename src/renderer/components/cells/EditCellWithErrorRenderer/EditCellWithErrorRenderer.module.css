@@ -1,0 +1,10 @@
+.Cell {
+    transition:
+        background-color 0.15s linear,
+        color 0.15s linear;
+}
+
+.CellError {
+    background-color: rgb(126, 10, 15, 0.1);
+    color: #750f0f;
+}

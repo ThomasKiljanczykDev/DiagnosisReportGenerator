@@ -1,6 +1,11 @@
 import { useCallback, useMemo } from 'react';
 
-import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    type GridColDef,
+    type GridPreProcessEditCellProps,
+    useGridApiRef
+} from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
 import {
@@ -11,7 +16,7 @@ import {
 } from '@/common/redux/selectors';
 import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
 import { formatStaffMember } from '@/common/utils/formatting';
-import PeselCellRenderer from '@/renderer/features/Reports/PatientsDataGrid/PeselCellRenderer';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { useAppSelector } from '@/renderer/hooks/redux';
 import {
     createMultiSelectDefinition,
@@ -48,13 +53,23 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                     field: 'pesel',
                     headerName: 'PESEL',
                     editable: true,
+                    preProcessEditCellProps: (
+                        params: GridPreProcessEditCellProps<string, Patient>
+                    ) => {
+                        const newPesel = parsePesel(params.props.value ?? '');
+
+                        return {
+                            ...params.props,
+                            error: newPesel.error
+                        };
+                    },
                     valueGetter: (pesel: Pesel) => pesel.string,
                     valueSetter: (peselString, patient) => {
                         patient.pesel = parsePesel(peselString);
                         return patient;
                     },
-                    renderCell: PeselCellRenderer
-                },
+                    renderEditCell: EditCellWithErrorRenderer
+                } as GridColDef<Patient, string>,
                 {
                     field: 'doctor',
                     headerName: 'Lekarz prowadzący',

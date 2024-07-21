@@ -9,9 +9,11 @@ import { illnessesActions } from '@/common/redux/slices/settings/illnesses';
 import type { Illness } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import MultiSelectCell from '@/renderer/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/renderer/components/cells/MultiSelectEditCell';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function IllnessesSettings() {
     const dispatch = useAppDispatch();
@@ -65,7 +67,7 @@ export default function IllnessesSettings() {
                     disableColumnMenu: true,
                     renderCell: (params) => (
                         <ActionCell
-                            entity={params.row}
+                            params={params}
                             onAdd={handleAddIllnesses}
                             onRemove={handleRemoveIllnesses}
                         />
@@ -75,7 +77,12 @@ export default function IllnessesSettings() {
                     field: 'name',
                     headerName: 'Nazwa',
                     hideable: false,
-                    editable: true
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, illnesses);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
                 },
                 {
                     field: 'recommendationIds',
@@ -103,7 +110,7 @@ export default function IllnessesSettings() {
                     )
                 }
             ] as GridColDef<Illness>[],
-        [handleAddIllnesses, handleRemoveIllnesses, recommendations]
+        [handleAddIllnesses, handleRemoveIllnesses, illnesses, recommendations]
     );
 
     useEffect(() => {
