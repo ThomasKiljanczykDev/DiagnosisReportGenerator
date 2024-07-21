@@ -21,7 +21,6 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                 return;
             }
 
-            // if file is excel
             let patientData: Patient[];
             if (file.name.endsWith('.xls') || file.name.endsWith('.xlsx')) {
                 const fileData = new Uint8Array(await file.arrayBuffer());

@@ -6,7 +6,6 @@ import { type Patient } from '@/common/models/patient';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import PatientsDataGrid from '@/renderer/features/Reports/PatientsDataGrid';
 
-import './Reports.css';
 import ReportsActionButtons from './ReportsActionButtons';
 
 export default function Reports() {

@@ -9,7 +9,9 @@ import { mutationsActions } from '@/common/redux/slices/settings/mutations';
 import type { Mutation } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function MutationsSettings() {
     const dispatch = useAppDispatch();
@@ -62,7 +64,7 @@ export default function MutationsSettings() {
                     disableColumnMenu: true,
                     renderCell: (params) => (
                         <ActionCell
-                            entity={params.row}
+                            params={params}
                             onAdd={handleAddMutation}
                             onRemove={handleRemoveMutation}
                         />
@@ -72,10 +74,15 @@ export default function MutationsSettings() {
                     field: 'name',
                     headerName: 'Nazwa',
                     hideable: false,
-                    editable: true
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, mutations);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
                 }
             ] as GridColDef<Mutation>[],
-        [handleAddMutation, handleRemoveMutation]
+        [handleAddMutation, handleRemoveMutation, mutations]
     );
 
     useEffect(() => {

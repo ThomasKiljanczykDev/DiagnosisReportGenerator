@@ -9,8 +9,10 @@ import { recommendationActions } from '@/common/redux/slices/settings/recommenda
 import { type Recommendation, RecommendationLevel } from '@/common/types/entities';
 import AppPageContent from '@/renderer/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/renderer/components/cells';
+import EditCellWithErrorRenderer from '@/renderer/components/cells/EditCellWithErrorRenderer';
 import { type Range } from '@/renderer/components/cells/RangeEditCell';
 import { useAppDispatch, useAppSelector } from '@/renderer/hooks/redux';
+import { validateName } from '@/renderer/utils/validators';
 
 export default function RecommendationsSettings() {
     const dispatch = useAppDispatch();
@@ -63,7 +65,7 @@ export default function RecommendationsSettings() {
                     disableColumnMenu: true,
                     renderCell: (params) => (
                         <ActionCell
-                            entity={params.row}
+                            params={params}
                             onAdd={handleAddRecommendation}
                             onRemove={handleRemoveRecommendation}
                         />
@@ -72,7 +74,12 @@ export default function RecommendationsSettings() {
                 {
                     field: 'name',
                     headerName: 'Nazwa',
-                    editable: true
+                    editable: true,
+                    preProcessEditCellProps: (params) => {
+                        const errorMessage = validateName(params.props.value, recommendations);
+                        return { ...params.props, error: errorMessage };
+                    },
+                    renderEditCell: EditCellWithErrorRenderer
                 },
                 {
                     field: 'content',
@@ -111,7 +118,7 @@ export default function RecommendationsSettings() {
                     )
                 }
             ] as GridColDef<Recommendation>[],
-        [handleAddRecommendation, handleRemoveRecommendation]
+        [handleAddRecommendation, handleRemoveRecommendation, recommendations]
     );
 
     useEffect(() => {
