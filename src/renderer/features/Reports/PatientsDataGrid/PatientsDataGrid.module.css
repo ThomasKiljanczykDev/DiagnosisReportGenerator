@@ -1,0 +1,11 @@
+.CellErrorIcon {
+    color: red;
+}
+
+.CellWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    border-radius: 2rem;
+}

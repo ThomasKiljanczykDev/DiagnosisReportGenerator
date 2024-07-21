@@ -1,28 +1,30 @@
+import ErrorRoundedIcon from '@mui/icons-material/ErrorRounded';
 import { Tooltip } from '@mui/material';
 import type { GridRenderCellParams } from '@mui/x-data-grid';
 
 import type { Patient } from '@/common/models/patient';
 
+import classes from './PatientsDataGrid.module.css';
+
 interface CellErrorTooltipProps {
     error: string;
-    value: string | undefined;
 }
 
 function CellErrorTooltip(props: CellErrorTooltipProps) {
     return (
         <Tooltip title={props.error} arrow={true}>
-            <div>{props.value || ''}</div>
+            <ErrorRoundedIcon className={classes.CellErrorIcon} />
         </Tooltip>
     );
 }
 
 export default function PeselCellRenderer(params: GridRenderCellParams<Patient, string>) {
-    const hasError = params.row.pesel.error !== undefined;
+    const hasError = !!params.row.pesel.error;
 
     return (
-        <div className={hasError ? 'cell-error' : ''}>
-            {hasError && <CellErrorTooltip error={params.row.pesel.error!} value={params.value} />}
-            {!hasError && <> {params.value || ''} </>}
+        <div className={classes.CellWrapper}>
+            {hasError && <CellErrorTooltip error={params.row.pesel.error!} />}
+            <span>{params.value}</span>
         </div>
     );
 }
