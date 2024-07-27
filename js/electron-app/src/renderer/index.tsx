@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client';
-// TODO: The export should be aliased so that 'src' part is not needed
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import App from '@diagnosis-report-generator/react-app/App'
 import Index from '@diagnosis-report-generator/react-app/index'
 
 
