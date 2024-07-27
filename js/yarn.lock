@@ -6074,6 +6074,7 @@ __metadata:
     react-router-dom: "npm:^6.25.1"
     redux: "npm:^5.0.1"
     redux-persist: "npm:^6.0.0"
+    ts-config: "workspace:*"
     typescript: "npm:^5.5.4"
     uuid: "npm:^10.0.0"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
