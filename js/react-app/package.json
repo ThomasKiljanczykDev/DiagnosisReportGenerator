@@ -14,10 +14,10 @@
         "@emotion/react": "^11.13.0",
         "@emotion/styled": "^11.13.0",
         "@fontsource-variable/roboto-flex": "^5.0.15",
-        "@mui/icons-material": "^5.16.4",
-        "@mui/material": "^5.16.4",
-        "@mui/system": "^5.16.4",
-        "@mui/x-data-grid": "^7.11.0",
+        "@mui/icons-material": "^5.16.5",
+        "@mui/material": "^5.16.5",
+        "@mui/system": "^5.16.5",
+        "@mui/x-data-grid": "^7.11.1",
         "@reduxjs/toolkit": "^2.2.6",
         "date-fns": "^3.6.0",
         "docx-templates": "^4.13.0",
@@ -38,9 +38,9 @@
         "@types/react": "^18.3.3",
         "@types/react-dom": "^18.3.0",
         "@types/uuid": "^10.0.0",
-        "@typescript-eslint/eslint-plugin": "^7.16.1",
-        "@typescript-eslint/parser": "^7.16.1",
-        "typescript": "^5.5.3"
+        "@typescript-eslint/eslint-plugin": "^7.17.0",
+        "@typescript-eslint/parser": "^7.17.0",
+        "typescript": "^5.5.4"
     },
     "packageManager": "yarn@4.3.1"
 }
