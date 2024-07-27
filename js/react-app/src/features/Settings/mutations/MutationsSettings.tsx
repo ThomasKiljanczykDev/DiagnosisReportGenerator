@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { mutationsSelectors } from '@/redux/selectors';
-import { mutationsActions } from '@/redux/slices/settings/mutations';
 import type { Mutation } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { mutationsSelectors } from '@/redux/selectors';
+import { mutationsActions } from '@/redux/slices/settings/mutations';
 import { validateName } from '@/utils/validators';
 
 export default function MutationsSettings() {

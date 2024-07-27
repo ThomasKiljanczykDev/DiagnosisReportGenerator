@@ -5,13 +5,13 @@ import { promisify } from 'util';
 
 import { type Patient } from '@/common/models/patient';
 import { type Report, type ReportGene } from '@/common/models/report';
+import { RecommendationLevel } from '@/common/types/entities';
+import { formatStaffMember } from '@/common/utils/formatting';
 import {
     mutationsSelectors,
     recommendationsSelectors,
     testMethodsSelectors
 } from '@/redux/selectors';
-import { RecommendationLevel } from '@/common/types/entities';
-import { formatStaffMember } from '@/common/utils/formatting';
 import { store } from '@/redux/store';
 
 const zip = promisify(zipCb);

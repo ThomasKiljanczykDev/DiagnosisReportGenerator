@@ -1,8 +1,14 @@
+import { StrictMode } from 'react';
+
 import ReactDOM from 'react-dom/client';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import App from '@diagnosis-report-generator/react-app/App'
 
+import App from '@diagnosis-report-generator/react-app/App';
+import '@fontsource-variable/roboto-flex';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<App />);
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <StrictMode>
+        <App />
+    </StrictMode>
+);
 
 postMessage({ payload: 'removeLoading' }, '*');

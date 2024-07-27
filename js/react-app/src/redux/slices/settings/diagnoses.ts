@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
-import { createAppSlice } from '@/redux/common';
 import type { Diagnosis } from '@/common/types/entities';
+import { createAppSlice } from '@/redux/common';
 
 export const diagnosesAdapter = createEntityAdapter<Diagnosis>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)

@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { testMethodsSelectors } from '@/redux/selectors';
-import { testMethodsActions } from '@/redux/slices/settings/test-methods';
 import type { TestMethod } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { testMethodsSelectors } from '@/redux/selectors';
+import { testMethodsActions } from '@/redux/slices/settings/test-methods';
 import { validateName } from '@/utils/validators';
 
 export default function TestMethodsSettings() {

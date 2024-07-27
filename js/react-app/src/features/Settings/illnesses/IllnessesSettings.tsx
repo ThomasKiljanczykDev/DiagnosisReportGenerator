@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { illnessesSelectors, recommendationsSelectors } from '@/redux/selectors';
-import { illnessesActions } from '@/redux/slices/settings/illnesses';
 import type { Illness } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
@@ -13,6 +11,8 @@ import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRende
 import MultiSelectCell from '@/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/components/cells/MultiSelectEditCell';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { illnessesSelectors, recommendationsSelectors } from '@/redux/selectors';
+import { illnessesActions } from '@/redux/slices/settings/illnesses';
 import { validateName } from '@/utils/validators';
 
 export default function IllnessesSettings() {

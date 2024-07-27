@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { staffSelectors } from '@/redux/selectors';
-import { staffActions } from '@/redux/slices/settings/staff';
 import { type StaffMember, StaffRole } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { staffSelectors } from '@/redux/selectors';
+import { staffActions } from '@/redux/slices/settings/staff';
 import { staffRoleToPolishString } from '@/utils/text-util';
 import { validateName } from '@/utils/validators';
 

@@ -1,9 +1,9 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
+import type { Gene } from '@/common/types/entities';
 import { createAppSlice } from '@/redux/common';
 import { mutationsActions } from '@/redux/slices/settings/mutations';
 import { testMethodsActions } from '@/redux/slices/settings/test-methods';
-import type { Gene } from '@/common/types/entities';
 
 export const genesAdapter = createEntityAdapter<Gene>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)

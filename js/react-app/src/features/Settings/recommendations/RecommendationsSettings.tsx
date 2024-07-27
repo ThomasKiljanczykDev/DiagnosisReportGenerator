@@ -4,14 +4,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { recommendationsSelectors } from '@/redux/selectors';
-import { recommendationActions } from '@/redux/slices/settings/recommendations';
 import { type Recommendation, RecommendationLevel } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import { type Range } from '@/components/cells/RangeEditCell';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { recommendationsSelectors } from '@/redux/selectors';
+import { recommendationActions } from '@/redux/slices/settings/recommendations';
 import { validateName } from '@/utils/validators';
 
 export default function RecommendationsSettings() {

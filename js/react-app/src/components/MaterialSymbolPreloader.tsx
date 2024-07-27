@@ -1,14 +1,8 @@
 import React, { memo, useEffect } from 'react';
 
-import { MaterialSymbol, type SymbolCodepoints } from 'react-material-symbols';
+import { MaterialSymbol } from 'react-material-symbols';
 
-interface MaterialSymbolPreloaderProps {
-    icons: SymbolCodepoints[];
-}
-
-const MaterialSymbolPreloader = memo(function MaterialSymbolPreloader(
-    props: MaterialSymbolPreloaderProps
-) {
+const MaterialSymbolPreloader = memo(function MaterialSymbolPreloader() {
     const [endPreload, setEndPreload] = React.useState(false);
 
     useEffect(() => {
@@ -27,9 +21,7 @@ const MaterialSymbolPreloader = memo(function MaterialSymbolPreloader(
                 display: endPreload ? 'none' : 'hidden'
             }}
         >
-            {props.icons.map((icon, index) => (
-                <MaterialSymbol key={index} icon={icon} />
-            ))}
+            <MaterialSymbol icon="check" />
         </div>
     );
 });

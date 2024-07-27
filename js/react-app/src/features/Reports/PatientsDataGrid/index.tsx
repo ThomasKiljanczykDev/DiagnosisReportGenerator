@@ -8,20 +8,17 @@ import {
 } from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
+import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
+import { formatStaffMember } from '@/common/utils/formatting';
+import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
+import { useAppSelector } from '@/hooks/redux';
 import {
     diagnosesSelectors,
     genesSelectors,
     illnessesSelectors,
     staffSelectors
 } from '@/redux/selectors';
-import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
-import { formatStaffMember } from '@/common/utils/formatting';
-import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppSelector } from '@/hooks/redux';
-import {
-    createMultiSelectDefinition,
-    createSingleSelectDefinition
-} from '@/utils/datagrid';
+import { createMultiSelectDefinition, createSingleSelectDefinition } from '@/utils/datagrid';
 
 interface PatientsDataGridProps {
     patients: Patient[];

@@ -6,12 +6,8 @@ import Redirect from '@/components/Redirect';
 import MutationsSettings from '@/features/Settings/mutations/MutationsSettings';
 import TestMethodsSettings from '@/features/Settings/test-methods/TestMethodsSettings';
 
-const DiagnosesSettings = lazy(
-    () => import('@/features/Settings/diagnoses/DiagnosesSettings')
-);
-const IllnessesSettings = lazy(
-    () => import('@/features/Settings/illnesses/IllnessesSettings')
-);
+const DiagnosesSettings = lazy(() => import('@/features/Settings/diagnoses/DiagnosesSettings'));
+const IllnessesSettings = lazy(() => import('@/features/Settings/illnesses/IllnessesSettings'));
 const GenesSettings = lazy(() => import('@/features/Settings/genes/GenesSettings'));
 const RecommendationsSettings = lazy(
     () => import('@/features/Settings/recommendations/RecommendationsSettings')

@@ -1,7 +1,7 @@
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
-import { createAppSlice } from '@/redux/common';
 import type { Mutation } from '@/common/types/entities';
+import { createAppSlice } from '@/redux/common';
 
 export const mutationsAdapter = createEntityAdapter<Mutation>({
     sortComparer: (a, b) => a.name.localeCompare(b.name)
