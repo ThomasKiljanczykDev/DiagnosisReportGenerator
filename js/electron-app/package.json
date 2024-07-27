@@ -1,5 +1,5 @@
 {
-    "name": "electron-app",
+    "name": "@diagnosis-report-generator/electron-app",
     "version": "1.0.0",
     "main": "dist-electron/main/index.js",
     "description": "A application used to generate patient diagnosis reports.",
@@ -21,10 +21,10 @@
         "e2e": "playwright test"
     },
     "dependencies": {
+        "@diagnosis-report-generator/react-app": "workspace:*",
         "electron-context-menu": "^4.0.1",
         "electron-updater": "^6.2.1",
         "react": "^18.3.1",
-        "react-app": "workspace:*",
         "react-dom": "^18.3.1"
     },
     "devDependencies": {

@@ -1,5 +1,5 @@
 {
-  "name": "diagnosis-form-generator",
+  "name": "diagnosis-report-generator",
   "private": true,
   "type": "module",
   "scripts": {

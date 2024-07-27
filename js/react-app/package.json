@@ -1,5 +1,5 @@
 {
-    "name": "react-app",
+    "name": "@diagnosis-report-generator/react-app",
     "version": "1.0.0",
     "main": "dist-electron/main/index.js",
     "description": "A application used to generate patient diagnosis reports.",
