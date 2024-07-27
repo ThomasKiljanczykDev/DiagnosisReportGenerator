@@ -216,7 +216,6 @@ __metadata:
   resolution: "@diagnosis-report-generator/electron-app@workspace:electron-app"
   dependencies:
     "@diagnosis-report-generator/react-app": "workspace:*"
-    "@fontsource-variable/roboto-flex": "npm:^5.0.15"
     "@playwright/test": "npm:^1.45.3"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
@@ -273,8 +272,6 @@ __metadata:
     typescript: "npm:^5.5.4"
     uuid: "npm:^10.0.0"
     xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
-  peerDependencies:
-    "@fontsource-variable/roboto-flex": ^5.0.15
   languageName: unknown
   linkType: soft
 
