@@ -18,12 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
-          cache-dependency-path: ./js/yarn.lock
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -38,3 +37,7 @@ jobs:
       - name: Check types - react-app
         working-directory: js/react-app
         run: yarn run check-types
+
+      - name: Build the code
+        working-directory: js/electron-app
+        run: yarn run build
