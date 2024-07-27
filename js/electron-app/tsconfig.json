@@ -1,26 +1,16 @@
 {
     "compilerOptions": {
-        "target": "ESNext",
-        "useDefineForClassFields": true,
-        "lib": ["DOM", "DOM.Iterable", "ESNext"],
-        "allowJs": false,
-        "skipLibCheck": true,
-        "esModuleInterop": false,
-        "allowSyntheticDefaultImports": true,
-        "strict": true,
-        "forceConsistentCasingInFileNames": true,
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "composite": true,
-        "resolveJsonModule": true,
-        "verbatimModuleSyntax": true,
-        "noEmit": true,
-        "jsx": "react-jsx",
-        "baseUrl": "./",
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": ["../react-app/src/*"]
         },
         "inlineSourceMap": true
     },
-    "include": ["src", "e2e", "vite.config.ts", "playwright.config.ts"]
+    "include": [
+        "src",
+        "e2e",
+        "vite.config.ts",
+        "vite.config.development.ts",
+        "playwright.config.ts"
+    ],
+    "extends": ["ts-config"]
 }

@@ -3,6 +3,7 @@ import path from 'node:path';
 import { type AliasOptions, type ResolveOptions, defineConfig } from 'vite';
 import circularDependency from 'vite-plugin-circular-dependency';
 import electron from 'vite-plugin-electron/simple';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 import react from '@vitejs/plugin-react-swc';
 
@@ -12,7 +13,7 @@ const resolve: ResolveOptions & {
     alias?: AliasOptions;
 } = {
     alias: {
-        '@': path.join(__dirname, 'src')
+        '@': path.join(__dirname, '../react-app/src')
     }
 };
 
@@ -28,6 +29,7 @@ export default defineConfig(({ command }) => {
         resolve: resolve,
         plugins: [
             circularDependency(),
+            nodePolyfills(),
             react(),
             electron({
                 main: {

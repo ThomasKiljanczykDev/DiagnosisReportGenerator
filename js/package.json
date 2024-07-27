@@ -10,7 +10,8 @@
         "electron-app",
         "react-app",
         "eslint-config",
-        "prettier-config"
+        "prettier-config",
+        "ts-config"
     ],
     "devDependencies": {
         "eslint": "<9",

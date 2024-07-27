@@ -56,4 +56,3 @@ config.json
 !.yarn/versions
 .pnp.*
 
-tsconfig.tsbuildinfo

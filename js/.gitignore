@@ -15,7 +15,7 @@ yarn-error.log*
 !.idea/jsLinters/eslint.xml
 
 .cache/
-
+**/tsconfig.tsbuildinfo
 
 # Yarn
 .yarn/*
