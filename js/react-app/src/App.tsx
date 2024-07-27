@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import '@fontsource-variable/roboto-flex';
-
 import { persistor, store } from '@/redux/store';
 
 const AppContent = lazy(() => import('@/AppContent'));
