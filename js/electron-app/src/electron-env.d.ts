@@ -1,3 +1,4 @@
+// eslint-disable-next-line spaced-comment
 /// <reference types="vite-plugin-electron/electron-env" />
 
 declare namespace NodeJS {

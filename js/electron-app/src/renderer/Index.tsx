@@ -9,11 +9,11 @@ import { PersistGate } from 'redux-persist/integration/react';
 import MaterialSymbolPreloader from '@/renderer/components/MaterialSymbolPreloader';
 import { rendererPersistor, rendererStore } from '@/renderer/redux/store';
 
-import './index.css';
+import './Index.css';
 
 const App = lazy(() => import('@/renderer/App'));
 
-const Index = () => {
+function Index() {
     return (
         <StrictMode>
             <Provider store={rendererStore}>
@@ -28,7 +28,7 @@ const Index = () => {
             <MaterialSymbolPreloader icons={['genetics']} />
         </StrictMode>
     );
-};
+}
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<Index />);
 

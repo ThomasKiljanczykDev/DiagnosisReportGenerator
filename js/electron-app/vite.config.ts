@@ -1,6 +1,6 @@
 import { rmSync } from 'node:fs';
 import path from 'node:path';
-import { AliasOptions, ResolveOptions, defineConfig } from 'vite';
+import { type AliasOptions, type ResolveOptions, defineConfig } from 'vite';
 import circularDependency from 'vite-plugin-circular-dependency';
 import electron from 'vite-plugin-electron/simple';
 
@@ -35,7 +35,7 @@ export default defineConfig(({ command }) => {
                     entry: 'src/main/index.ts',
                     onstart(args) {
                         if (process.env.VSCODE_DEBUG) {
-                            console.log(
+                            console.debug(
                                 /* For `.vscode/.debug.script.mjs` */ '[startup] Electron App'
                             );
                         } else {

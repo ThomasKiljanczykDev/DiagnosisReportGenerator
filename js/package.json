@@ -1,0 +1,22 @@
+{
+    "name": "diagnosis-form-generator",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "lint": "eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
+        "format": "prettier --config prettier.config.js  --write ."
+    },
+    "workspaces": [
+        "electron-app",
+        "react-app",
+        "eslint-config",
+        "prettier-config"
+    ],
+    "devDependencies": {
+        "eslint": "<9",
+        "eslint-config": "workspace:*",
+        "prettier": "^3.3.2",
+        "prettier-config": "workspace:*"
+    },
+    "packageManager": "yarn@4.3.1"
+}

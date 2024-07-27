@@ -4,6 +4,16 @@ import { createRequire } from 'node:module';
 
 const { autoUpdater } = createRequire(import.meta.url)('electron-updater');
 
+function startDownload(
+    callback: (error: Error | null, info: ProgressInfo | null) => void,
+    complete: (event: UpdateDownloadedEvent) => void
+) {
+    autoUpdater.on('download-progress', (info: ProgressInfo) => callback(null, info));
+    autoUpdater.on('error', (error: Error) => callback(error, null));
+    autoUpdater.on('update-downloaded', complete);
+    autoUpdater.downloadUpdate();
+}
+
 export function update(win: Electron.BrowserWindow) {
     // When set to false, the update download will be triggered through the API
     autoUpdater.autoDownload = false;
@@ -11,6 +21,7 @@ export function update(win: Electron.BrowserWindow) {
     autoUpdater.allowDowngrade = false;
 
     // start check
+    // eslint-disable-next-line no-empty-function
     autoUpdater.on('checking-for-update', function () {});
     // update available
     autoUpdater.on('update-available', (arg: UpdateInfo) => {
@@ -66,14 +77,4 @@ export function update(win: Electron.BrowserWindow) {
     ipcMain.handle('quit-and-install', () => {
         autoUpdater.quitAndInstall(false, true);
     });
-}
-
-function startDownload(
-    callback: (error: Error | null, info: ProgressInfo | null) => void,
-    complete: (event: UpdateDownloadedEvent) => void
-) {
-    autoUpdater.on('download-progress', (info: ProgressInfo) => callback(null, info));
-    autoUpdater.on('error', (error: Error) => callback(error, null));
-    autoUpdater.on('update-downloaded', complete);
-    autoUpdater.downloadUpdate();
 }

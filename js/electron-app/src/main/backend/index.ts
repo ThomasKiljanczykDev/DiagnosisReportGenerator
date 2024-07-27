@@ -39,14 +39,14 @@ export function setupBackend() {
     });
 
     handle('parseExcelFile', async (...args) => {
-        return await ImportService.parseExcelFile(args[0]);
+        return ImportService.parseExcelFile(args[0]);
     });
 
     handle('parseCsvFile', async (...args) => {
-        return await ImportService.parseCsvFile(args[0]);
+        return ImportService.parseCsvFile(args[0]);
     });
 
     handle('renderReportPackage', async (...args) => {
-        return await ExportService.generateReport(args[0], args[1]);
+        return ExportService.generateReport(args[0], args[1]);
     });
 }

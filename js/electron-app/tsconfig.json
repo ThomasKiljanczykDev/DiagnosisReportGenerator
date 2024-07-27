@@ -11,6 +11,7 @@
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
+        "composite": true,
         "resolveJsonModule": true,
         "verbatimModuleSyntax": true,
         "noEmit": true,
@@ -21,6 +22,5 @@
         },
         "inlineSourceMap": true
     },
-    "include": ["src"],
-    "references": [{ "path": "./tsconfig.node.json" }]
+    "include": ["src", "e2e", "vite.config.ts", "playwright.config.ts"]
 }

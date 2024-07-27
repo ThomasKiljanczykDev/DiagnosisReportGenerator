@@ -5,8 +5,8 @@ import MultiSelectEditCell from '@/renderer/components/cells/MultiSelectEditCell
 
 export function createSingleSelectDefinition<
     R extends Record<string, any>,
-    V extends R[P],
     P extends keyof R,
+    V extends R[P],
     O extends V
 >(
     property: P,
@@ -41,8 +41,8 @@ export function createSingleSelectDefinition<
 
 export function createMultiSelectDefinition<
     R extends Record<string, any>,
-    V extends R[P] & Array<any>,
     P extends keyof R,
+    V extends R[P] & Array<any>,
     O extends V
 >(
     _property: P,

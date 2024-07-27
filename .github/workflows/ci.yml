@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'yarn'
-          cache-dependency-path: ./js/electron-app/yarn.lock
+          cache-dependency-path: ./js/yarn.lock
 
       - name: Install dependencies
         run: yarn install --immutable

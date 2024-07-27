@@ -1,0 +1,7 @@
+**/.yarn/
+**/dist*/
+**/build/
+**/.vscode/
+**/.cache/
+**/node_modules/
+**/src/router.ts
