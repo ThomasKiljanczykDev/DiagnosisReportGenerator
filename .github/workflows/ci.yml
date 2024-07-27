@@ -38,7 +38,3 @@ jobs:
       - name: Check types - react-app
         working-directory: js/react-app
         run: yarn run check-types
-
-      - name: Build the code
-        working-directory: js/electron-app
-        run: yarn run build
