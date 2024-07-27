@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 // TODO: The export should be aliased so that 'src' part is not needed
-import Index from 'react-app/src'
+import Index from 'react-app/index'
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(<Index />);

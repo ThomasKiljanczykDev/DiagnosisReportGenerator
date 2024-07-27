@@ -7,6 +7,9 @@
     "license": "MIT",
     "private": true,
     "type": "module",
+    "exports": {
+        "./*": "./src/*.tsx"
+    },
     "scripts": {
         "check-types": "tsc --noEmit"
     },

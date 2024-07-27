@@ -32,9 +32,8 @@ jobs:
         run: yarn run lint
 
       - name: Check types - electron-app
-        run: |
-          cd electron-app
-          yarn run check-types
+        working-directory: js/electron-app
+        run: yarn run check-types
 
       - name: Check types - react-app
         working-directory: js/react-app
