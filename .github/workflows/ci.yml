@@ -32,9 +32,8 @@ jobs:
         run: yarn run lint
 
       - name: Check types - electron-app
-        working-directory: js/electron-app
         run: |
-          yarn install --immutable
+          cd electron-app
           yarn run check-types
 
       - name: Check types - react-app
