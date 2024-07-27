@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["../react-app/src/*"]
+        },
+        "inlineSourceMap": true
+    },
+    "include": [
+        "src",
+        "e2e",
+        "vite.config.ts",
+        "vite.config.development.ts",
+        "playwright.config.ts"
+    ],
+    "extends": ["ts-config"]
+}

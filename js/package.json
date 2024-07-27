@@ -1,0 +1,25 @@
+{
+    "name": "diagnosis-report-generator",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "lint": "eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
+        "format": "prettier --config prettier.config.js  --write ."
+    },
+    "workspaces": {
+        "packages": [
+            "electron-app",
+            "react-app",
+            "eslint-config",
+            "prettier-config",
+            "ts-config"
+        ]
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0",
+        "eslint-config": "workspace:*",
+        "prettier": "^3.3.3",
+        "prettier-config": "workspace:*"
+    },
+    "packageManager": "yarn@4.3.1"
+}

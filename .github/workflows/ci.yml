@@ -1,31 +1,40 @@
 name: ci
 
-on: [push]
+on: [ push ]
 
 permissions:
-    contents: read
+  contents: read
 
 env:
-    NODE_VERSION: '20'
+  NODE_VERSION: '20'
 
 jobs:
-    ci:
-        name: Lint and build
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
+  ci:
+    name: Lint and build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: js
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ env.NODE_VERSION }}
-                  cache: 'yarn'
+      - name: Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'yarn'
+          cache-dependency-path: ./js/yarn.lock
 
-            - name: Install dependencies
-              run: yarn install --immutable
+      - name: Install dependencies
+        run: yarn install --immutable
 
-            - name: Lint the code
-              run: yarn run lint
+      - name: Lint the code
+        run: yarn run lint
 
-            - name: Build the code
-              run: yarn run build
+      - name: Check types - electron-app
+        working-directory: js/electron-app
+        run: yarn run check-types
+
+      - name: Check types - react-app
+        working-directory: js/react-app
+        run: yarn run check-types

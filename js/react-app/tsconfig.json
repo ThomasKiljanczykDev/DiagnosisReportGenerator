@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "inlineSourceMap": true
+    },
+    "include": ["src"],
+    "extends": ["ts-config"]
+}

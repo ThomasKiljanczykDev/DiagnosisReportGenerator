@@ -1,0 +1,49 @@
+{
+    "name": "@diagnosis-report-generator/electron-app",
+    "version": "1.0.0",
+    "main": "dist-electron/main/index.js",
+    "description": "A application used to generate patient diagnosis reports.",
+    "author": "Tomasz Kiljańczyk <asz.czyk.dev.com>",
+    "license": "MIT",
+    "private": true,
+    "debug": {
+        "env": {
+            "VITE_DEV_SERVER_URL": "http://127.0.0.1:7777/"
+        }
+    },
+    "type": "module",
+    "scripts": {
+        "check-types": "tsc --noEmit",
+        "dev": "vite",
+        "build": "vite build && electron-builder",
+        "preview": "vite preview",
+        "pree2e": "vite build --mode=test",
+        "e2e": "playwright test"
+    },
+    "dependencies": {
+        "@diagnosis-report-generator/react-app": "workspace:*",
+        "electron-context-menu": "^4.0.1",
+        "electron-updater": "^6.2.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.45.3",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react-swc": "^3.7.0",
+        "autoprefixer": "^10.4.19",
+        "electron": "31.3",
+        "electron-builder": "^24.13.3",
+        "postcss": "^8.4.40",
+        "postcss-import": "^16.1.0",
+        "ts-config": "workspace:*",
+        "typescript": "^5.5.4",
+        "vite": "^5.3.5",
+        "vite-plugin-circular-dependency": "^0.4.1",
+        "vite-plugin-electron": "^0.28.7",
+        "vite-plugin-electron-renderer": "^0.14.5",
+        "vite-plugin-node-polyfills": "^0.22.0"
+    },
+    "packageManager": "yarn@4.3.1"
+}
