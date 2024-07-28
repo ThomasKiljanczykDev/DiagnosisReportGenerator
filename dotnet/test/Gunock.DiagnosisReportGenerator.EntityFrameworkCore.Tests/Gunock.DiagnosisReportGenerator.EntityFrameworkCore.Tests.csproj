@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\common.props"/>
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\Gunock.DiagnosisReportGenerator.EntityFrameworkCore\Gunock.DiagnosisReportGenerator.EntityFrameworkCore.csproj" />
+        <ProjectReference Include="..\Gunock.DiagnosisReportGenerator.Application.Tests\Gunock.DiagnosisReportGenerator.Application.Tests.csproj"/>
+        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.2.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0"/>
+    </ItemGroup>
+
+</Project>
