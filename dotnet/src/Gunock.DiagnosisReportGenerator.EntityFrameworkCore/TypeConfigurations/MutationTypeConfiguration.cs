@@ -8,7 +8,7 @@ public class MutationTypeConfiguration : IEntityTypeConfiguration<Mutation>
 {
     public void Configure(EntityTypeBuilder<Mutation> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedOnAdd();
+        builder.Property(e => e.Id).ValueGeneratedNever();
 
         builder.Property(e => e.Name).HasMaxLength(128);
 

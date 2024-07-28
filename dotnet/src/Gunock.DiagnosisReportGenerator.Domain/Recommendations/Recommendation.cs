@@ -3,7 +3,9 @@ using Volo.Abp.Domain.Entities;
 
 namespace Gunock.DiagnosisReportGenerator.Domain.Recommendations;
 
-public class Recommendation : Entity<Guid>
+public class Recommendation(
+    Guid id
+) : Entity<Guid>(id)
 {
     public required string Name { get; set; }
 

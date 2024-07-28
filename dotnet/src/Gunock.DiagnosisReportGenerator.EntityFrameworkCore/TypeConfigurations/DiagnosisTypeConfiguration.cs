@@ -8,7 +8,7 @@ public class DiagnosisTypeConfiguration : IEntityTypeConfiguration<Diagnosis>
 {
     public void Configure(EntityTypeBuilder<Diagnosis> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedOnAdd();
+        builder.Property(e => e.Id).ValueGeneratedNever();
 
         builder.Property(e => e.Name).HasMaxLength(128);
 

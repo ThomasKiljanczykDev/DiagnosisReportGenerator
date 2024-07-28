@@ -8,7 +8,7 @@ public class TestMethodMemberTypeConfiguration : IEntityTypeConfiguration<TestMe
 {
     public void Configure(EntityTypeBuilder<TestMethod> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedOnAdd();
+        builder.Property(e => e.Id).ValueGeneratedNever();
 
         builder.Property(e => e.Name).HasMaxLength(128);
 

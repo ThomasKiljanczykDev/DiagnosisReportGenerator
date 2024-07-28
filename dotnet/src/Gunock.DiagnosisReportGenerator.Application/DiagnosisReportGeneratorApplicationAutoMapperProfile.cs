@@ -24,11 +24,18 @@ public class DiagnosisReportGeneratorApplicationAutoMapperProfile : Profile
         CreateMap<Diagnosis, DiagnosisDto>();
         CreateMap<CreateUpdateDiagnosisDto, Diagnosis>();
 
-        CreateMap<Gene, GeneDto>();
+        CreateMap<Gene, GeneDto>()
+            .ForMember(dest => dest.TestMethodIds, opt => opt.MapFrom(src => src.TestMethods.Select(x => x.Id)))
+            .ForMember(dest => dest.MutationIds, opt => opt.MapFrom(src => src.Mutations.Select(x => x.Id)));
 
-        CreateMap<Illness, IllnessDto>();
+        CreateMap<Illness, IllnessDto>()
+            .ForMember(
+                dest => dest.RecommendationIds,
+                opt => opt.MapFrom(src => src.Recommendations.Select(x => x.Id))
+            );
 
         CreateMap<Mutation, MutationDto>();
+        CreateMap<CreateUpdateMutationDto, Mutation>();
 
         CreateMap<Recommendation, RecommendationDto>()
             .ForMember(
@@ -41,9 +48,14 @@ public class DiagnosisReportGeneratorApplicationAutoMapperProfile : Profile
                     }
                 )
             );
+        CreateMap<CreateUpdateRecommendationDto, Recommendation>()
+            .ForMember(dest => dest.AgeFrom, opt => opt.MapFrom(src => src.AgeRange.From))
+            .ForMember(dest => dest.AgeTo, opt => opt.MapFrom(src => src.AgeRange.To));
 
         CreateMap<StaffMember, StaffMemberDto>();
+        CreateMap<CreateUpdateStaffMemberDto, StaffMember>();
 
         CreateMap<TestMethod, TestMethodDto>();
+        CreateMap<CreateUpdateTestMethodDto, TestMethod>();
     }
 }

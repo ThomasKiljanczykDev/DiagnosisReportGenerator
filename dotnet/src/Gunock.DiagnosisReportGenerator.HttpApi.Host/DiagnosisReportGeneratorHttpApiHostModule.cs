@@ -68,6 +68,7 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
                 options.DocInclusionPredicate((_, _) => true);
                 options.CustomOperationIds(x => x.ActionDescriptor.RouteValues["action"]);
                 options.HideAbpEndpoints();
+                options.UserFriendlyEnums();
             }
         );
     }
@@ -91,10 +92,7 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
 
         app.UseSwagger();
         app.UseAbpSwaggerUI(
-            options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "DiagnosisReportGenerator API");
-            }
+            options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "DiagnosisReportGenerator API"); }
         );
 
         app.UseConfiguredEndpoints();

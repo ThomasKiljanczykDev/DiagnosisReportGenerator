@@ -3,7 +3,9 @@ using Volo.Abp.Domain.Entities;
 
 namespace Gunock.DiagnosisReportGenerator.Domain.Staff;
 
-public class StaffMember : Entity<Guid>
+public class StaffMember(
+    Guid id
+) : Entity<Guid>(id)
 {
     public required string Name { get; set; }
 

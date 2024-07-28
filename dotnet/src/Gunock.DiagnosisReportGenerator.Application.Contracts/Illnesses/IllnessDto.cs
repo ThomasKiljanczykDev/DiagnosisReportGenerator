@@ -7,6 +7,5 @@ public class IllnessDto : EntityDto<Guid>
 {
     public required string Name { get; init; }
 
-    // TODO: Add special DTO
-    public required RecommendationDto[] Recommendations { get; init; }
+    public required Guid[] RecommendationIds { get; init; }
 }

@@ -8,7 +8,7 @@ public class RecommendationTypeConfiguration : IEntityTypeConfiguration<Recommen
 {
     public void Configure(EntityTypeBuilder<Recommendation> builder)
     {
-        builder.Property(e => e.Id).ValueGeneratedOnAdd();
+        builder.Property(e => e.Id).ValueGeneratedNever();
 
         builder.Property(e => e.Name).HasMaxLength(128);
 
