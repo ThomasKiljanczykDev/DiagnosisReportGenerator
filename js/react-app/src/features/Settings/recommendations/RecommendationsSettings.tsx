@@ -1,57 +1,64 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import {
+    type Range,
+    type RecommendationDto,
+    RecommendationLevel,
+    RecommendationService
+} from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { type Recommendation, RecommendationLevel } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { type Range } from '@/components/cells/RangeEditCell';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { recommendationsSelectors } from '@/redux/selectors';
-import { recommendationActions } from '@/redux/slices/settings/recommendations';
 import { validateName } from '@/utils/validators';
 
 export default function RecommendationsSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const recommendationsState = useAppSelector(recommendationsSelectors.selectAll);
+    const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
-    const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
+    const getRecommendations = useCallback(async (signal?: AbortSignal) => {
+        const response = await RecommendationService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: '',
+            content: '',
+            level: RecommendationLevel.I,
+            priority: 0,
+            ageRange: {
+                from: undefined,
+                to: undefined
+            }
+        });
+        setRecommendations(response.items);
+    }, []);
 
     const handleAddRecommendation = useCallback(
-        (recommendation: Recommendation) => {
-            recommendation.id = uuidv4();
-            dispatch(recommendationActions.addRecommendation(recommendation));
+        async (recommendation: RecommendationDto) => {
+            await RecommendationService.create({
+                body: recommendation
+            });
+            await getRecommendations();
         },
-        [dispatch]
+        [getRecommendations]
     );
 
-    const handleRemoveRecommendation = useCallback(
-        (id: string) => {
-            dispatch(recommendationActions.removeRecommendation(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveRecommendation = useCallback(async (id: string) => {
+        await RecommendationService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: Recommendation) => {
-            if (newRow.id) {
-                dispatch(
-                    recommendationActions.updateRecommendation({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: RecommendationDto) => {
+        if (newRow.id) {
+            newRow = await RecommendationService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const RECOMMENDATIONS_COLUMNS = useMemo(
         () =>
@@ -87,7 +94,7 @@ export default function RecommendationsSettings() {
                     editable: true
                 },
                 {
-                    field: 'recommendationLevel',
+                    field: 'level',
                     headerName: 'Poziom zalecenia',
                     editable: true,
                     type: 'singleSelect',
@@ -117,26 +124,19 @@ export default function RecommendationsSettings() {
                         <RangeEditCell params={params} defaultValue={params.row.ageRange} />
                     )
                 }
-            ] as GridColDef<Recommendation>[],
+            ] as GridColDef<RecommendationDto>[],
         [handleAddRecommendation, handleRemoveRecommendation, recommendations]
     );
 
     useEffect(() => {
-        setRecommendations([
-            ...recommendationsState,
-            {
-                id: '',
-                name: '',
-                content: '',
-                recommendationLevel: RecommendationLevel.I,
-                priority: null,
-                ageRange: {
-                    from: null,
-                    to: null
-                }
-            }
-        ]);
-    }, [recommendationsState]);
+        const abortController = new AbortController();
+
+        getRecommendations(abortController.signal);
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getRecommendations]);
 
     useEffect(() => {
         window.setTimeout(async () => {

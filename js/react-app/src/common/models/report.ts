@@ -1,10 +1,14 @@
-import type { Diagnosis, Mutation, TestMethod } from '@/common/types/entities';
+import type {
+    DiagnosisDto,
+    MutationDto,
+    TestMethodDto
+} from '@diagnosis-report-generator/api/services';
 
 export interface ReportGene {
     id: string;
     name: string;
-    testMethods: TestMethod[];
-    mutations: Mutation[];
+    testMethods: TestMethodDto[];
+    mutations: MutationDto[];
 }
 
 export interface Report {
@@ -17,7 +21,7 @@ export interface Report {
     technicians: string;
     consultants: string;
     genes: ReportGene[];
-    diagnosis: Diagnosis | null;
+    diagnosis: DiagnosisDto | null;
     level1Recommendations: string[];
     level2Recommendations: string[];
 }

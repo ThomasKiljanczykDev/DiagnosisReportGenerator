@@ -1,5 +1,15 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import {
+    type DiagnosisDto,
+    DiagnosisService,
+    type GeneDto,
+    GeneService,
+    type IllnessDto,
+    IllnessService,
+    type StaffMemberDto,
+    StaffService
+} from '@diagnosis-report-generator/api/services';
 import {
     DataGrid,
     type GridColDef,
@@ -8,16 +18,8 @@ import {
 } from '@mui/x-data-grid';
 
 import { type Patient, type Pesel, parsePesel } from '@/common/models/patient';
-import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
 import { formatStaffMember } from '@/common/utils/formatting';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppSelector } from '@/hooks/redux';
-import {
-    diagnosesSelectors,
-    genesSelectors,
-    illnessesSelectors,
-    staffSelectors
-} from '@/redux/selectors';
 import { createMultiSelectDefinition, createSingleSelectDefinition } from '@/utils/datagrid';
 
 interface PatientsDataGridProps {
@@ -28,10 +30,10 @@ interface PatientsDataGridProps {
 export default function PatientsDataGrid(props: PatientsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const staff = useAppSelector(staffSelectors.selectAll);
-    const illnesses = useAppSelector(illnessesSelectors.selectAll);
-    const genes = useAppSelector(genesSelectors.selectAll);
-    const diagnoses = useAppSelector(diagnosesSelectors.selectAll);
+    const [staff, setStaff] = useState<StaffMemberDto[]>([]);
+    const [illnesses, setIllnesses] = useState<IllnessDto[]>([]);
+    const [genes, setGenes] = useState<GeneDto[]>([]);
+    const [diagnoses, setDiagnoses] = useState<DiagnosisDto[]>([]);
 
     const PATIENT_COLUMNS = useMemo(
         () =>
@@ -78,7 +80,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (staffMember) => staffMember?.id ?? '',
                         (staffMember) => formatStaffMember(staffMember)
                     )
-                } as GridColDef<Patient, StaffMember | null>,
+                } as GridColDef<Patient, StaffMemberDto | null>,
                 {
                     field: 'assistants',
                     headerName: 'Asystenci',
@@ -89,7 +91,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (assistant) => assistant.id,
                         (assistant) => formatStaffMember(assistant)
                     )
-                } as GridColDef<Patient, StaffMember[]>,
+                } as GridColDef<Patient, StaffMemberDto[]>,
                 {
                     field: 'technicians',
                     headerName: 'Technicy',
@@ -100,7 +102,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (technician) => technician.id,
                         (technician) => formatStaffMember(technician)
                     )
-                } as GridColDef<Patient, StaffMember[]>,
+                } as GridColDef<Patient, StaffMemberDto[]>,
                 {
                     field: 'consultants',
                     headerName: 'Konsultanci',
@@ -122,7 +124,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (gene) => gene.id,
                         (gene) => gene.name
                     )
-                } as GridColDef<Patient, Gene[]>,
+                } as GridColDef<Patient, GeneDto[]>,
                 {
                     field: 'illness',
                     headerName: 'Choroba',
@@ -133,7 +135,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (illness) => illness?.id ?? '',
                         (illness) => illness?.name ?? ''
                     )
-                } as GridColDef<Patient, Illness | null>,
+                } as GridColDef<Patient, IllnessDto | null>,
                 {
                     field: 'diagnosis',
                     headerName: 'Rozpoznanie',
@@ -144,7 +146,7 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
                         (diagnosis) => diagnosis?.id ?? '',
                         (diagnosis) => diagnosis?.name ?? ''
                     )
-                } as GridColDef<Patient, Diagnosis | null>,
+                } as GridColDef<Patient, DiagnosisDto | null>,
                 {
                     field: 'date',
                     headerName: 'Data',
@@ -162,6 +164,30 @@ export default function PatientsDataGrid(props: PatientsDataGridProps) {
         },
         [props]
     );
+
+    useEffect(() => {
+        const abortController = new AbortController();
+
+        StaffService.getList(undefined, { signal: abortController.signal }).then((response) => {
+            setStaff(response.items);
+        });
+
+        IllnessService.getList(undefined, { signal: abortController.signal }).then((response) => {
+            setIllnesses(response.items);
+        });
+
+        GeneService.getList(undefined, { signal: abortController.signal }).then((response) => {
+            setGenes(response.items);
+        });
+
+        DiagnosisService.getList(undefined, { signal: abortController.signal }).then((response) => {
+            setDiagnoses(response.items);
+        });
+
+        return () => {
+            abortController.abort();
+        };
+    }, []);
 
     return (
         <DataGrid

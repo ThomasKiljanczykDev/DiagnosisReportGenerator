@@ -1,0 +1,21 @@
+{
+    "name": "@diagnosis-report-generator/api",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "swagger-codegen": "node swagger/codegen.js"
+    },
+    "exports": {
+        "./services": "./src/services/index.ts",
+        "./services/*": "./src/services/*.ts"
+    },
+    "dependencies": {
+        "axios": "^1.7.2",
+        "swagger-axios-codegen": "^0.16.14"
+    },
+    "devDependencies": {
+        "ts-config": "workspace:*",
+        "typescript": "^5.5.4"
+    },
+    "packageManager": "yarn@4.3.1"
+}

@@ -1,12 +1,8 @@
 import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
 
+import { type Range } from '@diagnosis-report-generator/api/services';
 import { TextField } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
-
-export interface Range {
-    from: number | null;
-    to: number | null;
-}
 
 interface RangeEditCellProps {
     params: GridRenderEditCellParams<any, Range>;

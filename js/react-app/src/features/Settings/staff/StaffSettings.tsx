@@ -1,57 +1,59 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import {
+    type StaffMemberDto,
+    StaffRole,
+    StaffService
+} from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import { type StaffMember, StaffRole } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { staffSelectors } from '@/redux/selectors';
-import { staffActions } from '@/redux/slices/settings/staff';
 import { staffRoleToPolishString } from '@/utils/text-util';
 import { validateName } from '@/utils/validators';
 
 export default function StaffSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const staffState = useAppSelector(staffSelectors.selectAll);
+    const [staff, setStaff] = useState<StaffMemberDto[]>([]);
 
-    const [staff, setStaff] = useState<StaffMember[]>([]);
+    const getStaff = useCallback(async (signal?: AbortSignal) => {
+        const response = await StaffService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: '',
+            title: '',
+            role: StaffRole.Doctor
+        });
+        setStaff(response.items);
+    }, []);
 
     const handleAddStaffMember = useCallback(
-        (staffMember: StaffMember) => {
-            staffMember.id = uuidv4();
-            dispatch(staffActions.addStaffMember(staffMember));
+        async (staffMember: StaffMemberDto) => {
+            await StaffService.create({
+                body: staffMember
+            });
+            await getStaff();
         },
-        [dispatch]
+        [getStaff]
     );
 
-    const handleRemoveStaffMember = useCallback(
-        (id: string) => {
-            dispatch(staffActions.removeStaffMember(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveStaffMember = useCallback(async (id: string) => {
+        await StaffService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: StaffMember) => {
-            if (newRow.id) {
-                dispatch(
-                    staffActions.updateStaffMember({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: StaffMemberDto) => {
+        if (newRow.id) {
+            newRow = await StaffService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const STAFF_COLUMNS = useMemo(
         () =>
@@ -94,21 +96,18 @@ export default function StaffSettings() {
                     valueOptions: Object.values(StaffRole),
                     getOptionLabel: (staffRole: StaffRole) => staffRoleToPolishString(staffRole)
                 }
-            ] as GridColDef<StaffMember>[],
+            ] as GridColDef<StaffMemberDto>[],
         [handleAddStaffMember, handleRemoveStaffMember, staff]
     );
 
     useEffect(() => {
-        setStaff([
-            ...staffState,
-            {
-                id: '',
-                name: '',
-                title: '',
-                role: StaffRole.Doctor
-            }
-        ]);
-    }, [staffState]);
+        const abortController = new AbortController();
+        getStaff(abortController.signal);
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getStaff]);
 
     useEffect(() => {
         window.setTimeout(async () => {

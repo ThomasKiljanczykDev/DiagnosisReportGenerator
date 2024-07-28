@@ -2,12 +2,16 @@
     "name": "diagnosis-report-generator",
     "private": true,
     "type": "module",
+    "description": "A application used to generate patient diagnosis reports.",
+    "author": "Tomasz Kiljańczyk <asz.czyk.dev.com>",
+    "license": "MIT",
     "scripts": {
         "lint": "eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
         "format": "prettier --config prettier.config.js  --write ."
     },
     "workspaces": {
         "packages": [
+            "api",
             "electron-app",
             "react-app",
             "eslint-config",

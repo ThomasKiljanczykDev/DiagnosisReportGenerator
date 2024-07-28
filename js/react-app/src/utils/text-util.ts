@@ -1,5 +1,6 @@
+import { StaffRole } from '@diagnosis-report-generator/api/services';
+
 import { Sex } from '@/common/models/patient';
-import type { StaffRole } from '@/common/types/entities';
 
 export function sexToPolishString(sex: Sex): string {
     switch (sex) {
@@ -14,13 +15,13 @@ export function sexToPolishString(sex: Sex): string {
 
 export function staffRoleToPolishString(staffRole: StaffRole): string {
     switch (staffRole) {
-        case 'doctor':
+        case StaffRole.Doctor:
             return 'Lekarz';
-        case 'technician':
+        case StaffRole.Technician:
             return 'Technik';
-        case 'consultant':
+        case StaffRole.Consultant:
             return 'Konsultant';
-        case 'assistant':
+        case StaffRole.Assistant:
             return 'Asystent';
         default:
             return 'Nieznana';

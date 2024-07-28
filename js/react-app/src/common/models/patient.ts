@@ -1,4 +1,9 @@
-import type { Diagnosis, Gene, Illness, StaffMember } from '@/common/types/entities';
+import type {
+    DiagnosisDto,
+    GeneDto,
+    IllnessDto,
+    StaffMemberDto
+} from '@diagnosis-report-generator/api/services';
 
 export enum Sex {
     Male = 'M',
@@ -70,11 +75,11 @@ export interface Patient {
     cardNumber: string;
     name: string;
     pesel: Pesel;
-    doctor: StaffMember | null;
-    assistants: StaffMember[];
-    technicians: StaffMember[];
-    consultants: StaffMember[];
-    genes: Gene[];
-    illness: Illness | null;
-    diagnosis: Diagnosis | null;
+    doctor: StaffMemberDto | null;
+    assistants: StaffMemberDto[];
+    technicians: StaffMemberDto[];
+    consultants: StaffMemberDto[];
+    genes: GeneDto[];
+    illness: IllnessDto | null;
+    diagnosis: DiagnosisDto | null;
 }

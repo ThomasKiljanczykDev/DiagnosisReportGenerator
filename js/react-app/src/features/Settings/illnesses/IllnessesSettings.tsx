@@ -1,59 +1,61 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import {
+    type IllnessDto,
+    IllnessService,
+    type RecommendationDto,
+    RecommendationService
+} from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import type { Illness } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import MultiSelectCell from '@/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/components/cells/MultiSelectEditCell';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { illnessesSelectors, recommendationsSelectors } from '@/redux/selectors';
-import { illnessesActions } from '@/redux/slices/settings/illnesses';
 import { validateName } from '@/utils/validators';
 
 export default function IllnessesSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const illnessesState = useAppSelector(illnessesSelectors.selectAll);
-    const recommendations = useAppSelector(recommendationsSelectors.selectAll);
+    const [illnesses, setIllnesses] = useState<IllnessDto[]>([]);
+    const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
-    const [illnesses, setIllnesses] = useState<Illness[]>([]);
+    const getIllnesses = useCallback(async (signal?: AbortSignal) => {
+        const response = await IllnessService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: '',
+            recommendationIds: []
+        });
+        setIllnesses(response.items);
+    }, []);
 
     const handleAddIllnesses = useCallback(
-        (illness: Illness) => {
-            illness.id = uuidv4();
-            dispatch(illnessesActions.addIllness(illness));
+        async (illness: IllnessDto) => {
+            await IllnessService.create({
+                body: illness
+            });
+            await getIllnesses();
         },
-        [dispatch]
+        [getIllnesses]
     );
 
-    const handleRemoveIllnesses = useCallback(
-        (id: string) => {
-            dispatch(illnessesActions.removeIllness(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveIllnesses = useCallback(async (id: string) => {
+        await IllnessService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: Illness) => {
-            if (newRow.id) {
-                dispatch(
-                    illnessesActions.updateIllness({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: IllnessDto) => {
+        if (newRow.id) {
+            newRow = await IllnessService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const ILLNESSES_COLUMNS = useMemo(
         () =>
@@ -109,20 +111,25 @@ export default function IllnessesSettings() {
                         />
                     )
                 }
-            ] as GridColDef<Illness>[],
+            ] as GridColDef<IllnessDto>[],
         [handleAddIllnesses, handleRemoveIllnesses, illnesses, recommendations]
     );
 
     useEffect(() => {
-        setIllnesses([
-            ...illnessesState,
-            {
-                id: '',
-                name: '',
-                recommendationIds: []
+        const abortController = new AbortController();
+
+        getIllnesses(abortController.signal);
+
+        RecommendationService.getList(undefined, { signal: abortController.signal }).then(
+            (response) => {
+                setRecommendations(response.items);
             }
-        ]);
-    }, [illnessesState]);
+        );
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getIllnesses]);
 
     useEffect(() => {
         window.setTimeout(async () => {
