@@ -1,11 +1,10 @@
+using Gunock.DiagnosisReportGenerator.Domain.Illnesses;
 using Gunock.DiagnosisReportGenerator.Domain.Shared.Recommendations;
 using Volo.Abp.Domain.Entities;
 
 namespace Gunock.DiagnosisReportGenerator.Domain.Recommendations;
 
-public class Recommendation(
-    Guid id
-) : Entity<Guid>(id)
+public class Recommendation : Entity<Guid>
 {
     public required string Name { get; set; }
 
@@ -18,4 +17,6 @@ public class Recommendation(
     public int? AgeFrom { get; set; }
 
     public int? AgeTo { get; set; }
+
+    public virtual ICollection<Illness> Illnesses { get; set; } = new List<Illness>();
 }

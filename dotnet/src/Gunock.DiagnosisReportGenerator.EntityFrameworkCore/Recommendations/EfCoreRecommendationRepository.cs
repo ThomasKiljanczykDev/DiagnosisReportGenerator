@@ -11,8 +11,13 @@ public class EfCoreRecommendationRepository(
 ) : EfCoreRepository<DiagnosisReportGeneratorDbContext, Recommendation, Guid>(dbContextProvider),
     IRecommendationRepository
 {
-    public async Task<List<Recommendation>> FindByIdsAsync(IEnumerable<Guid> ids)
+    public async Task<List<Recommendation>> FindByIdsAsync(ICollection<Guid> ids)
     {
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+
         var dbSet = await GetDbSetAsync();
         return await dbSet.Where(recommendation => ids.Contains(recommendation.Id)).ToListAsync();
     }

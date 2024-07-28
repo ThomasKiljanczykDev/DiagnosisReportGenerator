@@ -3,9 +3,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace Gunock.DiagnosisReportGenerator.Domain.Illnesses;
 
-public class Illness(
-    Guid id
-) : Entity<Guid>(id)
+public class Illness : Entity<Guid>
 {
     public required string Name { get; set; }
 

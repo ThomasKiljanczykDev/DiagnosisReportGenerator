@@ -5,11 +5,14 @@ namespace Gunock.DiagnosisReportGenerator.Application.Contracts.Staff;
 
 public class CreateUpdateStaffMemberDto
 {
-    [StringLength(128, MinimumLength = 1)]
+    [Required]
+    [StringLength(128)]
     public required string Name { get; init; }
 
-    [StringLength(128, MinimumLength = 1)]
+    [Required]
+    [StringLength(128)]
     public required string Title { get; init; }
 
+    [Required]
     public required StaffRole Role { get; init; }
 }

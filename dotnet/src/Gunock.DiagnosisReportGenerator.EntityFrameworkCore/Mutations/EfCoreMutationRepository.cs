@@ -10,8 +10,13 @@ public class EfCoreMutationRepository(
     IDbContextProvider<DiagnosisReportGeneratorDbContext> dbContextProvider
 ) : EfCoreRepository<DiagnosisReportGeneratorDbContext, Mutation, Guid>(dbContextProvider), IMutationRepository
 {
-    public async Task<List<Mutation>> FindByIdsAsync(IEnumerable<Guid> ids)
+    public async Task<List<Mutation>> FindByIdsAsync(ICollection<Guid> ids)
     {
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+
         var dbSet = await GetDbSetAsync();
         return await dbSet.Where(mutation => ids.Contains(mutation.Id)).ToListAsync();
     }

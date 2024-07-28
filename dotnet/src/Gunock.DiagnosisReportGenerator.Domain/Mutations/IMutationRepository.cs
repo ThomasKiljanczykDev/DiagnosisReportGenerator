@@ -4,5 +4,5 @@ namespace Gunock.DiagnosisReportGenerator.Domain.Mutations;
 
 public interface IMutationRepository : IRepository<Mutation, Guid>
 {
-    Task<List<Mutation>> FindByIdsAsync(IEnumerable<Guid> ids);
+    Task<List<Mutation>> FindByIdsAsync(ICollection<Guid> ids);
 }

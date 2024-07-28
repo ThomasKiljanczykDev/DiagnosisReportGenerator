@@ -4,9 +4,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace Gunock.DiagnosisReportGenerator.Domain.Genes;
 
-public class Gene(
-    Guid id
-) : Entity<Guid>(id)
+public class Gene : Entity<Guid>
 {
     public required string Name { get; set; }
 

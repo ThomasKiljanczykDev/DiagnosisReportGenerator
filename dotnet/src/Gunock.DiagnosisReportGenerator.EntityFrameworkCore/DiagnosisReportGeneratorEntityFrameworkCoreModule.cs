@@ -20,6 +20,9 @@ public class DiagnosisReportGeneratorEntityFrameworkCoreModule : AbpModule
         Configure<AbpDbContextOptions>(
             options =>
             {
+                options.PreConfigure<DiagnosisReportGeneratorDbContext>(
+                    configurationContext => { configurationContext.DbContextOptions.UseLazyLoadingProxies(); }
+                );
                 options.UseSqlite(
                     sqliteOptions => { sqliteOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery); }
                 );

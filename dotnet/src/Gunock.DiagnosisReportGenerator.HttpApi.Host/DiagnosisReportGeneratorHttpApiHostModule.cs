@@ -1,6 +1,9 @@
+using System.Text.Json.Serialization;
 using Gunock.DiagnosisReportGenerator.Application;
 using Gunock.DiagnosisReportGenerator.EntityFrameworkCore;
 using Gunock.DiagnosisReportGenerator.EntityFrameworkCore.EntityFrameworkCore;
+using Gunock.DiagnosisReportGenerator.HttpApi.Host.Swagger;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
@@ -22,10 +25,14 @@ namespace Gunock.DiagnosisReportGenerator.HttpApi.Host;
 )]
 public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
 {
+    private const string SwaggerName = "DiagnosisReportGenerator API";
+
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         ConfigureLogging(context);
+        ConfigureHostServices(context);
         ConfigureConventionalControllers();
+        ConfigureCors(context);
         ConfigureSwaggerServices(context);
     }
 
@@ -42,6 +49,18 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
         context.Services.AddLogging(builder => builder.ClearProviders().AddNLogWeb());
     }
 
+    private static void ConfigureHostServices(ServiceConfigurationContext context)
+    {
+        context.Services
+            .AddControllers()
+            .AddJsonOptions(
+                options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); }
+            );
+
+        context.Services.AddResponseCompression();
+        context.Services.AddRequestDecompression();
+    }
+
     private void ConfigureConventionalControllers()
     {
         Configure<AbpAspNetCoreMvcOptions>(
@@ -52,6 +71,26 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
         );
     }
 
+    private static void ConfigureCors(ServiceConfigurationContext context)
+    {
+        context.Services.AddCors(
+            options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .WithAbpExposedHeaders()
+                            .SetIsOriginAllowedToAllowWildcardSubdomains();
+                    }
+                );
+            }
+        );
+    }
+
+
     private static void ConfigureSwaggerServices(ServiceConfigurationContext context)
     {
         context.Services.AddAbpSwaggerGen(
@@ -61,14 +100,16 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
                     "v1",
                     new OpenApiInfo
                     {
-                        Title = "DiagnosisReportGenerator API",
+                        Title = SwaggerName,
                         Version = "v1"
                     }
                 );
                 options.DocInclusionPredicate((_, _) => true);
                 options.CustomOperationIds(x => x.ActionDescriptor.RouteValues["action"]);
-                options.HideAbpEndpoints();
+                options.SupportNonNullableReferenceTypes();
                 options.UserFriendlyEnums();
+
+                options.SchemaFilter<RequireNonNullablePropertiesSchemaFilter>();
             }
         );
     }
@@ -83,17 +124,17 @@ public class DiagnosisReportGeneratorHttpApiHostModule : AbpModule
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseCorrelationId();
         app.UseStaticFiles();
         app.UseRouting();
-        app.UseCors();
 
         app.UseUnitOfWork();
+        app.UseRequestDecompression();
+        app.UseResponseCompression();
+
+        app.UseCors();
 
         app.UseSwagger();
-        app.UseAbpSwaggerUI(
-            options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "DiagnosisReportGenerator API"); }
-        );
+        app.UseAbpSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", SwaggerName); });
 
         app.UseConfiguredEndpoints();
     }

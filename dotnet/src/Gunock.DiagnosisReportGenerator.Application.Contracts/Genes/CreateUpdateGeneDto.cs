@@ -5,7 +5,7 @@ namespace Gunock.DiagnosisReportGenerator.Application.Contracts.Genes;
 public class CreateUpdateGeneDto
 {
     [Required]
-    [StringLength(128, MinimumLength = 1)]
+    [StringLength(128)]
     public required string Name { get; init; }
 
     [Required]

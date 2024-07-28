@@ -7,11 +7,10 @@ namespace Gunock.DiagnosisReportGenerator.Application.Contracts.Recommendations;
 public class CreateUpdateRecommendationDto
 {
     [Required]
-    [StringLength(128, MinimumLength = 1)]
+    [StringLength(128)]
     public required string Name { get; init; }
 
     [Required]
-    [StringLength(int.MaxValue, MinimumLength = 1)]
     public required string Content { get; init; }
 
     [Required]

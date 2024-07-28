@@ -20,7 +20,7 @@ public class IllnessAppService(
     {
         var recommendations = await recommendationRepository.FindByIdsAsync(createInput.RecommendationIds);
 
-        var entity = new Illness(guidGenerator.Create())
+        var entity = new Illness
         {
             Name = createInput.Name,
             Recommendations = recommendations

@@ -21,7 +21,7 @@ public class GeneAppService(
         var testMethods = await testMethodRepository.FindByIdsAsync(createInput.TestMethodIds);
         var mutations = await mutationRepository.FindByIdsAsync(createInput.MutationIds);
 
-        var entity = new Gene(guidGenerator.Create())
+        var entity = new Gene
         {
             Name = createInput.Name,
             TestMethods = testMethods,
