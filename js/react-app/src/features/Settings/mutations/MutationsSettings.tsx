@@ -1,56 +1,52 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import { type MutationDto, MutationService } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import type { Mutation } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { mutationsSelectors } from '@/redux/selectors';
-import { mutationsActions } from '@/redux/slices/settings/mutations';
 import { validateName } from '@/utils/validators';
 
 export default function MutationsSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const mutationsState = useAppSelector(mutationsSelectors.selectAll);
+    const [mutations, setMutations] = useState<MutationDto[]>([]);
 
-    const [mutations, setMutations] = useState<Mutation[]>([]);
+    const getMutations = useCallback(async (signal?: AbortSignal) => {
+        const response = await MutationService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: ''
+        });
+        setMutations(response.items);
+    }, []);
 
     const handleAddMutation = useCallback(
-        (mutation: Mutation) => {
-            mutation.id = uuidv4();
-            dispatch(mutationsActions.addMutation(mutation));
+        async (mutation: MutationDto) => {
+            await MutationService.create({
+                body: mutation
+            });
+            await getMutations();
         },
-        [dispatch]
+        [getMutations]
     );
 
-    const handleRemoveMutation = useCallback(
-        (id: string) => {
-            dispatch(mutationsActions.removeMutation(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveMutation = useCallback(async (id: string) => {
+        await MutationService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: Mutation) => {
-            if (newRow.id) {
-                dispatch(
-                    mutationsActions.updateMutation({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: MutationDto) => {
+        if (newRow.id) {
+            newRow = await MutationService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const MUTATIONS_COLUMNS = useMemo(
         () =>
@@ -81,19 +77,19 @@ export default function MutationsSettings() {
                     },
                     renderEditCell: EditCellWithErrorRenderer
                 }
-            ] as GridColDef<Mutation>[],
+            ] as GridColDef<MutationDto>[],
         [handleAddMutation, handleRemoveMutation, mutations]
     );
 
     useEffect(() => {
-        setMutations([
-            ...mutationsState,
-            {
-                id: '',
-                name: ''
-            }
-        ]);
-    }, [mutationsState]);
+        const abortController = new AbortController();
+
+        getMutations(abortController.signal);
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getMutations]);
 
     useEffect(() => {
         window.setTimeout(async () => {

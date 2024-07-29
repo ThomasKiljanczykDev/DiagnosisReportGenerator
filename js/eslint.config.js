@@ -10,6 +10,7 @@ export default tseslint.config(...tsEslintConfig, {
         '**/.cache/',
         '**/src/router.ts',
         '**/prettier.config.js',
-        '**/eslint.config.js'
+        '**/eslint.config.js',
+        'api/**'
     ]
 });

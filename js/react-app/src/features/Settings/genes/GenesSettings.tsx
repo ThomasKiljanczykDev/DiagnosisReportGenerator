@@ -1,60 +1,65 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import {
+    type GeneDto,
+    GeneService,
+    type MutationDto,
+    MutationService,
+    type TestMethodDto,
+    TestMethodService
+} from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import type { Gene } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import MultiSelectCell from '@/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/components/cells/MultiSelectEditCell';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { genesSelectors, mutationsSelectors, testMethodsSelectors } from '@/redux/selectors';
-import { genesActions } from '@/redux/slices/settings/genes';
 import { validateName } from '@/utils/validators';
 
 export default function GenesSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const genesState = useAppSelector(genesSelectors.selectAll);
-    const testMethods = useAppSelector(testMethodsSelectors.selectAll);
-    const mutations = useAppSelector(mutationsSelectors.selectAll);
+    const [genes, setGenes] = useState<GeneDto[]>([]);
+    const [testMethods, setTestMethods] = useState<TestMethodDto[]>([]);
+    const [mutations, setMutations] = useState<MutationDto[]>([]);
 
-    const [genes, setGenes] = useState<Gene[]>([]);
+    const getGenes = useCallback(async (signal?: AbortSignal) => {
+        const response = await GeneService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: '',
+            testMethodIds: [],
+            mutationIds: []
+        });
+        setGenes(response.items);
+    }, []);
 
     const handleAddGene = useCallback(
-        (gene: Gene) => {
-            gene.id = uuidv4();
-            dispatch(genesActions.addGene(gene));
+        async (gene: GeneDto) => {
+            await GeneService.create({
+                body: gene
+            });
+            await getGenes();
         },
-        [dispatch]
+        [getGenes]
     );
 
-    const handleRemoveGene = useCallback(
-        (id: string) => {
-            dispatch(genesActions.removeGene(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveGene = useCallback(async (id: string) => {
+        await GeneService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: Gene) => {
-            if (newRow.id) {
-                dispatch(
-                    genesActions.updateGene({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: GeneDto) => {
+        if (newRow.id) {
+            newRow = await GeneService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const GENES_COLUMNS = useMemo(
         () =>
@@ -135,21 +140,29 @@ export default function GenesSettings() {
                         />
                     )
                 }
-            ] as GridColDef<Gene>[],
+            ] as GridColDef<GeneDto>[],
         [handleAddGene, handleRemoveGene, genes, testMethods, mutations]
     );
 
     useEffect(() => {
-        setGenes([
-            ...genesState,
-            {
-                id: '',
-                name: '',
-                testMethodIds: [],
-                mutationIds: []
+        const abortController = new AbortController();
+
+        getGenes(abortController.signal);
+
+        TestMethodService.getList(undefined, { signal: abortController.signal }).then(
+            (response) => {
+                setTestMethods(response.items);
             }
-        ]);
-    }, [genesState]);
+        );
+
+        MutationService.getList(undefined, { signal: abortController.signal }).then((response) => {
+            setMutations(response.items);
+        });
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getGenes]);
 
     useEffect(() => {
         window.setTimeout(async () => {

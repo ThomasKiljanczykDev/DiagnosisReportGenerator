@@ -1,6 +1,6 @@
-import type { StaffMember } from '@/common/types/entities';
+import type { StaffMemberDto } from '@diagnosis-report-generator/api/services';
 
-export function formatStaffMember(staffMember: StaffMember | null): string {
+export function formatStaffMember(staffMember: StaffMemberDto | null): string {
     if (!staffMember) {
         return '';
     }

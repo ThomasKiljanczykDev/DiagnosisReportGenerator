@@ -1,40 +1,56 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import {
+    type CreateUpdateDiagnosisDto,
+    type DiagnosisDto,
+    DiagnosisService
+} from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import type { Diagnosis } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { diagnosesSelectors } from '@/redux/selectors';
-import { diagnosesActions } from '@/redux/slices/settings/diagnoses';
 import { validateName } from '@/utils/validators';
 
 export default function DiagnosesSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const diagnosesState = useAppSelector(diagnosesSelectors.selectAll);
+    const [diagnoses, setDiagnoses] = useState<DiagnosisDto[]>([]);
 
-    const [diagnoses, setDiagnoses] = useState<Diagnosis[]>([]);
+    const getDiagnoses = useCallback(async (signal?: AbortSignal) => {
+        const response = await DiagnosisService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: ''
+        });
+        setDiagnoses(response.items);
+    }, []);
 
     const handleAddDiagnosis = useCallback(
-        (diagnosis: Diagnosis) => {
-            diagnosis.id = uuidv4();
-            dispatch(diagnosesActions.addDiagnosis(diagnosis));
+        async (diagnosis: CreateUpdateDiagnosisDto) => {
+            await DiagnosisService.create({
+                body: diagnosis
+            });
+            await getDiagnoses();
         },
-        [dispatch]
+        [getDiagnoses]
     );
 
-    const handleRemoveDiagnosis = useCallback(
-        (id: string) => {
-            dispatch(diagnosesActions.removeDiagnosis(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveDiagnosis = useCallback(async (id: string) => {
+        await DiagnosisService.delete({ id });
+    }, []);
+
+    const processRowUpdate = useCallback(async (newRow: DiagnosisDto) => {
+        if (newRow.id) {
+            newRow = await DiagnosisService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
+
+        return newRow;
+    }, []);
 
     const DIAGNOSES_COLUMNS = useMemo(
         () =>
@@ -65,25 +81,25 @@ export default function DiagnosesSettings() {
                     },
                     renderEditCell: EditCellWithErrorRenderer
                 }
-            ] as GridColDef<Diagnosis>[],
+            ] as GridColDef<DiagnosisDto>[],
         [diagnoses, handleAddDiagnosis, handleRemoveDiagnosis]
     );
-
-    useEffect(() => {
-        setDiagnoses([
-            ...diagnosesState,
-            {
-                id: '',
-                name: ''
-            }
-        ]);
-    }, [diagnosesState]);
 
     useEffect(() => {
         window.setTimeout(async () => {
             await apiRef.current.autosizeColumns();
         }, 100);
     }, [diagnoses, apiRef]);
+
+    useEffect(() => {
+        const abortController = new AbortController();
+
+        getDiagnoses(abortController.signal);
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getDiagnoses]);
 
     return (
         <AppPageContent title="Rozpoznania">
@@ -92,18 +108,7 @@ export default function DiagnosesSettings() {
                 columns={DIAGNOSES_COLUMNS}
                 rows={diagnoses}
                 rowSelection={false}
-                processRowUpdate={(newRow) => {
-                    if (newRow.id) {
-                        dispatch(
-                            diagnosesActions.updateDiagnosis({
-                                id: newRow.id,
-                                changes: newRow
-                            })
-                        );
-                    }
-
-                    return newRow;
-                }}
+                processRowUpdate={processRowUpdate}
                 autosizeOnMount={true}
             />
         </AppPageContent>

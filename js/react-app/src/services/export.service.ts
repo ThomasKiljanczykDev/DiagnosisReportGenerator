@@ -3,16 +3,16 @@ import { createReport } from 'docx-templates';
 import { type AsyncZippable, zip as zipCb } from 'fflate';
 import { promisify } from 'util';
 
+import {
+    MutationService,
+    RecommendationLevel,
+    RecommendationService,
+    TestMethodService
+} from '@diagnosis-report-generator/api/services';
+
 import { type Patient } from '@/common/models/patient';
 import { type Report, type ReportGene } from '@/common/models/report';
-import { RecommendationLevel } from '@/common/types/entities';
 import { formatStaffMember } from '@/common/utils/formatting';
-import {
-    mutationsSelectors,
-    recommendationsSelectors,
-    testMethodsSelectors
-} from '@/redux/selectors';
-import { store } from '@/redux/store';
 
 const zip = promisify(zipCb);
 
@@ -20,18 +20,18 @@ export default class ExportService {
     static async generateReport(templateFileData: Uint8Array, patientData: Patient[]) {
         const reports: AsyncZippable = {};
 
-        const mutations = mutationsSelectors.selectAll(store.getState());
-        const recommendations = recommendationsSelectors.selectAll(store.getState());
-        const testMethods = testMethodsSelectors.selectAll(store.getState());
+        const mutations = await MutationService.getList().then((result) => result.items);
+        const recommendations = await RecommendationService.getList().then(
+            (result) => result.items
+        );
+        const testMethods = await TestMethodService.getList().then((result) => result.items);
 
         for (const patient of patientData) {
             const patientLevel1Recommendations = new Set<string>(
                 patient.illness?.recommendationIds
                     .map((recommendationId) =>
                         recommendations.find(
-                            (r) =>
-                                r.id === recommendationId &&
-                                r.recommendationLevel == RecommendationLevel.I
+                            (r) => r.id === recommendationId && r.level == RecommendationLevel.I
                         )
                     )
                     .sort((a, b) => (a?.priority ?? -1) - (b?.priority ?? -1))
@@ -45,9 +45,7 @@ export default class ExportService {
                 patient.illness?.recommendationIds
                     .map((recommendationId) =>
                         recommendations.find(
-                            (r) =>
-                                r.id === recommendationId &&
-                                r.recommendationLevel == RecommendationLevel.II
+                            (r) => r.id === recommendationId && r.level == RecommendationLevel.II
                         )
                     )
                     .sort((a, b) => (a?.priority ?? -1) - (b?.priority ?? -1))

@@ -1,0 +1,7 @@
+{
+    "compilerOptions": {
+        "incremental": true
+    },
+    "extends": ["ts-config"],
+    "exclude": ["out/**/*.d.ts", "out/**/*.ts", "test/**/*.ts"]
+}

@@ -1,0 +1,10 @@
+using Gunock.DiagnosisReportGenerator.Application.Tests.Samples;
+using Gunock.DiagnosisReportGenerator.TestBase;
+using Xunit;
+
+namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFrameworkCore.Applications;
+
+[Collection(DiagnosisReportGeneratorTestConsts.CollectionDefinitionName)]
+public class EfCoreSampleAppServiceTests : SampleAppServiceTests<DiagnosisReportGeneratorEntityFrameworkCoreTestModule>
+{
+}

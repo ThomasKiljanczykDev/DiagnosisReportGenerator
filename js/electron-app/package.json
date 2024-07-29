@@ -2,9 +2,6 @@
     "name": "@diagnosis-report-generator/electron-app",
     "version": "1.0.0",
     "main": "dist-electron/main/index.js",
-    "description": "A application used to generate patient diagnosis reports.",
-    "author": "Tomasz Kiljańczyk <asz.czyk.dev.com>",
-    "license": "MIT",
     "private": true,
     "debug": {
         "env": {

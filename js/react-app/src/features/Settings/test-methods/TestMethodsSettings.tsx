@@ -1,56 +1,52 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { v4 as uuidv4 } from 'uuid';
-
+import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import type { TestMethod } from '@/common/types/entities';
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { testMethodsSelectors } from '@/redux/selectors';
-import { testMethodsActions } from '@/redux/slices/settings/test-methods';
 import { validateName } from '@/utils/validators';
 
 export default function TestMethodsSettings() {
-    const dispatch = useAppDispatch();
     const apiRef = useGridApiRef();
 
-    const testMethodsState = useAppSelector(testMethodsSelectors.selectAll);
+    const [testMethods, setTestMethods] = useState<TestMethodDto[]>([]);
 
-    const [testMethods, setTestMethods] = useState<TestMethod[]>([]);
+    const getTestMethods = useCallback(async (signal?: AbortSignal) => {
+        const response = await TestMethodService.getList(undefined, { signal });
+
+        response.items.push({
+            id: '',
+            name: ''
+        });
+        setTestMethods(response.items);
+    }, []);
 
     const handleAddTestMethod = useCallback(
-        (testMethod: TestMethod) => {
-            testMethod.id = uuidv4();
-            dispatch(testMethodsActions.addTestMethods(testMethod));
+        async (testMethod: TestMethodDto) => {
+            await TestMethodService.create({
+                body: testMethod
+            });
+            await getTestMethods();
         },
-        [dispatch]
+        [getTestMethods]
     );
 
-    const handleRemoveTestMethod = useCallback(
-        (id: string) => {
-            dispatch(testMethodsActions.removeTestMethods(id));
-        },
-        [dispatch]
-    );
+    const handleRemoveTestMethod = useCallback(async (id: string) => {
+        await TestMethodService.delete({ id });
+    }, []);
 
-    const processRowUpdate = useCallback(
-        (newRow: TestMethod) => {
-            if (newRow.id) {
-                dispatch(
-                    testMethodsActions.updateTestMethods({
-                        id: newRow.id,
-                        changes: newRow
-                    })
-                );
-            }
+    const processRowUpdate = useCallback(async (newRow: TestMethodDto) => {
+        if (newRow.id) {
+            newRow = await TestMethodService.update({
+                id: newRow.id,
+                body: newRow
+            });
+        }
 
-            return newRow;
-        },
-        [dispatch]
-    );
+        return newRow;
+    }, []);
 
     const METODY_COLUMNS = useMemo(
         () =>
@@ -81,19 +77,18 @@ export default function TestMethodsSettings() {
                     },
                     renderEditCell: EditCellWithErrorRenderer
                 }
-            ] as GridColDef<TestMethod>[],
+            ] as GridColDef<TestMethodDto>[],
         [handleAddTestMethod, handleRemoveTestMethod, testMethods]
     );
 
     useEffect(() => {
-        setTestMethods([
-            ...testMethodsState,
-            {
-                id: '',
-                name: ''
-            }
-        ]);
-    }, [testMethodsState]);
+        const abortController = new AbortController();
+        getTestMethods(abortController.signal);
+
+        return () => {
+            abortController.abort();
+        };
+    }, [getTestMethods]);
 
     useEffect(() => {
         window.setTimeout(async () => {

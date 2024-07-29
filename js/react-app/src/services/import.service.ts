@@ -1,9 +1,9 @@
 import Papa from 'papaparse';
 import { read, utils } from 'xlsx';
 
+import { type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
+
 import { type Patient, parsePesel } from '@/common/models/patient';
-import { staffSelectors } from '@/redux/selectors';
-import { store } from '@/redux/store';
 
 export class ImportService {
     static async parseExcelFile(fileData: Uint8Array) {
@@ -28,55 +28,59 @@ export class ImportService {
         return this.parsePatientData(rawSheetData);
     }
 
+    private static parsePatient(
+        id: number,
+        data: string[],
+        staff: StaffMemberDto[]
+    ): Patient | null {
+        try {
+            const sourceAssistants = data[5];
+            const sourceConsultants = data[6];
+            const sourceDoctor = data[7];
+
+            const assistants = staff.filter((staffMember) =>
+                sourceAssistants.toUpperCase().includes(staffMember.name.toUpperCase())
+            );
+
+            const consultants = staff.filter((staffMember) =>
+                sourceConsultants.toUpperCase().includes(staffMember.name.toUpperCase())
+            );
+
+            const doctor = staff.find((staffMember) =>
+                sourceDoctor.toUpperCase().includes(staffMember.name.toUpperCase())
+            );
+
+            return {
+                id: id,
+                date: new Date(),
+                cardNumber: data[0],
+                name: data[1],
+                pesel: parsePesel(data[2]),
+                doctor: doctor ?? null,
+                assistants: assistants,
+                consultants: consultants,
+                technicians: [],
+                genes: [],
+                illness: null,
+                diagnosis: null
+            } as Patient;
+        } catch (e) {
+            console.error(`Error parsing patient data: ${data}`);
+            return null;
+        }
+    }
+
     private static async parsePatientData(rawSheetData: string[][]): Promise<Patient[]> {
-        const staff = staffSelectors.selectAll(store.getState());
+        const staff = await StaffService.getList().then((response) => response.items);
 
         rawSheetData = rawSheetData
             .map((row) => row.map((cell) => cell.trim()))
             .filter((row) => row.some((cell) => cell))
             .filter((row) => row.length > 0);
 
-        function parsePatient(id: number, data: string[]): Patient | null {
-            try {
-                const sourceAssistants = data[5];
-                const sourceConsultants = data[6];
-                const sourceDoctor = data[7];
-
-                const assistants = staff.filter((staffMember) =>
-                    sourceAssistants.toUpperCase().includes(staffMember.name.toUpperCase())
-                );
-
-                const consultants = staff.filter((staffMember) =>
-                    sourceConsultants.toUpperCase().includes(staffMember.name.toUpperCase())
-                );
-
-                const doctor = staff.find((staffMember) =>
-                    sourceDoctor.toUpperCase().includes(staffMember.name.toUpperCase())
-                );
-
-                return {
-                    id: id,
-                    date: new Date(),
-                    cardNumber: data[0],
-                    name: data[1],
-                    pesel: parsePesel(data[2]),
-                    doctor: doctor ?? null,
-                    assistants: assistants,
-                    consultants: consultants,
-                    technicians: [],
-                    genes: [],
-                    illness: null,
-                    diagnosis: null
-                } as Patient;
-            } catch (e) {
-                console.error(`Error parsing patient data: ${data}`);
-                return null;
-            }
-        }
-
         return rawSheetData
             .slice(1)
-            .map((row, index) => parsePatient(index, row))
+            .map((row, index) => ImportService.parsePatient(index, row, staff))
             .filter((patient) => patient !== null && patient?.cardNumber)
             .map((patient) => patient!);
     }
