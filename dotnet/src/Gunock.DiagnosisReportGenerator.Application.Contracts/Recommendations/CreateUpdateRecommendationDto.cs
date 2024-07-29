@@ -16,8 +16,8 @@ public class CreateUpdateRecommendationDto
     [Required]
     public required RecommendationLevel Level { get; init; }
 
-    [Required]
-    public required int Priority { get; init; }
+    [Range(1, int.MaxValue)]
+    public int Priority { get; init; } = int.MaxValue;
 
     [Required]
     public required Range AgeRange { get; init; }

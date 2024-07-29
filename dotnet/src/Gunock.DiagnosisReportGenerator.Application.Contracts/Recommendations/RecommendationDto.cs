@@ -17,6 +17,7 @@ public class RecommendationDto : EntityDto<Guid>
     public required RecommendationLevel Level { get; init; }
 
     [Required]
+    [Range(1, int.MaxValue)]
     public required int Priority { get; init; }
 
     [Required]
