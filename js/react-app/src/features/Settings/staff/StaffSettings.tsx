@@ -111,8 +111,11 @@ export default function StaffSettings() {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns();
-        }, 100);
+            await apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                includeHeaders: true
+            });
+        }, 50);
     }, [staff, apiRef]);
 
     return (

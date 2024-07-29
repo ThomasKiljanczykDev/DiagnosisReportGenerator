@@ -26,7 +26,8 @@ export default function RecommendationsSettings() {
             name: '',
             content: '',
             level: RecommendationLevel.I,
-            priority: 0,
+            // Max 32-bit signed integer value
+            priority: 2147483647,
             ageRange: {
                 from: undefined,
                 to: undefined
@@ -49,6 +50,37 @@ export default function RecommendationsSettings() {
         await RecommendationService.delete({ id });
     }, []);
 
+    const handleMove = useCallback(
+        async (id: string, increment: 1 | -1) => {
+            const recommendation = recommendations.find((r) => r.id === id);
+            if (recommendation == null || recommendation.priority <= 1) {
+                return;
+            }
+
+            recommendation.priority += increment;
+            await RecommendationService.update({
+                id,
+                body: recommendation
+            });
+            await getRecommendations();
+        },
+        [getRecommendations, recommendations]
+    );
+
+    const handleMoveUp = useCallback(
+        async (id: string) => {
+            await handleMove(id, -1);
+        },
+        [handleMove]
+    );
+
+    const handleMoveDown = useCallback(
+        async (id: string) => {
+            await handleMove(id, 1);
+        },
+        [handleMove]
+    );
+
     const processRowUpdate = useCallback(async (newRow: RecommendationDto) => {
         if (newRow.id) {
             newRow = await RecommendationService.update({
@@ -70,17 +102,26 @@ export default function RecommendationsSettings() {
                     filterable: false,
                     hideable: false,
                     disableColumnMenu: true,
-                    renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddRecommendation}
-                            onRemove={handleRemoveRecommendation}
-                        />
-                    )
+                    renderCell: (params) => {
+                        const isFirstRow = recommendations.indexOf(params.row) === 0;
+                        const isLastRow =
+                            recommendations.indexOf(params.row) === recommendations.length - 2;
+
+                        return (
+                            <ActionCell
+                                params={params}
+                                onAdd={handleAddRecommendation}
+                                onRemove={handleRemoveRecommendation}
+                                onMoveUp={isFirstRow ? undefined : handleMoveUp}
+                                onMoveDown={isLastRow ? undefined : handleMoveDown}
+                            />
+                        );
+                    }
                 },
                 {
                     field: 'name',
                     headerName: 'Nazwa',
+                    sortable: false,
                     editable: true,
                     preProcessEditCellProps: (params) => {
                         const errorMessage = validateName(params.props.value, recommendations);
@@ -91,11 +132,13 @@ export default function RecommendationsSettings() {
                 {
                     field: 'content',
                     headerName: 'Opis',
+                    sortable: false,
                     editable: true
                 },
                 {
                     field: 'level',
                     headerName: 'Poziom zalecenia',
+                    sortable: false,
                     editable: true,
                     type: 'singleSelect',
                     valueOptions: [
@@ -107,6 +150,7 @@ export default function RecommendationsSettings() {
                 {
                     field: 'ageRange',
                     headerName: 'Zakres wiekowy',
+                    sortable: false,
                     editable: true,
                     type: 'custom',
                     valueFormatter: (range: Range) => {
@@ -125,7 +169,13 @@ export default function RecommendationsSettings() {
                     )
                 }
             ] as GridColDef<RecommendationDto>[],
-        [handleAddRecommendation, handleRemoveRecommendation, recommendations]
+        [
+            handleAddRecommendation,
+            handleMoveDown,
+            handleMoveUp,
+            handleRemoveRecommendation,
+            recommendations
+        ]
     );
 
     useEffect(() => {
@@ -140,8 +190,11 @@ export default function RecommendationsSettings() {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns();
-        }, 100);
+            await apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                includeHeaders: true
+            });
+        }, 50);
     }, [recommendations, apiRef]);
 
     return (

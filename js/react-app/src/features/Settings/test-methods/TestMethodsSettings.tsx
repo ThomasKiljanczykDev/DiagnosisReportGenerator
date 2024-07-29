@@ -92,7 +92,10 @@ export default function TestMethodsSettings() {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns();
+            await apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                includeHeaders: true
+            });
         }, 100);
     }, [testMethods, apiRef]);
 
