@@ -3,26 +3,32 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
     type CreateUpdateDiagnosisDto,
     type DiagnosisDto,
-    DiagnosisService
+    DiagnosisService,
+    type RecommendationDto,
+    RecommendationService
 } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
 import AppPageContent from '@/components/AppPageContent';
 import { ActionCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
+import MultiSelectCell from '@/components/cells/MultiSelectCell';
+import MultiSelectEditCell from '@/components/cells/MultiSelectEditCell';
 import { validateName } from '@/utils/validators';
 
 export default function DiagnosesSettings() {
     const apiRef = useGridApiRef();
 
     const [diagnoses, setDiagnoses] = useState<DiagnosisDto[]>([]);
+    const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
     const getDiagnoses = useCallback(async (signal?: AbortSignal) => {
         const response = await DiagnosisService.getList(undefined, { signal });
 
         response.items.push({
             id: '',
-            name: ''
+            name: '',
+            recommendationIds: []
         });
         setDiagnoses(response.items);
     }, []);
@@ -80,9 +86,34 @@ export default function DiagnosesSettings() {
                         return { ...params.props, error: errorMessage };
                     },
                     renderEditCell: EditCellWithErrorRenderer
+                },
+                {
+                    field: 'recommendationIds',
+                    headerName: 'Zalecenia',
+                    editable: true,
+                    type: 'custom',
+                    renderEditCell: (params) => (
+                        <MultiSelectEditCell
+                            params={params}
+                            items={recommendations}
+                            initialValue={params.value}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
+                            valueFn={(item) => item.id}
+                        />
+                    ),
+                    renderCell: (params) => (
+                        <MultiSelectCell
+                            params={params}
+                            items={recommendations}
+                            value={params.value}
+                            keyFn={(item) => item.id}
+                            displayFn={(item) => item.name}
+                        />
+                    )
                 }
             ] as GridColDef<DiagnosisDto>[],
-        [diagnoses, handleAddDiagnosis, handleRemoveDiagnosis]
+        [diagnoses, handleAddDiagnosis, handleRemoveDiagnosis, recommendations]
     );
 
     useEffect(() => {
@@ -95,6 +126,11 @@ export default function DiagnosesSettings() {
         const abortController = new AbortController();
 
         getDiagnoses(abortController.signal);
+        RecommendationService.getList(undefined, { signal: abortController.signal }).then(
+            (response) => {
+                setRecommendations(response.items);
+            }
+        );
 
         return () => {
             abortController.abort();

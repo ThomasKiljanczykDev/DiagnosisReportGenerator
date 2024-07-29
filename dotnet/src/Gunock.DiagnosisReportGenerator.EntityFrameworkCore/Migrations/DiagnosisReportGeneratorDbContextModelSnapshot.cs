@@ -8,7 +8,7 @@ using Volo.Abp.EntityFrameworkCore;
 
 #nullable disable
 
-namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
+namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DiagnosisReportGeneratorDbContext))]
     partial class DiagnosisReportGeneratorDbContextModelSnapshot : ModelSnapshot
@@ -18,7 +18,25 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.Sqlite)
-                .HasAnnotation("ProductVersion", "8.0.7");
+                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true);
+
+            modelBuilder.Entity("DiagnosisRecommendation", b =>
+                {
+                    b.Property<Guid>("DiagnosesId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("RecommendationsId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("DiagnosesId", "RecommendationsId");
+
+                    b.HasIndex("RecommendationsId");
+
+                    b.ToTable("DiagnosisRecommendation");
+                });
 
             modelBuilder.Entity("GeneMutation", b =>
                 {
@@ -53,7 +71,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Diagnoses.Diagnosis", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -72,7 +89,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Genes.Gene", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -91,7 +107,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Illnesses.Illness", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -110,7 +125,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Mutations.Mutation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -129,7 +143,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Recommendations.Recommendation", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("AgeFrom")
@@ -164,7 +177,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.Staff.StaffMember", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -191,7 +203,6 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
             modelBuilder.Entity("Gunock.DiagnosisReportGenerator.Domain.TestMethods.TestMethod", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -220,6 +231,21 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
                     b.HasIndex("RecommendationsId");
 
                     b.ToTable("IllnessRecommendation");
+                });
+
+            modelBuilder.Entity("DiagnosisRecommendation", b =>
+                {
+                    b.HasOne("Gunock.DiagnosisReportGenerator.Domain.Diagnoses.Diagnosis", null)
+                        .WithMany()
+                        .HasForeignKey("DiagnosesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Gunock.DiagnosisReportGenerator.Domain.Recommendations.Recommendation", null)
+                        .WithMany()
+                        .HasForeignKey("RecommendationsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GeneMutation", b =>

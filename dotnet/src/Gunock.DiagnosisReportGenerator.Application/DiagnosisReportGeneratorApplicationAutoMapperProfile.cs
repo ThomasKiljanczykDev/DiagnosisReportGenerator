@@ -21,8 +21,10 @@ public class DiagnosisReportGeneratorApplicationAutoMapperProfile : Profile
 {
     public DiagnosisReportGeneratorApplicationAutoMapperProfile()
     {
-        CreateMap<Diagnosis, DiagnosisDto>();
-        CreateMap<CreateUpdateDiagnosisDto, Diagnosis>();
+        CreateMap<Diagnosis, DiagnosisDto>()            .ForMember(
+            dest => dest.RecommendationIds,
+            opt => opt.MapFrom(src => src.Recommendations.Select(x => x.Id))
+        );
 
         CreateMap<Gene, GeneDto>()
             .ForMember(dest => dest.TestMethodIds, opt => opt.MapFrom(src => src.TestMethods.Select(x => x.Id)))

@@ -1162,6 +1162,9 @@ export interface ControllerInterfaceApiDescriptionModel {
 export interface CreateUpdateDiagnosisDto {
   /**  */
   name: string;
+
+  /**  */
+  recommendationIds: string[];
 }
 
 export interface CreateUpdateGeneDto {
@@ -1340,6 +1343,9 @@ export interface DiagnosisDto {
 
   /**  */
   name: string;
+
+  /**  */
+  recommendationIds: string[];
 }
 
 export interface DiagnosisDtoPagedResultDto {
