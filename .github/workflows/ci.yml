@@ -1,6 +1,6 @@
 name: ci
 
-on: [ push ]
+on: [ pull_request ]
 
 permissions:
   contents: read
@@ -9,7 +9,7 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  ci:
+  ci-js:
     name: Lint and build
     runs-on: ubuntu-latest
     defaults:
