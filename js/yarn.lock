@@ -232,6 +232,7 @@ __metadata:
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     autoprefixer: "npm:^10.4.19"
+    axios: "npm:^1.7.2"
     electron: "npm:31.3"
     electron-builder: "npm:^24.13.3"
     electron-context-menu: "npm:^4.0.1"
