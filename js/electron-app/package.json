@@ -19,7 +19,7 @@
     },
     "dependencies": {
         "@diagnosis-report-generator/react-app": "workspace:*",
-        "axios": "^1.7.2",
+        "axios": "^1.7.3",
         "electron-context-menu": "^4.0.1",
         "electron-updater": "^6.2.1",
         "react": "^18.3.1",
@@ -31,7 +31,7 @@
         "@types/react-dom": "^18.3.0",
         "@vitejs/plugin-react-swc": "^3.7.0",
         "autoprefixer": "^10.4.19",
-        "electron": "31.3",
+        "electron": "31.3.1",
         "electron-builder": "^24.13.3",
         "postcss": "^8.4.40",
         "postcss-import": "^16.1.0",

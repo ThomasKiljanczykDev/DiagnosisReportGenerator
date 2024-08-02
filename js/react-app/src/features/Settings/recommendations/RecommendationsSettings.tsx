@@ -13,6 +13,8 @@ import { ActionCell, RangeEditCell } from '@/components/cells';
 import EditCellWithErrorRenderer from '@/components/cells/EditCellWithErrorRenderer';
 import { validateName } from '@/utils/validators';
 
+const int32max = 2147483647;
+
 export default function RecommendationsSettings() {
     const apiRef = useGridApiRef();
 
@@ -27,7 +29,7 @@ export default function RecommendationsSettings() {
             content: '',
             level: RecommendationLevel.I,
             // Max 32-bit signed integer value
-            priority: 2147483647,
+            priority: int32max,
             ageRange: {
                 from: undefined,
                 to: undefined
@@ -118,6 +120,19 @@ export default function RecommendationsSettings() {
                         );
                     }
                 },
+                {
+                    field: 'priority',
+                    headerName: 'Priorytet',
+                    sortable: false,
+                    editable: true,
+                    renderCell: (params) => {
+                        if (params.value == null) {
+                            return params.value;
+                        }
+
+                        return params.value >= int32max ? null : params.value;
+                    }
+                } as GridColDef<RecommendationDto, number>,
                 {
                     field: 'name',
                     headerName: 'Nazwa',

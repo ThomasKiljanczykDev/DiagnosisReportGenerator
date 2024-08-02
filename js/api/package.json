@@ -10,7 +10,7 @@
         "./services/*": "./src/services/*.ts"
     },
     "dependencies": {
-        "axios": "^1.7.2",
+        "axios": "^1.7.3",
         "swagger-axios-codegen": "^0.16.14"
     },
     "devDependencies": {
