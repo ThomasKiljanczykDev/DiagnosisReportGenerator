@@ -268,3 +268,5 @@ src/Gunock.DiagnosisReportGenerator.Blazor.Server.Tiered/Logs/*
 *.db
 *.db-shm
 *.db-wal
+
+**/appsettings.Development.json
