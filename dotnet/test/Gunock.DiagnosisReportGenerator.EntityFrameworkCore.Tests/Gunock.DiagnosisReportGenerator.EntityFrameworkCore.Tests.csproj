@@ -10,7 +10,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\src\Gunock.DiagnosisReportGenerator.EntityFrameworkCore\Gunock.DiagnosisReportGenerator.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\Gunock.DiagnosisReportGenerator.Application.Tests\Gunock.DiagnosisReportGenerator.Application.Tests.csproj"/>
-        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.2.0"/>
+        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.2.1" />
     </ItemGroup>
 
     <ItemGroup>
