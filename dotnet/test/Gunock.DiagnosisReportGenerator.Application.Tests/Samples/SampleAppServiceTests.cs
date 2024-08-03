@@ -27,7 +27,11 @@ public abstract class
     public async Task Should_Create_A_Diagnosis()
     {
         // Arrange
-        var input = new CreateUpdateDiagnosisDto { Name = "Test Diagnosis" };
+        var input = new CreateUpdateDiagnosisDto
+        {
+            Name = "Test Diagnosis",
+            RecommendationIds = []
+        };
 
         // Act
         var newDiagnosis = await _diagnosisAppService.CreateAsync(input);
