@@ -36,7 +36,7 @@ export default defineConfig(({ command }) => {
             electron({
                 main: {
                     // Shortcut of `build.lib.entry`
-                    entry: 'src/main/index.ts',
+                    entry: 'src/electron/main/index.ts',
                     onstart(args) {
                         if (process.env.VSCODE_DEBUG) {
                             console.debug(
@@ -64,7 +64,7 @@ export default defineConfig(({ command }) => {
                 preload: {
                     // Shortcut of `build.rollupOptions.input`.
                     // Preload scripts may contain Web assets, so use the `build.rollupOptions.input` instead `build.lib.entry`.
-                    input: 'src/preload/index.ts',
+                    input: 'src/electron/preload/index.ts',
                     vite: {
                         resolve: resolve,
                         build: {
