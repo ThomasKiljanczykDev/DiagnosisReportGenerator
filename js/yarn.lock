@@ -222,36 +222,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@diagnosis-report-generator/react-app@workspace:*, @diagnosis-report-generator/react-app@workspace:react-app":
-  version: 0.0.0-use.local
-  resolution: "@diagnosis-report-generator/react-app@workspace:react-app"
-  dependencies:
-    "@diagnosis-report-generator/api": "workspace:*"
-    "@emotion/react": "npm:^11.13.0"
-    "@emotion/styled": "npm:^11.13.0"
-    "@fontsource-variable/roboto-flex": "npm:^5.0.15"
-    "@mui/icons-material": "npm:^5.16.6"
-    "@mui/material": "npm:^5.16.6"
-    "@mui/system": "npm:^5.16.6"
-    "@mui/x-data-grid": "npm:^7.12.0"
-    "@types/papaparse": "npm:^5.3.14"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    axios: "npm:^1.7.3"
-    date-fns: "npm:^3.6.0"
-    docx-templates: "npm:^4.13.0"
-    fflate: "npm:^0.8.2"
-    papaparse: "npm:^5.4.1"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
-    react-material-symbols: "npm:^4.4.0"
-    react-router-dom: "npm:^6.26.0"
-    ts-config: "workspace:*"
-    typescript: "npm:^5.5.4"
-    xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
-  languageName: unknown
-  linkType: soft
-
 "@electron/asar@npm:^3.2.1":
   version: 3.2.10
   resolution: "@electron/asar@npm:3.2.10"
@@ -687,6 +657,20 @@ __metadata:
   version: 5.0.15
   resolution: "@fontsource-variable/roboto-flex@npm:5.0.15"
   checksum: 10c0/1939c5257cfae759b68e57357001ab25491c6398516a629976202920867ac303205208494c19cc629d3bc605f49e20d4b96b0cf22317428d0870557cfcef7343
+  languageName: node
+  linkType: hard
+
+"@generouted/react-router@npm:^1.19.6":
+  version: 1.19.6
+  resolution: "@generouted/react-router@npm:1.19.6"
+  dependencies:
+    fast-glob: "npm:^3.3.2"
+    generouted: "npm:^1.19.6"
+  peerDependencies:
+    react: ">=18"
+    react-router-dom: ">=6"
+    vite: ">=4"
+  checksum: 10c0/d4dfc8ad0a992b27eec2a1e3ba1256cc103fdb138d0c99838d546dc88539ebaea642d8f1f14f91adc5c2392f57efd8dd75e408d25219e0042510647cf1417805
   languageName: node
   linkType: hard
 
@@ -2993,27 +2977,43 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "diagnosis-report-generator-electron-app@workspace:electron-app"
   dependencies:
-    "@diagnosis-report-generator/react-app": "workspace:*"
+    "@diagnosis-report-generator/api": "workspace:*"
+    "@emotion/react": "npm:^11.13.0"
+    "@emotion/styled": "npm:^11.13.0"
+    "@fontsource-variable/roboto-flex": "npm:^5.0.15"
+    "@generouted/react-router": "npm:^1.19.6"
+    "@mui/icons-material": "npm:^5.16.6"
+    "@mui/material": "npm:^5.16.6"
+    "@mui/system": "npm:^5.16.6"
+    "@mui/x-data-grid": "npm:^7.12.0"
     "@playwright/test": "npm:^1.45.3"
+    "@types/papaparse": "npm:^5.3.14"
     "@types/react": "npm:^18.3.3"
     "@types/react-dom": "npm:^18.3.0"
     "@vitejs/plugin-react-swc": "npm:^3.7.0"
     autoprefixer: "npm:^10.4.20"
     axios: "npm:^1.7.3"
+    date-fns: "npm:^3.6.0"
+    docx-templates: "npm:^4.13.0"
     electron: "npm:31.3.1"
     electron-builder: "npm:^24.13.3"
     electron-context-menu: "npm:^4.0.1"
     electron-updater: "npm:^6.3.2"
+    fflate: "npm:^0.8.2"
+    papaparse: "npm:^5.4.1"
     postcss: "npm:^8.4.40"
     postcss-import: "npm:^16.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-material-symbols: "npm:^4.4.0"
+    react-router-dom: "npm:^6.26.0"
     ts-config: "workspace:*"
     typescript: "npm:^5.5.4"
     vite: "npm:^5.3.5"
     vite-plugin-circular-dependency: "npm:^0.4.1"
     vite-plugin-electron: "npm:^0.28.7"
     vite-plugin-node-polyfills: "npm:^0.22.0"
+    xlsx: "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   languageName: unknown
   linkType: soft
 
@@ -3861,7 +3861,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:^3.2.9":
+"fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2":
   version: 3.3.2
   resolution: "fast-glob@npm:3.3.2"
   dependencies:
@@ -4142,6 +4142,15 @@ __metadata:
   version: 1.2.3
   resolution: "functions-have-names@npm:1.2.3"
   checksum: 10c0/33e77fd29bddc2d9bb78ab3eb854c165909201f88c75faa8272e35899e2d35a8a642a15e7420ef945e1f64a9670d6aa3ec744106b2aa42be68ca5114025954ca
+  languageName: node
+  linkType: hard
+
+"generouted@npm:^1.19.6":
+  version: 1.19.6
+  resolution: "generouted@npm:1.19.6"
+  peerDependencies:
+    vite: ">=3"
+  checksum: 10c0/998bc57ffe2215d8308210bc3c2f79edfda8cf99a53bf0223359f71a7b190ccb1cad79e20d13ee5995c3be1a1b3225f1bc814bc518461e51da65b963f78659bc
   languageName: node
   linkType: hard
 
