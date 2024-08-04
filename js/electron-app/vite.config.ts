@@ -5,6 +5,7 @@ import circularDependency from 'vite-plugin-circular-dependency';
 import electron from 'vite-plugin-electron/simple';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
+import generouted from '@generouted/react-router/plugin';
 import react from '@vitejs/plugin-react-swc';
 
 import pkg from './package.json';
@@ -13,7 +14,7 @@ const resolve: ResolveOptions & {
     alias?: AliasOptions;
 } = {
     alias: {
-        '@': path.join(__dirname, '../react-app/src')
+        '@': path.join(__dirname, './src')
     }
 };
 
@@ -31,6 +32,7 @@ export default defineConfig(({ command }) => {
             circularDependency(),
             nodePolyfills(),
             react(),
+            generouted(),
             electron({
                 main: {
                     // Shortcut of `build.lib.entry`

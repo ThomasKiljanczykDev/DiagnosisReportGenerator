@@ -132,7 +132,7 @@ app.on('activate', () => {
 });
 
 app.on('before-quit', async () => {
-    if (process.env.VITE_NODE_ENV !== 'development') {
+    if (process.env.NODE_ENV !== 'development') {
         await HomeService.shutdown();
     }
 });
