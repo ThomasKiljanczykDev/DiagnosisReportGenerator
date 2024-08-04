@@ -1,4 +1,4 @@
-import { type PropsWithChildren, type ReactNode, memo } from 'react';
+import { type PropsWithChildren, memo } from 'react';
 
 import { Grid } from '@mui/material';
 

@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import {
     type CreateUpdateDiagnosisDto,
@@ -34,9 +34,13 @@ export default function DiagnosesDataGrid(props: DiagnosesDataGridProps) {
         [props]
     );
 
-    const handleRemoveDiagnosis = useCallback(async (id: string) => {
-        await DiagnosisService.delete({ id });
-    }, []);
+    const handleRemoveDiagnosis = useCallback(
+        async (id: string) => {
+            await DiagnosisService.delete({ id });
+            await props.onDiagnosesChanged();
+        },
+        [props]
+    );
 
     const processRowUpdate = useCallback(async (newRow: DiagnosisDto) => {
         if (newRow.id) {
@@ -106,6 +110,15 @@ export default function DiagnosesDataGrid(props: DiagnosesDataGridProps) {
             ] as GridColDef<DiagnosisDto>[],
         [props.diagnoses, handleAddDiagnosis, handleRemoveDiagnosis, props.recommendations]
     );
+
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                includeHeaders: true
+            });
+        }, 100);
+    }, [props.diagnoses, apiRef]);
 
     return (
         <DataGrid

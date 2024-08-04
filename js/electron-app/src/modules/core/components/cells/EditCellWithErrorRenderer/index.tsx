@@ -1,7 +1,7 @@
 import { GridEditInputCell, type GridRenderEditCellParams } from '@mui/x-data-grid';
 
-import { type Patient } from '@/types/patient';
 import ErrorTooltip from '@/modules/core/components/ErrorTooltip';
+import { type Patient } from '@/types/patient';
 
 import classes from './EditCellWithErrorRenderer.module.css';
 

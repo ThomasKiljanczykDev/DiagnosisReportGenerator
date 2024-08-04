@@ -30,9 +30,13 @@ export default function StaffDataGrid(props: StaffSettingsProps) {
         [props]
     );
 
-    const handleRemoveStaffMember = useCallback(async (id: string) => {
-        await StaffService.delete({ id });
-    }, []);
+    const handleRemoveStaffMember = useCallback(
+        async (id: string) => {
+            await StaffService.delete({ id });
+            await props.onStaffChanged();
+        },
+        [props]
+    );
 
     const processRowUpdate = useCallback(async (newRow: StaffMemberDto) => {
         if (newRow.id) {

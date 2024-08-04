@@ -34,9 +34,13 @@ export default function GenesDataGrid(props: GenesDataGridProps) {
         [props]
     );
 
-    const handleRemoveGene = useCallback(async (id: string) => {
-        await GeneService.delete({ id });
-    }, []);
+    const handleRemoveGene = useCallback(
+        async (id: string) => {
+            await GeneService.delete({ id });
+            await props.onGenesChanged();
+        },
+        [props]
+    );
 
     const processRowUpdate = useCallback(async (newRow: GeneDto) => {
         if (newRow.id) {

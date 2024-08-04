@@ -11,7 +11,7 @@ import CreateRecommendationDialog from '@/modules/settings/components/recommenda
 import RecommendationsDataGrid from '@/modules/settings/components/recommendations/RecommendationsDataGrid';
 
 export default function RecommendationsSettings() {
-    const [showAddRecommendationModal, setShowCreateRecommendationModal] = useState(false);
+    const [showCreateRecommendationModal, setShowCreateRecommendationModal] = useState(false);
     const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
     const getRecommendations = useCallback(async (signal?: AbortSignal) => {
@@ -32,7 +32,7 @@ export default function RecommendationsSettings() {
     return (
         <>
             <CreateRecommendationDialog
-                open={showAddRecommendationModal}
+                open={showCreateRecommendationModal}
                 onClose={() => {
                     setShowCreateRecommendationModal(false);
                 }}

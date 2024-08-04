@@ -32,9 +32,13 @@ export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
         [props]
     );
 
-    const handleRemoveIllnesses = useCallback(async (id: string) => {
-        await IllnessService.delete({ id });
-    }, []);
+    const handleRemoveIllnesses = useCallback(
+        async (id: string) => {
+            await IllnessService.delete({ id });
+            await props.onIllnessesChanged();
+        },
+        [props]
+    );
 
     const processRowUpdate = useCallback(async (newRow: IllnessDto) => {
         if (newRow.id) {

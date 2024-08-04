@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react';
 
 import { Grid } from '@mui/material';
 
-import { type Patient } from '@/types/patient';
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import LoadingContainer from '@/modules/core/components/LoadingContainer';
 import PatientsDataGrid from '@/modules/reports/components/PatientsDataGrid';
 import ReportsActionButtons from '@/modules/reports/components/ReportsActionButtons';
+import { type Patient } from '@/types/patient';
 
 export default function Reports() {
     const [patientData, setPatientData] = useState<Patient[]>([]);

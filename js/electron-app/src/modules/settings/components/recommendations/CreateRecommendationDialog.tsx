@@ -45,7 +45,11 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                 if (axios.isAxiosError(e)) {
                     setOpenErrorSnackbar(true);
                 }
+
+                return;
             }
+
+            props.onClose();
         },
         [props]
     );

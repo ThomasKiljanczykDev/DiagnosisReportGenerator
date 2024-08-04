@@ -30,9 +30,13 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
         [props]
     );
 
-    const handleRemoveRecommendation = useCallback(async (id: string) => {
-        await RecommendationService.delete({ id });
-    }, []);
+    const handleRemoveRecommendation = useCallback(
+        async (id: string) => {
+            await RecommendationService.delete({ id });
+            await props.onRecommendationsChanged();
+        },
+        [props]
+    );
 
     const handleMove = useCallback(
         async (id: string, increment: 1 | -1) => {

@@ -25,9 +25,13 @@ export default function MutationsDataGrid(props: MutationsDataGridProps) {
         [props]
     );
 
-    const handleRemoveMutation = useCallback(async (id: string) => {
-        await MutationService.delete({ id });
-    }, []);
+    const handleRemoveMutation = useCallback(
+        async (id: string) => {
+            await MutationService.delete({ id });
+            await props.onMutationsChanged();
+        },
+        [props]
+    );
 
     const processRowUpdate = useCallback(async (newRow: MutationDto) => {
         if (newRow.id) {

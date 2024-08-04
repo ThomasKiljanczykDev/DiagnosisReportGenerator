@@ -18,9 +18,12 @@ import {
 } from '@mui/x-data-grid';
 
 import EditCellWithErrorRenderer from '@/modules/core/components/cells/EditCellWithErrorRenderer';
+import {
+    createMultiSelectDefinition,
+    createSingleSelectDefinition
+} from '@/modules/core/utils/datagrid';
 import { formatStaffMember } from '@/modules/core/utils/formatting';
 import { type Patient, type Pesel, parsePesel } from '@/types/patient';
-import { createMultiSelectDefinition, createSingleSelectDefinition } from '@/modules/core/utils/datagrid';
 
 interface PatientsDataGridProps {
     patients: Patient[];
