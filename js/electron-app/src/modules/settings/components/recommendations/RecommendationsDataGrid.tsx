@@ -20,16 +20,6 @@ interface RecommendationsDataGridProps {
 export default function RecommendationsDataGrid(props: RecommendationsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleCreateRecommendation = useCallback(
-        async (recommendation: RecommendationDto) => {
-            await RecommendationService.create({
-                body: recommendation
-            });
-            await props.onRecommendationsChanged();
-        },
-        [props]
-    );
-
     const handleRemoveRecommendation = useCallback(
         async (id: string) => {
             await RecommendationService.delete({ id });
@@ -94,12 +84,11 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                         const isFirstRow = props.recommendations.indexOf(params.row) === 0;
                         const isLastRow =
                             props.recommendations.indexOf(params.row) ===
-                            props.recommendations.length - 2;
+                            props.recommendations.length - 1;
 
                         return (
                             <ActionCell
                                 params={params}
-                                onAdd={handleCreateRecommendation}
                                 onRemove={handleRemoveRecommendation}
                                 onMoveUp={isFirstRow ? undefined : handleMoveUp}
                                 onMoveDown={isLastRow ? undefined : handleMoveDown}
@@ -167,13 +156,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     )
                 }
             ] as GridColDef<RecommendationDto>[],
-        [
-            handleCreateRecommendation,
-            handleMoveDown,
-            handleMoveUp,
-            handleRemoveRecommendation,
-            props.recommendations
-        ]
+        [handleMoveDown, handleMoveUp, handleRemoveRecommendation, props.recommendations]
     );
 
     useEffect(() => {

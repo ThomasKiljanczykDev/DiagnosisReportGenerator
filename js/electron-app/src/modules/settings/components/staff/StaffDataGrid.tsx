@@ -20,16 +20,6 @@ interface StaffSettingsProps {
 export default function StaffDataGrid(props: StaffSettingsProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddStaffMember = useCallback(
-        async (staffMember: StaffMemberDto) => {
-            await StaffService.create({
-                body: staffMember
-            });
-            await props.onStaffChanged();
-        },
-        [props]
-    );
-
     const handleRemoveStaffMember = useCallback(
         async (id: string) => {
             await StaffService.delete({ id });
@@ -60,11 +50,7 @@ export default function StaffDataGrid(props: StaffSettingsProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddStaffMember}
-                            onRemove={handleRemoveStaffMember}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveStaffMember} />
                     )
                 },
                 {
@@ -91,7 +77,7 @@ export default function StaffDataGrid(props: StaffSettingsProps) {
                     getOptionLabel: (staffRole: StaffRole) => staffRoleToPolishString(staffRole)
                 }
             ] as GridColDef<StaffMemberDto>[],
-        [handleAddStaffMember, handleRemoveStaffMember, props.staff]
+        [handleRemoveStaffMember, props.staff]
     );
 
     useEffect(() => {

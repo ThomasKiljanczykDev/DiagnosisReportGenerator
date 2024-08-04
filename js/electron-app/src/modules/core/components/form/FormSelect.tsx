@@ -24,7 +24,7 @@ interface FormSelectProps<Values extends FormikValues, Value> extends BaseSelect
     InputProps?: Partial<StandardInputProps>;
 
     formik: FormikProps<Values> & FormikState<Values>;
-    field: keyof Values;
+    field: string;
     fixedHeight?: boolean;
     items: SelectItem[];
 }

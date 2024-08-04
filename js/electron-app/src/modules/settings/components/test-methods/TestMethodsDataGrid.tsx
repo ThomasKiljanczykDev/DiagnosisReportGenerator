@@ -15,16 +15,6 @@ interface TestMethodsDataGridProps {
 export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddTestMethod = useCallback(
-        async (testMethod: TestMethodDto) => {
-            await TestMethodService.create({
-                body: testMethod
-            });
-            await props.onTestMethodsChanged();
-        },
-        [props]
-    );
-
     const handleRemoveTestMethod = useCallback(
         async (id: string) => {
             await TestMethodService.delete({ id });
@@ -55,11 +45,7 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddTestMethod}
-                            onRemove={handleRemoveTestMethod}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveTestMethod} />
                     )
                 },
                 {
@@ -74,7 +60,7 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
                     renderEditCell: EditCellWithErrorRenderer
                 }
             ] as GridColDef<TestMethodDto>[],
-        [handleAddTestMethod, handleRemoveTestMethod, props.testMethods]
+        [handleRemoveTestMethod, props.testMethods]
     );
 
     useEffect(() => {
