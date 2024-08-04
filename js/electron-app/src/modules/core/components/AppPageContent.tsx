@@ -1,13 +1,12 @@
-import { type ReactNode, memo } from 'react';
+import { type PropsWithChildren, type ReactNode, memo } from 'react';
 
 import { Grid } from '@mui/material';
 
 interface AppPageContentProps {
     title: string;
-    children?: ReactNode;
 }
 
-const AppPageContent = memo(function AppPageContent(props: AppPageContentProps) {
+const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<AppPageContentProps>) {
     return (
         <Grid
             container
@@ -22,7 +21,15 @@ const AppPageContent = memo(function AppPageContent(props: AppPageContentProps) 
             <Grid item flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
                 <h2 style={{ color: 'black', margin: 0 }}>{props.title}</h2>
             </Grid>
-            <Grid item flex={1} minWidth={0} minHeight={0} maxWidth="100%">
+            <Grid
+                item
+                display="flex"
+                flex={1}
+                flexDirection="column"
+                minWidth={0}
+                minHeight={0}
+                maxWidth="100%"
+            >
                 {props.children}
             </Grid>
         </Grid>

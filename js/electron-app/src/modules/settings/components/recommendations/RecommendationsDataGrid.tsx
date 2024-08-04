@@ -8,12 +8,9 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import AppPageContent from '@/modules/core/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/modules/core/components/cells';
 import EditCellWithErrorRenderer from '@/modules/core/components/cells/EditCellWithErrorRenderer';
 import { validateName } from '@/modules/core/utils/validators';
-
-const int32max = 2147483647;
 
 interface RecommendationsDataGridProps {
     recommendations: RecommendationDto[];
@@ -23,7 +20,7 @@ interface RecommendationsDataGridProps {
 export default function RecommendationsDataGrid(props: RecommendationsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddRecommendation = useCallback(
+    const handleCreateRecommendation = useCallback(
         async (recommendation: RecommendationDto) => {
             await RecommendationService.create({
                 body: recommendation
@@ -98,7 +95,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                         return (
                             <ActionCell
                                 params={params}
-                                onAdd={handleAddRecommendation}
+                                onAdd={handleCreateRecommendation}
                                 onRemove={handleRemoveRecommendation}
                                 onMoveUp={isFirstRow ? undefined : handleMoveUp}
                                 onMoveDown={isLastRow ? undefined : handleMoveDown}
@@ -110,9 +107,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     field: 'priority',
                     headerName: 'Priorytet',
                     sortable: false,
-                    editable: false,
-                    renderCell: (params) =>
-                        params.value == null || params.value >= int32max ? null : params.value
+                    editable: false
                 } as GridColDef<RecommendationDto, number>,
                 {
                     field: 'name',
@@ -120,7 +115,10 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     sortable: false,
                     editable: true,
                     preProcessEditCellProps: (params) => {
-                        const errorMessage = validateName(params.props.value, props.recommendations);
+                        const errorMessage = validateName(
+                            params.props.value,
+                            props.recommendations
+                        );
                         return { ...params.props, error: errorMessage };
                     },
                     renderEditCell: EditCellWithErrorRenderer
@@ -166,7 +164,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                 }
             ] as GridColDef<RecommendationDto>[],
         [
-            handleAddRecommendation,
+            handleCreateRecommendation,
             handleMoveDown,
             handleMoveUp,
             handleRemoveRecommendation,
@@ -184,16 +182,14 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
     }, [props.recommendations, apiRef]);
 
     return (
-        <AppPageContent title="Zalecenia">
-            <DataGrid
-                apiRef={apiRef}
-                columns={RECOMMENDATIONS_COLUMNS}
-                rows={props.recommendations}
-                rowSelection={false}
-                processRowUpdate={processRowUpdate}
-                getRowClassName={(row) => (row.id ? '' : 'new-row')}
-                autosizeOnMount={true}
-            />
-        </AppPageContent>
+        <DataGrid
+            apiRef={apiRef}
+            columns={RECOMMENDATIONS_COLUMNS}
+            rows={props.recommendations}
+            rowSelection={false}
+            processRowUpdate={processRowUpdate}
+            getRowClassName={(row) => (row.id ? '' : 'new-row')}
+            autosizeOnMount={true}
+        />
     );
 }

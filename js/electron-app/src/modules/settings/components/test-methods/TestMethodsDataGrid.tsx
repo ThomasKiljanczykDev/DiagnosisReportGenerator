@@ -83,16 +83,14 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
     }, [props.testMethods, apiRef]);
 
     return (
-        <AppPageContent title="Metody Badań">
-            <DataGrid
-                apiRef={apiRef}
-                columns={METODY_COLUMNS}
-                rows={props.testMethods}
-                rowSelection={false}
-                processRowUpdate={processRowUpdate}
-                getRowClassName={(row) => (row.id ? '' : 'new-row')}
-                autosizeOnMount={true}
-            />
-        </AppPageContent>
+        <DataGrid
+            apiRef={apiRef}
+            columns={METODY_COLUMNS}
+            rows={props.testMethods}
+            rowSelection={false}
+            processRowUpdate={processRowUpdate}
+            getRowClassName={(row) => (row.id ? '' : 'new-row')}
+            autosizeOnMount={true}
+        />
     );
 }
