@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ArrowDownwardRounded from '@mui/icons-material/ArrowDownwardRounded';
 import ArrowUpwardRounded from '@mui/icons-material/ArrowUpwardRounded';
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { IconButton, Tooltip } from '@mui/material';
 import { type GridRenderCellParams } from '@mui/x-data-grid';
 
@@ -49,7 +49,7 @@ export default function ActionCell<T extends { id: string }>(props: ActionCellPr
             ) : (
                 <Tooltip title="Usuń" arrow={true}>
                     <IconButton onClick={handleRemove}>
-                        <RemoveRoundedIcon />
+                        <DeleteRoundedIcon />
                     </IconButton>
                 </Tooltip>
             )}
