@@ -124,14 +124,9 @@ export default function RecommendationsSettings() {
                     field: 'priority',
                     headerName: 'Priorytet',
                     sortable: false,
-                    editable: true,
-                    renderCell: (params) => {
-                        if (params.value == null) {
-                            return params.value;
-                        }
-
-                        return params.value >= int32max ? null : params.value;
-                    }
+                    editable: false,
+                    renderCell: (params) =>
+                        params.value == null || params.value >= int32max ? null : params.value
                 } as GridColDef<RecommendationDto, number>,
                 {
                     field: 'name',
