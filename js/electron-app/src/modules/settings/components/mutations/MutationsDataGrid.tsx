@@ -15,16 +15,6 @@ interface MutationsDataGridProps {
 export default function MutationsDataGrid(props: MutationsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddMutation = useCallback(
-        async (mutation: MutationDto) => {
-            await MutationService.create({
-                body: mutation
-            });
-            await props.onMutationsChanged();
-        },
-        [props]
-    );
-
     const handleRemoveMutation = useCallback(
         async (id: string) => {
             await MutationService.delete({ id });
@@ -57,7 +47,6 @@ export default function MutationsDataGrid(props: MutationsDataGridProps) {
                     renderCell: (params) => (
                         <ActionCell
                             params={params}
-                            onAdd={handleAddMutation}
                             onRemove={handleRemoveMutation}
                         />
                     )
@@ -74,7 +63,7 @@ export default function MutationsDataGrid(props: MutationsDataGridProps) {
                     renderEditCell: EditCellWithErrorRenderer
                 }
             ] as GridColDef<MutationDto>[],
-        [handleAddMutation, handleRemoveMutation, props.mutations]
+        [handleRemoveMutation, props.mutations]
     );
 
     useEffect(() => {
