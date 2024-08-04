@@ -405,6 +405,21 @@ export class GeneService {
   }
 }
 
+export class HomeService {
+  /**
+   *
+   */
+  static shutdown(options: IRequestOptions = {}): Promise<any> {
+    return new Promise((resolve, reject) => {
+      let url = basePath + '/shutdown';
+
+      const configs: IRequestConfig = getConfigs('get', 'application/json', url, options);
+
+      axios(configs, resolve, reject);
+    });
+  }
+}
+
 export class IllnessService {
   /**
    *
@@ -1162,6 +1177,9 @@ export interface ControllerInterfaceApiDescriptionModel {
 export interface CreateUpdateDiagnosisDto {
   /**  */
   name: string;
+
+  /**  */
+  recommendationIds: string[];
 }
 
 export interface CreateUpdateGeneDto {
@@ -1340,6 +1358,9 @@ export interface DiagnosisDto {
 
   /**  */
   name: string;
+
+  /**  */
+  recommendationIds: string[];
 }
 
 export interface DiagnosisDtoPagedResultDto {

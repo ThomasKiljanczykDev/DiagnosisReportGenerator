@@ -4,6 +4,4 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFramew
 
 public class
     DiagnosisReportGeneratorEntityFrameworkCoreCollectionFixtureBase : ICollectionFixture<
-    DiagnosisReportGeneratorEntityFrameworkCoreFixture>
-{
-}
+    DiagnosisReportGeneratorEntityFrameworkCoreFixture>;

@@ -5,6 +5,4 @@ namespace Gunock.DiagnosisReportGenerator.Application.Tests;
 
 public abstract class
     DiagnosisReportGeneratorApplicationTestBase<TStartupModule> : DiagnosisReportGeneratorTestBase<TStartupModule>
-    where TStartupModule : IAbpModule
-{
-}
+    where TStartupModule : IAbpModule;

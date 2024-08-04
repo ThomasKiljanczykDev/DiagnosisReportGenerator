@@ -4,12 +4,10 @@ using Gunock.DiagnosisReportGenerator.Domain.Mutations;
 using Gunock.DiagnosisReportGenerator.Domain.TestMethods;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Guids;
 
 namespace Gunock.DiagnosisReportGenerator.Application.Genes;
 
 public class GeneAppService(
-    IGuidGenerator guidGenerator,
     IGeneRepository geneRepository,
     ITestMethodRepository testMethodRepository,
     IMutationRepository mutationRepository

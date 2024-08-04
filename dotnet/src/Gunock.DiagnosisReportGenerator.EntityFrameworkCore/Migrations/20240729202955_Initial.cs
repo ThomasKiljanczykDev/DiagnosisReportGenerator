@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
+namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -126,6 +127,30 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
                 });
 
             migrationBuilder.CreateTable(
+                name: "DiagnosisRecommendation",
+                columns: table => new
+                {
+                    DiagnosesId = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RecommendationsId = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiagnosisRecommendation", x => new { x.DiagnosesId, x.RecommendationsId });
+                    table.ForeignKey(
+                        name: "FK_DiagnosisRecommendation_Diagnoses_DiagnosesId",
+                        column: x => x.DiagnosesId,
+                        principalTable: "Diagnoses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DiagnosisRecommendation_Recommendations_RecommendationsId",
+                        column: x => x.RecommendationsId,
+                        principalTable: "Recommendations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IllnessRecommendation",
                 columns: table => new
                 {
@@ -178,6 +203,11 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
                 table: "Diagnoses",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DiagnosisRecommendation_RecommendationsId",
+                table: "DiagnosisRecommendation",
+                column: "RecommendationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GeneMutation_MutationsId",
@@ -235,7 +265,7 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Diagnoses");
+                name: "DiagnosisRecommendation");
 
             migrationBuilder.DropTable(
                 name: "GeneMutation");
@@ -248,6 +278,9 @@ namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Entities
 
             migrationBuilder.DropTable(
                 name: "StaffMember");
+
+            migrationBuilder.DropTable(
+                name: "Diagnoses");
 
             migrationBuilder.DropTable(
                 name: "Mutations");

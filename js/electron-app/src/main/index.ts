@@ -1,10 +1,18 @@
+import axios from 'axios';
 import { BrowserWindow, app, ipcMain, nativeTheme, shell } from 'electron';
 import contextMenu from 'electron-context-menu';
 import { release } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { HomeService, serviceOptions } from '@diagnosis-report-generator/api/services';
+
 import { update } from './update';
+
+// setup api axios
+serviceOptions.axios = axios.create({
+    baseURL: import.meta.env.VITE_API_URL
+});
 
 globalThis.__filename = fileURLToPath(import.meta.url);
 globalThis.__dirname = dirname(__filename);
@@ -123,13 +131,19 @@ app.on('activate', () => {
     }
 });
 
+app.on('before-quit', async () => {
+    if (process.env.VITE_NODE_ENV !== 'development') {
+        await HomeService.shutdown();
+    }
+});
+
 // New window example arg: new windows url
 ipcMain.handle('open-win', (_, arg: string) => {
     const childWindow = new BrowserWindow({
         webPreferences: {
             preload,
-            nodeIntegration: true,
-            contextIsolation: false
+            nodeIntegration: false,
+            contextIsolation: true
         }
     });
 

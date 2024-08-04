@@ -3,6 +3,4 @@
 namespace Gunock.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFrameworkCore;
 
 public abstract class DiagnosisReportGeneratorEntityFrameworkCoreTestBase : DiagnosisReportGeneratorTestBase<
-    DiagnosisReportGeneratorEntityFrameworkCoreTestModule>
-{
-}
+    DiagnosisReportGeneratorEntityFrameworkCoreTestModule>;

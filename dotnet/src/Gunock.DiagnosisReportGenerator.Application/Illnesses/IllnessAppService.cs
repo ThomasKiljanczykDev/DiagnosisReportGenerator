@@ -3,12 +3,10 @@ using Gunock.DiagnosisReportGenerator.Domain.Illnesses;
 using Gunock.DiagnosisReportGenerator.Domain.Recommendations;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
-using Volo.Abp.Guids;
 
 namespace Gunock.DiagnosisReportGenerator.Application.Illnesses;
 
 public class IllnessAppService(
-    IGuidGenerator guidGenerator,
     IIllnessRepository illnessRepository,
     IRecommendationRepository recommendationRepository
 ) : CrudAppService<Illness, IllnessDto, Guid, PagedAndSortedResultRequestDto, CreateUpdateIllnessDto>(

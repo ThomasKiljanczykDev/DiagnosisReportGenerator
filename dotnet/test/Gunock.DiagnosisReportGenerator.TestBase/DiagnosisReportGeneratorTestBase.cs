@@ -25,17 +25,13 @@ public abstract class DiagnosisReportGeneratorTestBase<TStartupModule> : AbpInte
 
     protected virtual async Task WithUnitOfWorkAsync(AbpUnitOfWorkOptions options, Func<Task> action)
     {
-        using (var scope = ServiceProvider.CreateScope())
-        {
-            var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+        using var scope = ServiceProvider.CreateScope();
+        var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
 
-            using (var uow = uowManager.Begin(options))
-            {
-                await action();
+        using var uow = uowManager.Begin(options);
+        await action();
 
-                await uow.CompleteAsync();
-            }
-        }
+        await uow.CompleteAsync();
     }
 
     protected virtual Task<TResult> WithUnitOfWorkAsync<TResult>(Func<Task<TResult>> func)
@@ -48,16 +44,12 @@ public abstract class DiagnosisReportGeneratorTestBase<TStartupModule> : AbpInte
         Func<Task<TResult>> func
     )
     {
-        using (var scope = ServiceProvider.CreateScope())
-        {
-            var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
+        using var scope = ServiceProvider.CreateScope();
+        var uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
 
-            using (var uow = uowManager.Begin(options))
-            {
-                var result = await func();
-                await uow.CompleteAsync();
-                return result;
-            }
-        }
+        using var uow = uowManager.Begin(options);
+        var result = await func();
+        await uow.CompleteAsync();
+        return result;
     }
 }

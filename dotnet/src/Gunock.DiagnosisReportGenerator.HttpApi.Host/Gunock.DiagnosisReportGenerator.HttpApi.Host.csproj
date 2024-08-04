@@ -19,9 +19,9 @@
         </PackageReference>
         <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11"/>
         <PackageReference Include="NLog.Web.AspNetCore" Version="5.3.11"/>
-        <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="8.2.0"/>
-        <PackageReference Include="Volo.Abp.Autofac" Version="8.2.0"/>
-        <PackageReference Include="Volo.Abp.Swashbuckle" Version="8.2.0"/>
+        <PackageReference Include="Volo.Abp.AspNetCore.Mvc" Version="8.2.1"/>
+        <PackageReference Include="Volo.Abp.Autofac" Version="8.2.1"/>
+        <PackageReference Include="Volo.Abp.Swashbuckle" Version="8.2.1"/>
     </ItemGroup>
 
     <ItemGroup>
