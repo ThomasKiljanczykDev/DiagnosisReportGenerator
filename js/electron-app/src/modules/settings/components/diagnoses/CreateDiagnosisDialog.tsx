@@ -90,8 +90,8 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                         />
                         <FormMultiSelect
                             formik={formik}
-                            label="Metody badań"
-                            field="testMethodIds"
+                            label="Zalecenia"
+                            field="recommendationIds"
                             items={Object.values(props.recommendations).map((recommendation) => ({
                                 label: recommendation.name,
                                 value: recommendation.id
