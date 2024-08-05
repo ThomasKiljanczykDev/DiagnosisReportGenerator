@@ -8,12 +8,9 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import AppPageContent from '@/modules/core/components/AppPageContent';
 import { ActionCell, RangeEditCell } from '@/modules/core/components/cells';
 import EditCellWithErrorRenderer from '@/modules/core/components/cells/EditCellWithErrorRenderer';
 import { validateName } from '@/modules/core/utils/validators';
-
-const int32max = 2147483647;
 
 interface RecommendationsDataGridProps {
     recommendations: RecommendationDto[];
@@ -23,19 +20,13 @@ interface RecommendationsDataGridProps {
 export default function RecommendationsDataGrid(props: RecommendationsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddRecommendation = useCallback(
-        async (recommendation: RecommendationDto) => {
-            await RecommendationService.create({
-                body: recommendation
-            });
+    const handleRemoveRecommendation = useCallback(
+        async (id: string) => {
+            await RecommendationService.delete({ id });
             await props.onRecommendationsChanged();
         },
         [props]
     );
-
-    const handleRemoveRecommendation = useCallback(async (id: string) => {
-        await RecommendationService.delete({ id });
-    }, []);
 
     const handleMove = useCallback(
         async (id: string, increment: 1 | -1) => {
@@ -93,12 +84,11 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                         const isFirstRow = props.recommendations.indexOf(params.row) === 0;
                         const isLastRow =
                             props.recommendations.indexOf(params.row) ===
-                            props.recommendations.length - 2;
+                            props.recommendations.length - 1;
 
                         return (
                             <ActionCell
                                 params={params}
-                                onAdd={handleAddRecommendation}
                                 onRemove={handleRemoveRecommendation}
                                 onMoveUp={isFirstRow ? undefined : handleMoveUp}
                                 onMoveDown={isLastRow ? undefined : handleMoveDown}
@@ -110,9 +100,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     field: 'priority',
                     headerName: 'Priorytet',
                     sortable: false,
-                    editable: false,
-                    renderCell: (params) =>
-                        params.value == null || params.value >= int32max ? null : params.value
+                    editable: false
                 } as GridColDef<RecommendationDto, number>,
                 {
                     field: 'name',
@@ -120,7 +108,10 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     sortable: false,
                     editable: true,
                     preProcessEditCellProps: (params) => {
-                        const errorMessage = validateName(params.props.value, props.recommendations);
+                        const errorMessage = validateName(
+                            params.props.value,
+                            props.recommendations
+                        );
                         return { ...params.props, error: errorMessage };
                     },
                     renderEditCell: EditCellWithErrorRenderer
@@ -165,13 +156,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
                     )
                 }
             ] as GridColDef<RecommendationDto>[],
-        [
-            handleAddRecommendation,
-            handleMoveDown,
-            handleMoveUp,
-            handleRemoveRecommendation,
-            props.recommendations
-        ]
+        [handleMoveDown, handleMoveUp, handleRemoveRecommendation, props.recommendations]
     );
 
     useEffect(() => {
@@ -184,16 +169,14 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
     }, [props.recommendations, apiRef]);
 
     return (
-        <AppPageContent title="Zalecenia">
-            <DataGrid
-                apiRef={apiRef}
-                columns={RECOMMENDATIONS_COLUMNS}
-                rows={props.recommendations}
-                rowSelection={false}
-                processRowUpdate={processRowUpdate}
-                getRowClassName={(row) => (row.id ? '' : 'new-row')}
-                autosizeOnMount={true}
-            />
-        </AppPageContent>
+        <DataGrid
+            apiRef={apiRef}
+            columns={RECOMMENDATIONS_COLUMNS}
+            rows={props.recommendations}
+            rowSelection={false}
+            processRowUpdate={processRowUpdate}
+            getRowClassName={(row) => (row.id ? '' : 'new-row')}
+            autosizeOnMount={true}
+        />
     );
 }

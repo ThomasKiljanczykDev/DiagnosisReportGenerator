@@ -1,7 +1,6 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import {
-    type CreateUpdateDiagnosisDto,
     type DiagnosisDto,
     DiagnosisService,
     type RecommendationDto
@@ -23,20 +22,13 @@ interface DiagnosesDataGridProps {
 export default function DiagnosesDataGrid(props: DiagnosesDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddDiagnosis = useCallback(
-        async (diagnosis: CreateUpdateDiagnosisDto) => {
-            await DiagnosisService.create({
-                body: diagnosis
-            });
-
+    const handleRemoveDiagnosis = useCallback(
+        async (id: string) => {
+            await DiagnosisService.delete({ id });
             await props.onDiagnosesChanged();
         },
         [props]
     );
-
-    const handleRemoveDiagnosis = useCallback(async (id: string) => {
-        await DiagnosisService.delete({ id });
-    }, []);
 
     const processRowUpdate = useCallback(async (newRow: DiagnosisDto) => {
         if (newRow.id) {
@@ -60,11 +52,7 @@ export default function DiagnosesDataGrid(props: DiagnosesDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddDiagnosis}
-                            onRemove={handleRemoveDiagnosis}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveDiagnosis} />
                     )
                 },
                 {
@@ -104,8 +92,17 @@ export default function DiagnosesDataGrid(props: DiagnosesDataGridProps) {
                     )
                 }
             ] as GridColDef<DiagnosisDto>[],
-        [props.diagnoses, handleAddDiagnosis, handleRemoveDiagnosis, props.recommendations]
+        [props.diagnoses, handleRemoveDiagnosis, props.recommendations]
     );
+
+    useEffect(() => {
+        window.setTimeout(async () => {
+            await apiRef.current.autosizeColumns({
+                includeOutliers: true,
+                includeHeaders: true
+            });
+        }, 100);
+    }, [props.diagnoses, apiRef]);
 
     return (
         <DataGrid

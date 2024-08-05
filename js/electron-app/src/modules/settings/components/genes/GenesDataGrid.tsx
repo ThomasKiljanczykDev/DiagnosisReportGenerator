@@ -24,19 +24,13 @@ interface GenesDataGridProps {
 export default function GenesDataGrid(props: GenesDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddGene = useCallback(
-        async (gene: GeneDto) => {
-            await GeneService.create({
-                body: gene
-            });
+    const handleRemoveGene = useCallback(
+        async (id: string) => {
+            await GeneService.delete({ id });
             await props.onGenesChanged();
         },
         [props]
     );
-
-    const handleRemoveGene = useCallback(async (id: string) => {
-        await GeneService.delete({ id });
-    }, []);
 
     const processRowUpdate = useCallback(async (newRow: GeneDto) => {
         if (newRow.id) {
@@ -60,11 +54,7 @@ export default function GenesDataGrid(props: GenesDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddGene}
-                            onRemove={handleRemoveGene}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveGene} />
                     )
                 },
                 {
@@ -129,7 +119,7 @@ export default function GenesDataGrid(props: GenesDataGridProps) {
                     )
                 }
             ] as GridColDef<GeneDto>[],
-        [handleAddGene, handleRemoveGene, props.genes, props.testMethods, props.mutations]
+        [handleRemoveGene, props.genes, props.testMethods, props.mutations]
     );
 
     useEffect(() => {

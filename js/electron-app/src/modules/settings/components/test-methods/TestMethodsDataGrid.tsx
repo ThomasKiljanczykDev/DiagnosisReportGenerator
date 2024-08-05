@@ -3,7 +3,6 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
 import { DataGrid, type GridColDef, useGridApiRef } from '@mui/x-data-grid';
 
-import AppPageContent from '@/modules/core/components/AppPageContent';
 import { ActionCell } from '@/modules/core/components/cells';
 import EditCellWithErrorRenderer from '@/modules/core/components/cells/EditCellWithErrorRenderer';
 import { validateName } from '@/modules/core/utils/validators';
@@ -16,19 +15,13 @@ interface TestMethodsDataGridProps {
 export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddTestMethod = useCallback(
-        async (testMethod: TestMethodDto) => {
-            await TestMethodService.create({
-                body: testMethod
-            });
+    const handleRemoveTestMethod = useCallback(
+        async (id: string) => {
+            await TestMethodService.delete({ id });
             await props.onTestMethodsChanged();
         },
         [props]
     );
-
-    const handleRemoveTestMethod = useCallback(async (id: string) => {
-        await TestMethodService.delete({ id });
-    }, []);
 
     const processRowUpdate = useCallback(async (newRow: TestMethodDto) => {
         if (newRow.id) {
@@ -52,11 +45,7 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddTestMethod}
-                            onRemove={handleRemoveTestMethod}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveTestMethod} />
                     )
                 },
                 {
@@ -71,8 +60,9 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
                     renderEditCell: EditCellWithErrorRenderer
                 }
             ] as GridColDef<TestMethodDto>[],
-        [handleAddTestMethod, handleRemoveTestMethod, props.testMethods]
+        [handleRemoveTestMethod, props.testMethods]
     );
+
     useEffect(() => {
         window.setTimeout(async () => {
             await apiRef.current.autosizeColumns({
@@ -83,16 +73,14 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
     }, [props.testMethods, apiRef]);
 
     return (
-        <AppPageContent title="Metody Badań">
-            <DataGrid
-                apiRef={apiRef}
-                columns={METODY_COLUMNS}
-                rows={props.testMethods}
-                rowSelection={false}
-                processRowUpdate={processRowUpdate}
-                getRowClassName={(row) => (row.id ? '' : 'new-row')}
-                autosizeOnMount={true}
-            />
-        </AppPageContent>
+        <DataGrid
+            apiRef={apiRef}
+            columns={METODY_COLUMNS}
+            rows={props.testMethods}
+            rowSelection={false}
+            processRowUpdate={processRowUpdate}
+            getRowClassName={(row) => (row.id ? '' : 'new-row')}
+            autosizeOnMount={true}
+        />
     );
 }

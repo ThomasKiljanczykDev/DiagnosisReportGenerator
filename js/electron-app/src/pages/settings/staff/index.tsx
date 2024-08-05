@@ -1,26 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-    type StaffMemberDto,
-    StaffRole,
-    StaffService
-} from '@diagnosis-report-generator/api/services';
+import { type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
+import { Box, Button } from '@mui/material';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
+import CreateStaffMemberDialog from '@/modules/settings/components/staff/CreateStaffMemberDialog';
 import StaffDataGrid from '@/modules/settings/components/staff/StaffDataGrid';
 
 export default function StaffSettings() {
+    const [showCreateStaffMemberModal, setShowCreateStaffMemberModal] = useState(false);
     const [staff, setStaff] = useState<StaffMemberDto[]>([]);
 
     const getStaff = useCallback(async (signal?: AbortSignal) => {
         const response = await StaffService.getList(undefined, { signal });
-
-        response.items.push({
-            id: '',
-            name: '',
-            title: '',
-            role: StaffRole.Doctor
-        });
         setStaff(response.items);
     }, []);
 
@@ -34,8 +26,25 @@ export default function StaffSettings() {
     }, [getStaff]);
 
     return (
-        <AppPageContent title="Personel">
-            <StaffDataGrid staff={staff} onStaffChanged={getStaff} />
-        </AppPageContent>
+        <>
+            <CreateStaffMemberDialog
+                open={showCreateStaffMemberModal}
+                onClose={() => {
+                    setShowCreateStaffMemberModal(false);
+                }}
+                onStaffChanged={getStaff}
+            />
+            <AppPageContent title="Personel">
+                <Box marginBottom={1}>
+                    <Button variant="contained" onClick={() => setShowCreateStaffMemberModal(true)}>
+                        Stwórz członka personelu
+                    </Button>
+                </Box>
+
+                <Box flexGrow={1}>
+                    <StaffDataGrid staff={staff} onStaffChanged={getStaff} />
+                </Box>
+            </AppPageContent>
+        </>
     );
 }

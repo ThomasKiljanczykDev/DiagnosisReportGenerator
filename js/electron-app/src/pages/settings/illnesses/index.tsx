@@ -6,22 +6,19 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
+import { Box, Button } from '@mui/material';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
+import CreateIllnessDialog from '@/modules/settings/components/illnesses/CreateIllnessDialog';
 import IllnessesDataGrid from '@/modules/settings/components/illnesses/IllnessesDataGrid';
 
 export default function IllnessesSettings() {
+    const [showCreateIllnessModal, setShowCreateIllnessModal] = useState(false);
     const [illnesses, setIllnesses] = useState<IllnessDto[]>([]);
     const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
     const getIllnesses = useCallback(async (signal?: AbortSignal) => {
         const response = await IllnessService.getList(undefined, { signal });
-
-        response.items.push({
-            id: '',
-            name: '',
-            recommendationIds: []
-        });
         setIllnesses(response.items);
     }, []);
 
@@ -42,12 +39,30 @@ export default function IllnessesSettings() {
     }, [getIllnesses]);
 
     return (
-        <AppPageContent title="Choroby">
-            <IllnessesDataGrid
-                illnesses={illnesses}
-                recommendations={recommendations}
+        <>
+            <CreateIllnessDialog
+                open={showCreateIllnessModal}
+                onClose={() => {
+                    setShowCreateIllnessModal(false);
+                }}
                 onIllnessesChanged={getIllnesses}
+                recommendations={recommendations}
             />
-        </AppPageContent>
+            <AppPageContent title="Choroby">
+                <Box marginBottom={1}>
+                    <Button variant="contained" onClick={() => setShowCreateIllnessModal(true)}>
+                        Stwórz chorobę
+                    </Button>
+                </Box>
+
+                <Box flexGrow={1}>
+                    <IllnessesDataGrid
+                        illnesses={illnesses}
+                        recommendations={recommendations}
+                        onIllnessesChanged={getIllnesses}
+                    />
+                </Box>
+            </AppPageContent>
+        </>
     );
 }

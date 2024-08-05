@@ -10,9 +10,9 @@ import {
     TestMethodService
 } from '@diagnosis-report-generator/api/services';
 
+import { formatStaffMember } from '@/modules/core/utils/formatting';
 import { type Patient } from '@/types/patient';
 import { type Report, type ReportGene } from '@/types/report';
-import { formatStaffMember } from '@/modules/core/utils/formatting';
 
 const zip = promisify(zipCb);
 

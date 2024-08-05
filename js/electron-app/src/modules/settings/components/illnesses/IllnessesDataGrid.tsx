@@ -22,19 +22,13 @@ interface IllnessesDataGridProps {
 export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
     const apiRef = useGridApiRef();
 
-    const handleAddIllnesses = useCallback(
-        async (illness: IllnessDto) => {
-            await IllnessService.create({
-                body: illness
-            });
+    const handleRemoveIllnesses = useCallback(
+        async (id: string) => {
+            await IllnessService.delete({ id });
             await props.onIllnessesChanged();
         },
         [props]
     );
-
-    const handleRemoveIllnesses = useCallback(async (id: string) => {
-        await IllnessService.delete({ id });
-    }, []);
 
     const processRowUpdate = useCallback(async (newRow: IllnessDto) => {
         if (newRow.id) {
@@ -58,11 +52,7 @@ export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onAdd={handleAddIllnesses}
-                            onRemove={handleRemoveIllnesses}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveIllnesses} />
                     )
                 },
                 {
@@ -102,7 +92,7 @@ export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
                     )
                 }
             ] as GridColDef<IllnessDto>[],
-        [handleAddIllnesses, handleRemoveIllnesses, props.illnesses, props.recommendations]
+        [handleRemoveIllnesses, props.illnesses, props.recommendations]
     );
 
     useEffect(() => {
