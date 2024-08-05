@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
     type DiagnosisDto,
@@ -6,12 +6,15 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
+import { Box, Button } from '@mui/material';
 import { useGridApiRef } from '@mui/x-data-grid';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
+import CreateDiagnosisDialog from '@/modules/settings/components/diagnoses/CreateDiagnosisDialog';
 import DiagnosesDataGrid from '@/modules/settings/components/diagnoses/DiagnosesDataGrid';
 
 export default function DiagnosesSettings() {
+    const [showCreateDiagnosisModal, setShowCreateDiagnosisModal] = useState(false);
     const apiRef = useGridApiRef();
 
     const [diagnoses, setDiagnoses] = useState<DiagnosisDto[]>([]);
@@ -19,12 +22,6 @@ export default function DiagnosesSettings() {
 
     const getDiagnoses = useCallback(async (signal?: AbortSignal) => {
         const response = await DiagnosisService.getList(undefined, { signal });
-
-        response.items.push({
-            id: '',
-            name: '',
-            recommendationIds: []
-        });
         setDiagnoses(response.items);
     }, []);
 
@@ -51,12 +48,30 @@ export default function DiagnosesSettings() {
     }, [getDiagnoses]);
 
     return (
-        <AppPageContent title="Rozpoznania">
-            <DiagnosesDataGrid
-                diagnoses={diagnoses}
-                recommendations={recommendations}
+        <>
+            <CreateDiagnosisDialog
+                open={showCreateDiagnosisModal}
+                onClose={() => {
+                    setShowCreateDiagnosisModal(false);
+                }}
                 onDiagnosesChanged={getDiagnoses}
+                recommendations={recommendations}
             />
-        </AppPageContent>
+            <AppPageContent title="Rozpoznania">
+                <Box marginBottom={1}>
+                    <Button variant="contained" onClick={() => setShowCreateDiagnosisModal(true)}>
+                        Stwórz rozpoznanie
+                    </Button>
+                </Box>
+
+                <Box flexGrow={1}>
+                    <DiagnosesDataGrid
+                        diagnoses={diagnoses}
+                        recommendations={recommendations}
+                        onDiagnosesChanged={getDiagnoses}
+                    />
+                </Box>
+            </AppPageContent>
+        </>
     );
 }
