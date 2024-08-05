@@ -14,13 +14,13 @@ import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormTextField from '@/modules/core/components/form/FormTextField';
 import { testMethodValidator } from '@/modules/settings/components/test-methods/validators';
 
-interface CreateRecommendationDialogProps {
+interface CreateTestMethodDialogProps {
     open: boolean;
     onClose: () => void;
     onTestMethodsChanged: () => Promise<void>;
 }
 
-export default function CreateTestMethodDialog(props: CreateRecommendationDialogProps) {
+export default function CreateTestMethodDialog(props: CreateTestMethodDialogProps) {
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
 
     const handleCreateTestMethod = useCallback(
@@ -61,6 +61,7 @@ export default function CreateTestMethodDialog(props: CreateRecommendationDialog
         } else {
             formik.submitForm();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.open]);
 
     return (

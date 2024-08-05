@@ -77,6 +77,7 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
         } else {
             formik.submitForm();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.open]);
 
     return (

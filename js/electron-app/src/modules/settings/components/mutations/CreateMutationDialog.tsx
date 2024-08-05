@@ -14,13 +14,13 @@ import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormTextField from '@/modules/core/components/form/FormTextField';
 import { mutationValidator } from '@/modules/settings/components/mutations/validators';
 
-interface CreateRecommendationDialogProps {
+interface CreateMutationDialogProps {
     open: boolean;
     onClose: () => void;
     onMutationsChanged: () => Promise<void>;
 }
 
-export default function CreateMutationDialog(props: CreateRecommendationDialogProps) {
+export default function CreateMutationDialog(props: CreateMutationDialogProps) {
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
 
     const handleCreateMutation = useCallback(
@@ -59,6 +59,7 @@ export default function CreateMutationDialog(props: CreateRecommendationDialogPr
         } else {
             formik.submitForm();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.open]);
 
     return (

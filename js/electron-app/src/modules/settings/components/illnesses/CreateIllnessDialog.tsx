@@ -5,40 +5,38 @@ import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import {
-    type CreateUpdateStaffMemberDto,
-    StaffRole,
-    StaffService
+    type CreateUpdateIllnessDto,
+    IllnessService,
+    type RecommendationDto
 } from '@diagnosis-report-generator/api/services';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
-import FormSelect from '@/modules/core/components/form/FormSelect';
+import FormMultiSelect from '@/modules/core/components/form/FormMultiSelect';
 import FormTextField from '@/modules/core/components/form/FormTextField';
-import { staffRoleToPolishString } from '@/modules/core/utils/text-util';
-import { staffMemberValidator } from '@/modules/settings/components/staff/validators';
+import { illnessValidator } from '@/modules/settings/components/illnesses/validators';
 
-interface CreateStaffMemberDialogProps {
+interface CreateIllnessDialogProps {
     open: boolean;
     onClose: () => void;
-    onStaffChanged: () => Promise<void>;
+    onIllnessesChanged: () => Promise<void>;
+    recommendations: RecommendationDto[];
 }
 
-export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogProps) {
+export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
 
-    const handleCreateStaffMember = useCallback(
-        async (dto: CreateUpdateStaffMemberDto) => {
+    const handleCreateIllness = useCallback(
+        async (dto: CreateUpdateIllnessDto) => {
             try {
-                await StaffService.create({
+                await IllnessService.create({
                     body: dto
                 });
-                await props.onStaffChanged();
+                await props.onIllnessesChanged();
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     setOpenErrorSnackbar(true);
                 }
-
-                // TODO: Add snackbar for unexpected errors
 
                 return;
             }
@@ -51,11 +49,10 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
     const formik = useFormik({
         initialValues: {
             name: '',
-            title: '',
-            role: StaffRole.Doctor
+            recommendationIds: []
         },
-        validationSchema: toFormikValidationSchema(staffMemberValidator()),
-        onSubmit: handleCreateStaffMember
+        validationSchema: toFormikValidationSchema(illnessValidator()),
+        onSubmit: handleCreateIllness
     });
 
     useEffect(() => {
@@ -76,38 +73,29 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia członka personelu. Upewnij się, że imię i nazwisko
-                jest unikatowe.
+                Wystąpił błąd podczas tworzenia choroby. Upewnij się, że nazwa choroby jest
+                unikatowa.
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Stwórz członka personelu</DialogTitle>
+                <DialogTitle>Stwórz chorobę</DialogTitle>
                 <DialogContent>
                     <Stack>
                         <FormTextField
-                            label="Imię i nazwisko"
+                            label="Nazwa"
                             variant="standard"
                             formik={formik}
                             field="name"
                             required
                             fixedHeight
                         />
-                        <FormTextField
-                            label="Tytuł"
-                            variant="standard"
+                        {/* TODO: replace with a table where you move recommendation from left to right */}
+                        <FormMultiSelect
                             formik={formik}
-                            field="title"
-                            required
-                            fixedHeight
-                        />
-                        <br />
-                        <FormSelect
-                            formik={formik}
-                            label="Rola"
-                            field="role"
-                            fullWidth
-                            items={Object.values(StaffRole).map((role) => ({
-                                label: staffRoleToPolishString(role),
-                                value: role
+                            label="Zalecenia"
+                            field="recommendationIds"
+                            items={Object.values(props.recommendations).map((recommendation) => ({
+                                label: recommendation.name,
+                                value: recommendation.id
                             }))}
                         />
                     </Stack>
