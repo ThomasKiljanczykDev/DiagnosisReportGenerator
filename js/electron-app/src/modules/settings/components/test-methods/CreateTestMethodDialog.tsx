@@ -77,7 +77,7 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz metodę badania</DialogTitle>
                 <DialogContent>
-                    <Stack>
+                    <Stack spacing="1rem">
                         <FormTextField
                             label="Nazwa"
                             variant="standard"

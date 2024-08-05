@@ -5,34 +5,36 @@ import { useFormik } from 'formik';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import {
-    type CreateUpdateIllnessDto,
-    IllnessService,
-    type RecommendationDto
+    type CreateUpdateGeneDto,
+    GeneService,
+    type MutationDto,
+    type TestMethodDto
 } from '@diagnosis-report-generator/api/services';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormMultiSelect from '@/modules/core/components/form/FormMultiSelect';
 import FormTextField from '@/modules/core/components/form/FormTextField';
-import { illnessValidator } from '@/modules/settings/components/illnesses/validators';
+import { geneValidator } from '@/modules/settings/components/genes/validators';
 
-interface CreateIllnessDialogProps {
+interface CreateGeneDialogProps {
     open: boolean;
     onClose: () => void;
-    onIllnessesChanged: () => Promise<void>;
-    recommendations: RecommendationDto[];
+    onGenesChanged: () => Promise<void>;
+    testMethods: TestMethodDto[];
+    mutations: MutationDto[];
 }
 
-export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
+export default function CreateGeneDialog(props: CreateGeneDialogProps) {
     const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
 
-    const handleCreateIllness = useCallback(
-        async (dto: CreateUpdateIllnessDto) => {
+    const handleCreateGene = useCallback(
+        async (dto: CreateUpdateGeneDto) => {
             try {
-                await IllnessService.create({
+                await GeneService.create({
                     body: dto
                 });
-                await props.onIllnessesChanged();
+                await props.onGenesChanged();
             } catch (e) {
                 if (axios.isAxiosError(e)) {
                     setOpenErrorSnackbar(true);
@@ -49,10 +51,11 @@ export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
     const formik = useFormik({
         initialValues: {
             name: '',
-            recommendationIds: []
+            testMethodIds: [],
+            mutationIds: []
         },
-        validationSchema: toFormikValidationSchema(illnessValidator()),
-        onSubmit: handleCreateIllness
+        validationSchema: toFormikValidationSchema(geneValidator()),
+        onSubmit: handleCreateGene
     });
 
     useEffect(() => {
@@ -73,7 +76,7 @@ export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia choroby. Upewnij się, że nazwa choroby jest
+                Wystąpił błąd podczas tworzenia mutacji. Upewnij się, że nazwa mutacji jest
                 unikatowa.
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
@@ -88,14 +91,22 @@ export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
                             required
                             fixedHeight
                         />
-                        {/* TODO: replace with a table where you move recommendation from left to right */}
                         <FormMultiSelect
                             formik={formik}
-                            label="Zalecenia"
-                            field="recommendationIds"
-                            items={Object.values(props.recommendations).map((recommendation) => ({
-                                label: recommendation.name,
-                                value: recommendation.id
+                            label="Metody badań"
+                            field="testMethodIds"
+                            items={Object.values(props.testMethods).map((testMethod) => ({
+                                label: testMethod.name,
+                                value: testMethod.id
+                            }))}
+                        />
+                        <FormMultiSelect
+                            formik={formik}
+                            label="Mutacje"
+                            field="mutationIds"
+                            items={Object.values(props.mutations).map((mutation) => ({
+                                label: mutation.name,
+                                value: mutation.id
                             }))}
                         />
                     </Stack>

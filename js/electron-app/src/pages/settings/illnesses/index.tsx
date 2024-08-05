@@ -51,7 +51,7 @@ export default function IllnessesSettings() {
             <AppPageContent title="Choroby">
                 <Box marginBottom={1}>
                     <Button variant="contained" onClick={() => setShowCreateIllnessModal(true)}>
-                        Stwórz mutację
+                        Stwórz chorobę
                     </Button>
                 </Box>
 

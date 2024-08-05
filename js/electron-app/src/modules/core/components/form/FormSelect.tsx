@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
     type LiHTMLAttributes,
     type ReactElement,
@@ -5,7 +6,6 @@ import {
     useCallback,
     useMemo
 } from 'react';
-import * as React from 'react';
 
 import type { FormikProps, FormikState, FormikValues } from 'formik';
 
@@ -25,7 +25,6 @@ interface FormSelectProps<Values extends FormikValues, Value> extends BaseSelect
 
     formik: FormikProps<Values> & FormikState<Values>;
     field: string;
-    fixedHeight?: boolean;
     items: SelectItem[];
 }
 

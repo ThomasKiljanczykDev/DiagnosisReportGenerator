@@ -82,7 +82,7 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz członka personelu</DialogTitle>
                 <DialogContent>
-                    <Stack>
+                    <Stack spacing="1rem">
                         <FormTextField
                             label="Imię i nazwisko"
                             variant="standard"

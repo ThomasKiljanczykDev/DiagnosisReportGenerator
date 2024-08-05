@@ -75,7 +75,7 @@ export default function CreateMutationDialog(props: CreateMutationDialogProps) {
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz mutację</DialogTitle>
                 <DialogContent>
-                    <Stack>
+                    <Stack spacing="1rem">
                         <FormTextField
                             label="Nazwa"
                             variant="standard"

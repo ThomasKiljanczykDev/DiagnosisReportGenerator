@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
     type LiHTMLAttributes,
     type ReactElement,
@@ -5,11 +6,10 @@ import {
     useCallback,
     useMemo
 } from 'react';
-import * as React from 'react';
 
 import type { FormikProps, FormikState, FormikValues } from 'formik';
 
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import type { InputProps as StandardInputProps } from '@mui/material/Input/Input';
 import type { BaseSelectProps } from '@mui/material/Select/Select';
 import type { SelectChangeEvent, SelectInputProps } from '@mui/material/Select/SelectInput';
@@ -37,6 +37,24 @@ export default function FormMultiSelect<Values extends FormikValues, Value>(
         [props.field, props.formik.values]
     ) as Value;
 
+    const error = useMemo(() => {
+        if (!props.formik.touched[props.field]) {
+            return false;
+        }
+
+        return !!props.formik.errors[props.field];
+    }, [props.formik.touched, props.formik.errors, props.field]);
+
+    const errorText = useMemo(() => {
+        const emptyErrorText = props.fixedHeight ? ' ' : '';
+
+        if (!props.formik.touched[props.field]) {
+            return emptyErrorText;
+        }
+
+        return props.formik.errors[props.field]?.toString() ?? emptyErrorText;
+    }, [props.fixedHeight, props.formik.touched, props.formik.errors, props.field]);
+
     const handleOnChange = useCallback(
         (event: SelectChangeEvent<Value>, child: ReactNode) => {
             props.onChange?.(event, child);
@@ -47,7 +65,7 @@ export default function FormMultiSelect<Values extends FormikValues, Value>(
     );
 
     return (
-        <FormControl fullWidth={props.fullWidth}>
+        <FormControl error={error} fullWidth={props.fullWidth}>
             <InputLabel>{props.label}</InputLabel>
             <Select
                 {...props}
@@ -63,6 +81,7 @@ export default function FormMultiSelect<Values extends FormikValues, Value>(
                     </MenuItem>
                 ))}
             </Select>
+            <FormHelperText>{errorText}</FormHelperText>
         </FormControl>
     );
 }

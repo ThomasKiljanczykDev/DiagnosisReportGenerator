@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import {
     type GeneDto,
@@ -8,24 +8,20 @@ import {
     type TestMethodDto,
     TestMethodService
 } from '@diagnosis-report-generator/api/services';
+import { Box, Button } from '@mui/material';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
+import CreateGeneDialog from '@/modules/settings/components/genes/CreateGeneDialog';
 import GenesDataGrid from '@/modules/settings/components/genes/GenesDataGrid';
 
 export default function GenesSettings() {
+    const [showCreateGeneModal, setShowCreateGeneModal] = useState(false);
     const [genes, setGenes] = useState<GeneDto[]>([]);
     const [testMethods, setTestMethods] = useState<TestMethodDto[]>([]);
     const [mutations, setMutations] = useState<MutationDto[]>([]);
 
     const getGenes = useCallback(async (signal?: AbortSignal) => {
         const response = await GeneService.getList(undefined, { signal });
-
-        response.items.push({
-            id: '',
-            name: '',
-            testMethodIds: [],
-            mutationIds: []
-        });
         setGenes(response.items);
     }, []);
 
@@ -50,13 +46,32 @@ export default function GenesSettings() {
     }, [getGenes]);
 
     return (
-        <AppPageContent title="Geny">
-            <GenesDataGrid
-                genes={genes}
+        <>
+            <CreateGeneDialog
+                open={showCreateGeneModal}
+                onClose={() => {
+                    setShowCreateGeneModal(false);
+                }}
+                onGenesChanged={getGenes}
                 testMethods={testMethods}
                 mutations={mutations}
-                onGenesChanged={getGenes}
             />
-        </AppPageContent>
+            <AppPageContent title="Geny">
+                <Box marginBottom={1}>
+                    <Button variant="contained" onClick={() => setShowCreateGeneModal(true)}>
+                        Stwórz gen
+                    </Button>
+                </Box>
+
+                <Box flexGrow={1}>
+                    <GenesDataGrid
+                        genes={genes}
+                        testMethods={testMethods}
+                        mutations={mutations}
+                        onGenesChanged={getGenes}
+                    />
+                </Box>
+            </AppPageContent>
+        </>
     );
 }
