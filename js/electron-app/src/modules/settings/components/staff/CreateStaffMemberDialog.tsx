@@ -76,8 +76,10 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia członka personelu. Upewnij się, że imię i nazwisko
-                jest unikatowe.
+                <span>
+                    Wystąpił błąd podczas tworzenia członka personelu. Upewnij się, że imię i
+                    nazwisko jest unikatowe.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz członka personelu</DialogTitle>

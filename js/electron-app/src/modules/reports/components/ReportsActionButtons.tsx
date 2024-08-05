@@ -1,12 +1,18 @@
-import { type ChangeEvent, useCallback } from 'react';
+import { type ChangeEvent, useCallback, useState } from 'react';
+
+
 
 import { Button, Grid } from '@mui/material';
 
+
+
+import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import VisuallyHiddenInput from '@/modules/core/components/VisuallyHiddenInput';
 import { MimeType, saveFile } from '@/modules/core/utils/file-util';
 import ExportService from '@/modules/reports/services/ExportService';
 import { ImportService } from '@/modules/reports/services/ImportService';
 import { type Patient } from '@/types/patient';
+
 
 interface MainPageActionButtonsProps {
     patientData: Patient[];
@@ -14,6 +20,9 @@ interface MainPageActionButtonsProps {
 }
 
 export default function ReportsActionButtons(props: MainPageActionButtonsProps) {
+    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+    const [errorSnackbarMessage, setErrorSnackbarMessage] = useState('');
+
     const handleFileChange = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
             const file = event.target.files?.[0];
@@ -48,7 +57,18 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
             }
 
             const fileData = new Uint8Array(await file.arrayBuffer());
-            const zipData = await ExportService.generateReport(fileData, props.patientData);
+
+            let zipData: Uint8Array;
+            try {
+                zipData = await ExportService.generateReport(fileData, props.patientData);
+            } catch (e) {
+                setOpenErrorSnackbar(true);
+
+                if (e instanceof Error) {
+                    setErrorSnackbarMessage(e.message);
+                }
+                return;
+            }
 
             const filenameWithoutExtension = file.name.replace(/\.[^/.]+$/, '');
 
@@ -60,34 +80,43 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
     );
 
     return (
-        <Grid container spacing={2}>
-            <Grid item>
-                <Button component="label" role="none" variant="contained">
-                    Importuj plik
-                    <VisuallyHiddenInput
-                        accept=".csv,.xlsx,.xls"
-                        onChange={handleFileChange}
-                        type="file"
-                    />
-                </Button>
+        <>
+            <AlertSnackbar
+                open={openErrorSnackbar}
+                openSetter={setOpenErrorSnackbar}
+                severity="error"
+            >
+                <span>Wystąpił błąd podczas generowania raportów: {errorSnackbarMessage}</span>
+            </AlertSnackbar>
+            <Grid container spacing={2}>
+                <Grid item>
+                    <Button component="label" role="none" variant="contained">
+                        Importuj plik
+                        <VisuallyHiddenInput
+                            accept=".csv,.xlsx,.xls"
+                            onChange={handleFileChange}
+                            type="file"
+                        />
+                    </Button>
+                </Grid>
+                <Grid item>
+                    <Button
+                        component="label"
+                        role="none"
+                        variant="contained"
+                        disabled={!props.patientData.length}
+                    >
+                        Generuj raporty
+                        <VisuallyHiddenInput
+                            accept=".docx"
+                            title={'Wybierz plik szablonu raportu'}
+                            value={undefined}
+                            onChange={handleReportGeneration}
+                            type="file"
+                        />
+                    </Button>
+                </Grid>
             </Grid>
-            <Grid item>
-                <Button
-                    component="label"
-                    role="none"
-                    variant="contained"
-                    disabled={!props.patientData.length}
-                >
-                    Generuj raporty
-                    <VisuallyHiddenInput
-                        accept=".docx"
-                        title={'Wybierz plik szablonu raportu'}
-                        value={undefined}
-                        onChange={handleReportGeneration}
-                        type="file"
-                    />
-                </Button>
-            </Grid>
-        </Grid>
+        </>
     );
 }

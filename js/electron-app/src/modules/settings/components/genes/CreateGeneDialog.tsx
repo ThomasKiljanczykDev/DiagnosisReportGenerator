@@ -76,7 +76,9 @@ export default function CreateGeneDialog(props: CreateGeneDialogProps) {
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia genu. Upewnij się, że nazwa genu jest unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia genu. Upewnij się, że nazwa genu jest unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz gen</DialogTitle>

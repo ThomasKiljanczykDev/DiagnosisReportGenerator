@@ -73,8 +73,10 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia rozpoznania. Upewnij się, że nazwa rozpoznania jest
-                unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia rozpoznania. Upewnij się, że nazwa rozpoznania
+                    jest unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz rozpoznanie</DialogTitle>

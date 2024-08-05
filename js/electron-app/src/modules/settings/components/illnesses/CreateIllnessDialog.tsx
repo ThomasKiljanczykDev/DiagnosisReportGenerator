@@ -73,8 +73,10 @@ export default function CreateIllnessDialog(props: CreateIllnessDialogProps) {
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia choroby. Upewnij się, że nazwa choroby jest
-                unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia choroby. Upewnij się, że nazwa choroby jest
+                    unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz chorobę</DialogTitle>
