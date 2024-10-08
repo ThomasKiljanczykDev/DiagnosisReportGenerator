@@ -1,10 +1,6 @@
 import { type ChangeEvent, useCallback, useState } from 'react';
 
-
-
 import { Button, Grid } from '@mui/material';
-
-
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import VisuallyHiddenInput from '@/modules/core/components/VisuallyHiddenInput';
@@ -12,7 +8,6 @@ import { MimeType, saveFile } from '@/modules/core/utils/file-util';
 import ExportService from '@/modules/reports/services/ExportService';
 import { ImportService } from '@/modules/reports/services/ImportService';
 import { type Patient } from '@/types/patient';
-
 
 interface MainPageActionButtonsProps {
     patientData: Patient[];

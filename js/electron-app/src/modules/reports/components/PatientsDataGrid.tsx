@@ -1,17 +1,29 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-
-
-import { type DiagnosisDto, DiagnosisService, type GeneDto, GeneService, type IllnessDto, IllnessService, type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
-import { DataGrid, type GridColDef, type GridPreProcessEditCellProps, useGridApiRef } from '@mui/x-data-grid';
-
-
+import {
+    type DiagnosisDto,
+    DiagnosisService,
+    type GeneDto,
+    GeneService,
+    type IllnessDto,
+    IllnessService,
+    type StaffMemberDto,
+    StaffService
+} from '@diagnosis-report-generator/api/services';
+import {
+    DataGrid,
+    type GridColDef,
+    type GridPreProcessEditCellProps,
+    useGridApiRef
+} from '@mui/x-data-grid';
 
 import EditCellWithErrorRenderer from '@/modules/core/components/cells/EditCellWithErrorRenderer';
-import { createMultiSelectDefinition, createSingleSelectDefinition } from '@/modules/core/utils/datagrid';
+import {
+    createMultiSelectDefinition,
+    createSingleSelectDefinition
+} from '@/modules/core/utils/datagrid';
 import { formatStaffMember } from '@/modules/core/utils/formatting';
 import { type Patient, type Pesel, parsePesel } from '@/types/patient';
-
 
 interface PatientsDataGridProps {
     patients: Patient[];

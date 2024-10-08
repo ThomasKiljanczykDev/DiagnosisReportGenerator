@@ -1,5 +1,9 @@
-import type { DiagnosisDto, GeneDto, IllnessDto, StaffMemberDto } from '@diagnosis-report-generator/api/services';
-
+import type {
+    DiagnosisDto,
+    GeneDto,
+    IllnessDto,
+    StaffMemberDto
+} from '@diagnosis-report-generator/api/services';
 
 export enum Sex {
     Male = 'M',

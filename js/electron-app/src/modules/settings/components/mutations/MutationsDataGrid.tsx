@@ -45,10 +45,7 @@ export default function MutationsDataGrid(props: MutationsDataGridProps) {
                     hideable: false,
                     disableColumnMenu: true,
                     renderCell: (params) => (
-                        <ActionCell
-                            params={params}
-                            onRemove={handleRemoveMutation}
-                        />
+                        <ActionCell params={params} onRemove={handleRemoveMutation} />
                     )
                 },
                 {
