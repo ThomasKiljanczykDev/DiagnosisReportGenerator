@@ -62,7 +62,7 @@ export class ImportService {
                 technicians: [],
                 genes: [],
                 illness: null,
-                diagnosis: null
+                diagnoses: []
             } as Patient;
         } catch (e) {
             console.error(`Error parsing patient data: ${data}`);

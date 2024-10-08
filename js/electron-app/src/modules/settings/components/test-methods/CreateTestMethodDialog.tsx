@@ -71,8 +71,10 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa metody badań jest
-                unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa metody badań
+                    jest unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz metodę badania</DialogTitle>

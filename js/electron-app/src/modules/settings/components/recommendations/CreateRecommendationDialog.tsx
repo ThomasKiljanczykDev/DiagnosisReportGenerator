@@ -87,8 +87,10 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa zalecenia jest
-                unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa zalecenia jest
+                    unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz zalecenie</DialogTitle>

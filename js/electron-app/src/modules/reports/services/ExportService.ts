@@ -3,16 +3,16 @@ import { createReport } from 'docx-templates';
 import { type AsyncZippable, zip as zipCb } from 'fflate';
 import { promisify } from 'util';
 
-import {
-    MutationService,
-    RecommendationLevel,
-    RecommendationService,
-    TestMethodService
-} from '@diagnosis-report-generator/api/services';
+
+
+import { MutationService, RecommendationLevel, RecommendationService, TestMethodService } from '@diagnosis-report-generator/api/services';
+
+
 
 import { formatStaffMember } from '@/modules/core/utils/formatting';
 import { type Patient } from '@/types/patient';
 import { type Report, type ReportGene } from '@/types/report';
+
 
 const zip = promisify(zipCb);
 
@@ -85,7 +85,7 @@ export default class ExportService {
                     .map((consultant) => formatStaffMember(consultant))
                     .join(', '),
                 genes: genes,
-                diagnosis: patient.diagnosis,
+                diagnoses: patient.diagnoses,
                 level1Recommendations: [...patientLevel1Recommendations],
                 level2Recommendations: [...patientLevel2Recommendations]
             };

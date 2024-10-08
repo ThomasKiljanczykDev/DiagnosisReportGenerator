@@ -1,17 +1,17 @@
-import type { ReactNode, SyntheticEvent } from 'react';
+import type { SyntheticEvent } from 'react';
 
 import { Alert, type AlertColor, type SnackbarCloseReason } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
+import type { SnackbarProps } from '@mui/material/Snackbar/Snackbar';
 
 import classes from './AlertSnackbar.module.css';
 
-export default function AlertSnackbar(props: {
-    children: ReactNode;
-    open: boolean;
+interface AlertSnackbarProps extends SnackbarProps {
     openSetter: (value: boolean) => void;
     severity: AlertColor;
-    autoHideDuration?: number;
-}) {
+}
+
+export default function AlertSnackbar(props: AlertSnackbarProps) {
     function handleSnackbarClose(
         visibilitySetter: (value: boolean) => void,
         event?: SyntheticEvent | Event,
@@ -24,12 +24,14 @@ export default function AlertSnackbar(props: {
         visibilitySetter(false);
     }
 
-    const autoHideDuration = props.autoHideDuration ?? 6000;
-
     return (
         <Snackbar
+            {...{
+                ...props,
+                openSetter: undefined,
+                severity: undefined
+            }}
             open={props.open}
-            autoHideDuration={autoHideDuration}
             onClose={(event, reason) => handleSnackbarClose(props.openSetter, event, reason)}
         >
             <Alert

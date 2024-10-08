@@ -69,8 +69,10 @@ export default function CreateMutationDialog(props: CreateMutationDialogProps) {
                 openSetter={setOpenErrorSnackbar}
                 severity="error"
             >
-                Wystąpił błąd podczas tworzenia mutacji. Upewnij się, że nazwa mutacji jest
-                unikatowa.
+                <span>
+                    Wystąpił błąd podczas tworzenia mutacji. Upewnij się, że nazwa mutacji jest
+                    unikatowa.
+                </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
                 <DialogTitle>Stwórz mutację</DialogTitle>
