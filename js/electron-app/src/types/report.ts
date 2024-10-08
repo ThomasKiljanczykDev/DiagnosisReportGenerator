@@ -1,5 +1,8 @@
-import type { DiagnosisDto, MutationDto, TestMethodDto } from '@diagnosis-report-generator/api/services';
-
+import type {
+    DiagnosisDto,
+    MutationDto,
+    TestMethodDto
+} from '@diagnosis-report-generator/api/services';
 
 export interface ReportGene {
     id: string;

@@ -10,12 +10,12 @@
         "./services/*": "./src/services/*.ts"
     },
     "dependencies": {
-        "axios": "^1.7.3",
+        "axios": "^1.7.7",
         "swagger-axios-codegen": "^0.16.14"
     },
     "devDependencies": {
         "ts-config": "workspace:*",
-        "typescript": "^5.5.4"
+        "typescript": "<5.6"
     },
     "packageManager": "yarn@4.3.1"
 }
