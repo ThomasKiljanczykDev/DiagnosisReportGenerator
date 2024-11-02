@@ -7,12 +7,13 @@ import {
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateIllnessDialog from '@/modules/settings/components/illnesses/CreateIllnessDialog';
 import IllnessesDataGrid from '@/modules/settings/components/illnesses/IllnessesDataGrid';
 
-export default function IllnessesSettings() {
+function IllnessesSettings() {
     const [showCreateIllnessModal, setShowCreateIllnessModal] = useState(false);
     const [illnesses, setIllnesses] = useState<IllnessDto[]>([]);
     const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
@@ -66,3 +67,7 @@ export default function IllnessesSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/illnesses/')({
+    component: IllnessesSettings
+});

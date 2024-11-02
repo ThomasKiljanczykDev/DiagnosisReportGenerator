@@ -5,12 +5,13 @@ import {
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateRecommendationDialog from '@/modules/settings/components/recommendations/CreateRecommendationDialog';
 import RecommendationsDataGrid from '@/modules/settings/components/recommendations/RecommendationsDataGrid';
 
-export default function RecommendationsSettings() {
+function RecommendationsSettings() {
     const [showCreateRecommendationModal, setShowCreateRecommendationModal] = useState(false);
     const [recommendations, setRecommendations] = useState<RecommendationDto[]>([]);
 
@@ -58,3 +59,7 @@ export default function RecommendationsSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/recommendations/')({
+    component: RecommendationsSettings
+});

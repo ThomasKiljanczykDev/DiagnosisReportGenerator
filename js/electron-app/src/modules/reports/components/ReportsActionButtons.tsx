@@ -1,6 +1,6 @@
 import { type ChangeEvent, useCallback, useState } from 'react';
 
-import { Button, Grid } from '@mui/material';
+import { Button, Grid2 } from '@mui/material';
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import VisuallyHiddenInput from '@/modules/core/components/VisuallyHiddenInput';
@@ -83,8 +83,8 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
             >
                 <span>Wystąpił błąd podczas generowania raportów: {errorSnackbarMessage}</span>
             </AlertSnackbar>
-            <Grid container spacing={2}>
-                <Grid item>
+            <Grid2 container spacing={2}>
+                <Grid2>
                     <Button component="label" role="none" variant="contained">
                         Importuj plik
                         <VisuallyHiddenInput
@@ -93,8 +93,8 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                             type="file"
                         />
                     </Button>
-                </Grid>
-                <Grid item>
+                </Grid2>
+                <Grid2>
                     <Button
                         component="label"
                         role="none"
@@ -110,8 +110,8 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                             type="file"
                         />
                     </Button>
-                </Grid>
-            </Grid>
+                </Grid2>
+            </Grid2>
         </>
     );
 }

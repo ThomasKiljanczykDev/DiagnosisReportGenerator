@@ -15,7 +15,7 @@
     },
     "devDependencies": {
         "ts-config": "workspace:*",
-        "typescript": "<5.6"
+        "typescript": "<5.7"
     },
     "packageManager": "yarn@4.3.1"
 }

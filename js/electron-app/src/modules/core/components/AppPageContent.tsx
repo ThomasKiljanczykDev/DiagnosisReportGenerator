@@ -1,6 +1,6 @@
 import { type PropsWithChildren, memo } from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid2 } from '@mui/material';
 
 interface AppPageContentProps {
     title: string;
@@ -8,7 +8,7 @@ interface AppPageContentProps {
 
 const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<AppPageContentProps>) {
     return (
-        <Grid
+        <Grid2
             container
             flexDirection="column"
             height="100%"
@@ -18,11 +18,10 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
             minHeight={0}
             maxWidth="100%"
         >
-            <Grid item flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
+            <Grid2 flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
                 <h2 style={{ color: 'black', margin: 0 }}>{props.title}</h2>
-            </Grid>
-            <Grid
-                item
+            </Grid2>
+            <Grid2
                 display="flex"
                 flex={1}
                 flexDirection="column"
@@ -31,8 +30,8 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
                 maxWidth="100%"
             >
                 {props.children}
-            </Grid>
-        </Grid>
+            </Grid2>
+        </Grid2>
     );
 });
 export default AppPageContent;
