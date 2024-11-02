@@ -1,9 +1,10 @@
-import { type PropsWithChildren, memo } from 'react';
+import React, { type PropsWithChildren, type ReactNode, memo } from 'react';
 
 import { Grid2 } from '@mui/material';
 
 interface AppPageContentProps {
     title: string;
+    actionButtons?: ReactNode;
 }
 
 const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<AppPageContentProps>) {
@@ -18,8 +19,17 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
             minHeight={0}
             maxWidth="100%"
         >
-            <Grid2 flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
+            <Grid2
+                display="flex"
+                flexShrink={0}
+                minWidth={0}
+                minHeight={0}
+                maxWidth="100%"
+                direction="row"
+                justifyContent="space-between"
+            >
                 <h2 style={{ color: 'black', margin: 0 }}>{props.title}</h2>
+                {props.actionButtons}
             </Grid2>
             <Grid2
                 display="flex"

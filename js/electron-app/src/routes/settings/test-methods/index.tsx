@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -33,19 +33,18 @@ function TestMethodsSettings() {
                 onClose={() => setShowCreateTestMethodModal(false)}
                 onTestMethodsChanged={getTestMethods}
             />
-            <AppPageContent title="Metody Badań">
-                <Box marginBottom={1}>
+            <AppPageContent
+                title="Metody Badań"
+                actionButtons={
                     <Button variant="contained" onClick={() => setShowCreateTestMethodModal(true)}>
                         Stwórz metodę badania
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <TestMethodsDataGrid
-                        testMethods={testMethods}
-                        onTestMethodsChanged={getTestMethods}
-                    />
-                </Box>
+                }
+            >
+                <TestMethodsDataGrid
+                    testMethods={testMethods}
+                    onTestMethodsChanged={getTestMethods}
+                />
             </AppPageContent>
         </>
     );

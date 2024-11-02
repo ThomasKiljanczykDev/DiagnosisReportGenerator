@@ -57,13 +57,14 @@ function GenesSettings() {
                 testMethods={testMethods}
                 mutations={mutations}
             />
-            <AppPageContent title="Geny">
-                <Box marginBottom={1}>
+            <AppPageContent
+                title="Geny"
+                actionButtons={
                     <Button variant="contained" onClick={() => setShowCreateGeneModal(true)}>
                         Stwórz gen
                     </Button>
-                </Box>
-
+                }
+            >
                 <Box flexGrow={1}>
                     <GenesDataGrid
                         genes={genes}

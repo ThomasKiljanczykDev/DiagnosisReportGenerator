@@ -4,7 +4,7 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -39,22 +39,21 @@ function RecommendationsSettings() {
                 }}
                 onRecommendationsChanged={getRecommendations}
             />
-            <AppPageContent title="Zalecenia">
-                <Box marginBottom={1}>
+            <AppPageContent
+                title="Zalecenia"
+                actionButtons={
                     <Button
                         variant="contained"
                         onClick={() => setShowCreateRecommendationModal(true)}
                     >
                         Stwórz zalecenie
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <RecommendationsDataGrid
-                        recommendations={recommendations}
-                        onRecommendationsChanged={getRecommendations}
-                    />
-                </Box>
+                }
+            >
+                <RecommendationsDataGrid
+                    recommendations={recommendations}
+                    onRecommendationsChanged={getRecommendations}
+                />
             </AppPageContent>
         </>
     );
