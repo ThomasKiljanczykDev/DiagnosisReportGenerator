@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { type MutationDto, MutationService } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateMutationDialog from '@/modules/settings/components/mutations/CreateMutationDialog';
 import MutationsDataGrid from '@/modules/settings/components/mutations/MutationsDataGrid';
 
-export default function MutationsSettings() {
+function MutationsSettings() {
     const [showCreateRecommendationModal, setShowCreateRecommendationModal] = useState(false);
     const [mutations, setMutations] = useState<MutationDto[]>([]);
 
@@ -53,3 +54,7 @@ export default function MutationsSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/mutations/')({
+    component: MutationsSettings
+});

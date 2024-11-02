@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "description": "A application used to generate patient diagnosis reports.",
-    "author": "Tomasz Kiljańczyk <asz.czyk.dev.com>",
+    "author": "Tomasz Kiljańczyk <thomas.kiljanczyk.dev@gmail.com>",
     "license": "MIT",
     "scripts": {
         "lint": "eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",

@@ -9,12 +9,13 @@ import {
     TestMethodService
 } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateGeneDialog from '@/modules/settings/components/genes/CreateGeneDialog';
 import GenesDataGrid from '@/modules/settings/components/genes/GenesDataGrid';
 
-export default function GenesSettings() {
+function GenesSettings() {
     const [showCreateGeneModal, setShowCreateGeneModal] = useState(false);
     const [genes, setGenes] = useState<GeneDto[]>([]);
     const [testMethods, setTestMethods] = useState<TestMethodDto[]>([]);
@@ -75,3 +76,7 @@ export default function GenesSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/genes/')({
+    component: GenesSettings
+});

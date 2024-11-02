@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateTestMethodDialog from '@/modules/settings/components/test-methods/CreateTestMethodDialog';
 import TestMethodsDataGrid from '@/modules/settings/components/test-methods/TestMethodsDataGrid';
 
-export default function TestMethodsSettings() {
+function TestMethodsSettings() {
     const [showCreateTestMethodModal, setShowCreateTestMethodModal] = useState(false);
     const [testMethods, setTestMethods] = useState<TestMethodDto[]>([]);
 
@@ -49,3 +50,7 @@ export default function TestMethodsSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/test-methods/')({
+    component: TestMethodsSettings
+});

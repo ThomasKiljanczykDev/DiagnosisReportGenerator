@@ -8,12 +8,13 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import { Box, Button } from '@mui/material';
 import { useGridApiRef } from '@mui/x-data-grid';
+import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateDiagnosisDialog from '@/modules/settings/components/diagnoses/CreateDiagnosisDialog';
 import DiagnosesDataGrid from '@/modules/settings/components/diagnoses/DiagnosesDataGrid';
 
-export default function DiagnosesSettings() {
+function DiagnosesSettings() {
     const [showCreateDiagnosisModal, setShowCreateDiagnosisModal] = useState(false);
     const apiRef = useGridApiRef();
 
@@ -75,3 +76,7 @@ export default function DiagnosesSettings() {
         </>
     );
 }
+
+export const Route = createFileRoute('/settings/diagnoses/')({
+    component: DiagnosesSettings
+});

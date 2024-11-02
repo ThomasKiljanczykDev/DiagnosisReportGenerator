@@ -1,16 +1,15 @@
 import React from 'react';
 
-import { Outlet } from 'react-router-dom';
-
 import { Box } from '@mui/material';
+import { Outlet, createFileRoute } from '@tanstack/react-router';
 
 import MainAppBar from '@/modules/core/components/MainAppBar';
-import SettingsDrawer from '@/modules/core/components/drawer/SettingsDrawer';
+import MainDrawer from '@/modules/core/components/drawer/MainDrawer';
 
-export default function SettingsLayout() {
+export function ReportsLayout() {
     return (
         <>
-            <MainAppBar title="Ustawienia" />
+            <MainAppBar title="Generowanie raportów" />
             <Box
                 minWidth={0}
                 minHeight={0}
@@ -20,7 +19,7 @@ export default function SettingsLayout() {
                     height: `calc(100% - ${64}px)`
                 }}
             >
-                <SettingsDrawer />
+                <MainDrawer />
                 <Box
                     component="main"
                     sx={{
@@ -37,3 +36,7 @@ export default function SettingsLayout() {
         </>
     );
 }
+
+export const Route = createFileRoute('/reports')({
+    component: ReportsLayout
+});

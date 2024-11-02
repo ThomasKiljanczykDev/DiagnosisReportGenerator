@@ -1,14 +1,16 @@
 import { type ReactNode, memo, useCallback, useMemo } from 'react';
 
-import { useLocation } from 'react-router-dom';
-
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-
-import { type Path, useNavigate } from '@/router';
+import {
+    type RegisteredRouter,
+    type RoutePaths,
+    useLocation,
+    useNavigate
+} from '@tanstack/react-router';
 
 interface DrawerListItemProps {
     text: string;
-    navigateTo: Path;
+    navigateTo: RoutePaths<RegisteredRouter['routeTree']>;
     icon: ReactNode;
 }
 
@@ -21,8 +23,11 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
     }, [location.pathname, props.navigateTo]);
 
     const handleClick = useCallback(() => {
-        navigate(props.navigateTo);
-    }, [navigate, props.navigateTo]);
+        navigate({
+            from: location.pathname,
+            to: props.navigateTo
+        });
+    }, [location.pathname, navigate, props.navigateTo]);
 
     return (
         <ListItem disablePadding>

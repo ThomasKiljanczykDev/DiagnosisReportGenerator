@@ -4,5 +4,5 @@
 **/release/
 **/.cache/
 **/node_modules/
-**/src/router.ts
+**/src/routeTree.gen.ts
 api/src/services
