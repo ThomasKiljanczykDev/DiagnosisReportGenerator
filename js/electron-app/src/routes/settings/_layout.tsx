@@ -9,7 +9,7 @@ import SettingsDrawer from '@/modules/core/components/drawer/SettingsDrawer';
 function SettingsLayout() {
     return (
         <>
-            <MainAppBar title="Ustawienia" />
+            <MainAppBar />
             <Box
                 minWidth={0}
                 minHeight={0}
@@ -27,7 +27,9 @@ function SettingsLayout() {
                         padding: 3,
                         minWidth: 0,
                         minHeight: 0,
-                        backgroundColor: 'white'
+                        backgroundColor: 'white',
+                        borderRadius: '4px',
+                        margin: '1rem'
                     }}
                 >
                     <Outlet />

@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as SettingsLayoutImport } from './routes/settings/_layout'
 import { Route as ReportsLayoutImport } from './routes/reports/_layout'
 import { Route as IndexImport } from './routes/index'
+import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as ReportsIndexImport } from './routes/reports/index'
 import { Route as SettingsTestMethodsIndexImport } from './routes/settings/test-methods/index'
 import { Route as SettingsStaffIndexImport } from './routes/settings/staff/index'
@@ -41,6 +42,12 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const SettingsIndexRoute = SettingsIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SettingsLayoutRoute,
 } as any)
 
 const ReportsIndexRoute = ReportsIndexImport.update({
@@ -124,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ReportsIndexImport
       parentRoute: typeof ReportsLayoutImport
     }
+    '/settings/': {
+      id: '/settings/'
+      path: '/'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof SettingsIndexImport
+      parentRoute: typeof SettingsLayoutImport
+    }
     '/settings/diagnoses/': {
       id: '/settings/diagnoses/'
       path: '/diagnoses'
@@ -191,6 +205,7 @@ const ReportsLayoutRouteWithChildren = ReportsLayoutRoute._addFileChildren(
 )
 
 interface SettingsLayoutRouteChildren {
+  SettingsIndexRoute: typeof SettingsIndexRoute
   SettingsDiagnosesIndexRoute: typeof SettingsDiagnosesIndexRoute
   SettingsGenesIndexRoute: typeof SettingsGenesIndexRoute
   SettingsIllnessesIndexRoute: typeof SettingsIllnessesIndexRoute
@@ -201,6 +216,7 @@ interface SettingsLayoutRouteChildren {
 }
 
 const SettingsLayoutRouteChildren: SettingsLayoutRouteChildren = {
+  SettingsIndexRoute: SettingsIndexRoute,
   SettingsDiagnosesIndexRoute: SettingsDiagnosesIndexRoute,
   SettingsGenesIndexRoute: SettingsGenesIndexRoute,
   SettingsIllnessesIndexRoute: SettingsIllnessesIndexRoute,
@@ -219,6 +235,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof ReportsLayoutRouteWithChildren
   '/settings': typeof SettingsLayoutRouteWithChildren
   '/reports/': typeof ReportsIndexRoute
+  '/settings/': typeof SettingsIndexRoute
   '/settings/diagnoses': typeof SettingsDiagnosesIndexRoute
   '/settings/genes': typeof SettingsGenesIndexRoute
   '/settings/illnesses': typeof SettingsIllnessesIndexRoute
@@ -230,8 +247,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/settings': typeof SettingsLayoutRouteWithChildren
   '/reports': typeof ReportsIndexRoute
+  '/settings': typeof SettingsIndexRoute
   '/settings/diagnoses': typeof SettingsDiagnosesIndexRoute
   '/settings/genes': typeof SettingsGenesIndexRoute
   '/settings/illnesses': typeof SettingsIllnessesIndexRoute
@@ -247,6 +264,7 @@ export interface FileRoutesById {
   '/reports': typeof ReportsLayoutRouteWithChildren
   '/settings': typeof SettingsLayoutRouteWithChildren
   '/reports/': typeof ReportsIndexRoute
+  '/settings/': typeof SettingsIndexRoute
   '/settings/diagnoses/': typeof SettingsDiagnosesIndexRoute
   '/settings/genes/': typeof SettingsGenesIndexRoute
   '/settings/illnesses/': typeof SettingsIllnessesIndexRoute
@@ -263,6 +281,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/reports/'
+    | '/settings/'
     | '/settings/diagnoses'
     | '/settings/genes'
     | '/settings/illnesses'
@@ -273,8 +292,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/settings'
     | '/reports'
+    | '/settings'
     | '/settings/diagnoses'
     | '/settings/genes'
     | '/settings/illnesses'
@@ -288,6 +307,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/reports/'
+    | '/settings/'
     | '/settings/diagnoses/'
     | '/settings/genes/'
     | '/settings/illnesses/'
@@ -337,6 +357,7 @@ export const routeTree = rootRoute
     "/settings": {
       "filePath": "settings/_layout.tsx",
       "children": [
+        "/settings/",
         "/settings/diagnoses/",
         "/settings/genes/",
         "/settings/illnesses/",
@@ -349,6 +370,10 @@ export const routeTree = rootRoute
     "/reports/": {
       "filePath": "reports/index.tsx",
       "parent": "/reports"
+    },
+    "/settings/": {
+      "filePath": "settings/index.tsx",
+      "parent": "/settings"
     },
     "/settings/diagnoses/": {
       "filePath": "settings/diagnoses/index.tsx",

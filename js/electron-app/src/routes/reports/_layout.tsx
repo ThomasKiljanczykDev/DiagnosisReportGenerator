@@ -9,7 +9,7 @@ import MainDrawer from '@/modules/core/components/drawer/MainDrawer';
 export function ReportsLayout() {
     return (
         <>
-            <MainAppBar title="Generowanie raportów" />
+            <MainAppBar />
             <Box
                 minWidth={0}
                 minHeight={0}
@@ -27,7 +27,9 @@ export function ReportsLayout() {
                         padding: 3,
                         minWidth: 0,
                         minHeight: 0,
-                        backgroundColor: 'white'
+                        backgroundColor: 'white',
+                        borderRadius: '4px',
+                        margin: '1rem'
                     }}
                 >
                     <Outlet />
