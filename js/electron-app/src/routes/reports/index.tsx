@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid2 } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -31,7 +31,7 @@ function Reports() {
 
     return (
         <AppPageContent title="Pacjenci">
-            <Grid
+            <Grid2
                 container
                 flexDirection="column"
                 height="100%"
@@ -41,15 +41,15 @@ function Reports() {
                 minHeight={0}
                 maxWidth="100%"
             >
-                <Grid item flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
+                <Grid2 flexShrink={0} minWidth={0} minHeight={0} maxWidth="100%">
                     <ReportsActionButtons onFileImport={onFileImport} patientData={patientData} />
-                </Grid>
-                <Grid item flex={1} minWidth={0} minHeight={0} maxWidth="100%">
+                </Grid2>
+                <Grid2 flex={1} minWidth={0} minHeight={0} maxWidth="100%">
                     <LoadingContainer loading={loading}>
                         <PatientsDataGrid patients={patientData} onRowUpdate={processRowUpdate} />
                     </LoadingContainer>
-                </Grid>
-            </Grid>
+                </Grid2>
+            </Grid2>
         </AppPageContent>
     );
 }
