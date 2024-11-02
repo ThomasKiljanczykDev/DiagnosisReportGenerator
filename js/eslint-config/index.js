@@ -4,7 +4,6 @@ import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
 
-import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 
 import errors from './src/errors.js';
@@ -20,7 +19,7 @@ const tsEslintConfig = tseslint.config(
     {
         plugins: {
             react: eslintPluginReact,
-            'react-hooks': fixupPluginRules(eslintPluginReactHooks)
+            'react-hooks': eslintPluginReactHooks
         },
         rules: {
             ...eslintPluginReactHooks.configs.recommended.rules
