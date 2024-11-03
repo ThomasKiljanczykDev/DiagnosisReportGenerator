@@ -77,7 +77,7 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
                 </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Stwórz metodę badania</DialogTitle>
+                <DialogTitle>Dodaj metodę badania</DialogTitle>
                 <DialogContent>
                     <Stack spacing="1rem">
                         <FormTextField
@@ -91,7 +91,7 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary" variant="contained" onClick={props.onClose}>
+                    <Button color="secondary" onClick={props.onClose}>
                         Anuluj
                     </Button>
                     <Button
@@ -99,7 +99,7 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
                         onClick={formik.submitForm}
                         disabled={!formik.isValid}
                     >
-                        Stwórz
+                        Dodaj
                     </Button>
                 </DialogActions>
             </Dialog>

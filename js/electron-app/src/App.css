@@ -11,8 +11,6 @@
     font-weight: 400;
 
     color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
 
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -25,14 +23,7 @@ body {
     min-width: 800px;
     min-height: 600px;
 
-    color: white;
-    background-color: white;
     font-family: 'Roboto Flex Variable', sans-serif;
-}
-
-/* TODO: Move to a css module */
-.new-row {
-    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .MuiDataGrid-cell:has(.Mui-error) {

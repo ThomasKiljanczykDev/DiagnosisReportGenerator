@@ -82,7 +82,7 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
                 </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Stwórz członka personelu</DialogTitle>
+                <DialogTitle>Dodaj członka personelu</DialogTitle>
                 <DialogContent>
                     <Stack spacing="1rem">
                         <FormTextField
@@ -115,7 +115,7 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary" variant="contained" onClick={props.onClose}>
+                    <Button color="secondary" onClick={props.onClose}>
                         Anuluj
                     </Button>
                     <Button
@@ -123,7 +123,7 @@ export default function CreateStaffMemberDialog(props: CreateStaffMemberDialogPr
                         onClick={formik.submitForm}
                         disabled={!formik.isValid}
                     >
-                        Stwórz
+                        Dodaj
                     </Button>
                 </DialogActions>
             </Dialog>

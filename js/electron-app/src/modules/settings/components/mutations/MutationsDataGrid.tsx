@@ -79,7 +79,6 @@ export default function MutationsDataGrid(props: MutationsDataGridProps) {
             rows={props.mutations}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount={true}
         />
     );

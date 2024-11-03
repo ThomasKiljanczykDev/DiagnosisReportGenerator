@@ -79,7 +79,7 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                 </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Stwórz rozpoznanie</DialogTitle>
+                <DialogTitle>Dodaj rozpoznanie</DialogTitle>
                 <DialogContent>
                     <Stack spacing="1rem">
                         <FormTextField
@@ -102,7 +102,7 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary" variant="contained" onClick={props.onClose}>
+                    <Button color="secondary" onClick={props.onClose}>
                         Anuluj
                     </Button>
                     <Button
@@ -110,7 +110,7 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                         onClick={formik.submitForm}
                         disabled={!formik.isValid}
                     >
-                        Stwórz
+                        Dodaj
                     </Button>
                 </DialogActions>
             </Dialog>

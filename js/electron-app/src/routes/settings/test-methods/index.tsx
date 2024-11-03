@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -36,8 +37,12 @@ function TestMethodsSettings() {
             <AppPageContent
                 title="Metody Badań"
                 actionButtons={
-                    <Button variant="contained" onClick={() => setShowCreateTestMethodModal(true)}>
-                        Stwórz metodę badania
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateTestMethodModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj metodę badania
                     </Button>
                 }
             >

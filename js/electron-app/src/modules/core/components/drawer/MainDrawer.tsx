@@ -17,7 +17,8 @@ const MainDrawer = memo(function MainDrawer() {
                 minWidth: drawerWidth,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
+                    transition: 'background-color 0.3s'
                 }
             }}
             variant="permanent"

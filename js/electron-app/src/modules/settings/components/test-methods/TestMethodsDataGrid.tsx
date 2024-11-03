@@ -79,7 +79,6 @@ export default function TestMethodsDataGrid(props: TestMethodsDataGridProps) {
             rows={props.testMethods}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount={true}
         />
     );

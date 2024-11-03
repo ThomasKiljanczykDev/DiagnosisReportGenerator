@@ -29,7 +29,20 @@ serviceOptions.axios = axios.create({
 });
 
 export default function App() {
-    const themeWithLocale = useMemo(() => createTheme(plPL, dataGridPlPL), []);
+    const themeWithLocale = useMemo(
+        () =>
+            createTheme(
+                {
+                    colorSchemes: {
+                        dark: true
+                    },
+                    defaultColorScheme: 'light'
+                },
+                plPL,
+                dataGridPlPL
+            ),
+        []
+    );
 
     return (
         <ThemeProvider theme={themeWithLocale}>

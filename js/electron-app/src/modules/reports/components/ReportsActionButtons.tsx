@@ -1,5 +1,7 @@
 import { type ChangeEvent, useCallback, useState } from 'react';
 
+import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
+import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
 import { Button, Grid2 } from '@mui/material';
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
@@ -85,7 +87,12 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
             </AlertSnackbar>
             <Grid2 container spacing={2}>
                 <Grid2>
-                    <Button component="label" role="none" variant="contained">
+                    <Button
+                        component="label"
+                        role="none"
+                        variant="contained"
+                        startIcon={<UploadFileRoundedIcon fontSize="small" />}
+                    >
                         Importuj plik
                         <VisuallyHiddenInput
                             accept=".csv,.xlsx,.xls"
@@ -98,8 +105,9 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                     <Button
                         component="label"
                         role="none"
-                        variant="contained"
+                        variant="outlined"
                         disabled={!props.patientData.length}
+                        startIcon={<DescriptionRoundedIcon fontSize="small" />}
                     >
                         Generuj raporty
                         <VisuallyHiddenInput

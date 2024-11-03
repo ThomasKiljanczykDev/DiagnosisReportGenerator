@@ -105,6 +105,8 @@ async function createWindow() {
 
     // Apply electron-updater
     update(win);
+
+    nativeTheme.themeSource = 'system';
 }
 
 app.whenReady().then(createWindow);

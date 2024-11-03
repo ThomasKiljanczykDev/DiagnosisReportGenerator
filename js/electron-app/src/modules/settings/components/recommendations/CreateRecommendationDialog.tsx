@@ -93,7 +93,7 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                 </span>
             </AlertSnackbar>
             <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Stwórz zalecenie</DialogTitle>
+                <DialogTitle>Dodaj zalecenie</DialogTitle>
                 <DialogContent>
                     <Stack>
                         <Box display="flex" gap="0.75rem" width="100%">
@@ -155,7 +155,7 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                     </Stack>
                 </DialogContent>
                 <DialogActions>
-                    <Button color="secondary" variant="contained" onClick={props.onClose}>
+                    <Button color="secondary" onClick={props.onClose}>
                         Anuluj
                     </Button>
                     <Button
@@ -163,7 +163,7 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                         onClick={formik.submitForm}
                         disabled={!formik.isValid}
                     >
-                        Stwórz
+                        Dodaj
                     </Button>
                 </DialogActions>
             </Dialog>

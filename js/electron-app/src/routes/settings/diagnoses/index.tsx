@@ -6,6 +6,7 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { useGridApiRef } from '@mui/x-data-grid';
 import { createFileRoute } from '@tanstack/react-router';
@@ -61,8 +62,12 @@ function DiagnosesSettings() {
             <AppPageContent
                 title="Rozpoznania"
                 actionButtons={
-                    <Button variant="contained" onClick={() => setShowCreateDiagnosisModal(true)}>
-                        Stwórz rozpoznanie
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateDiagnosisModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj rozpoznanie
                     </Button>
                 }
             >

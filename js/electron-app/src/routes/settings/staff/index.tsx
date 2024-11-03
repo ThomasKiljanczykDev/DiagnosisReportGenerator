@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -38,8 +39,12 @@ function StaffSettings() {
             <AppPageContent
                 title="Personel"
                 actionButtons={
-                    <Button variant="contained" onClick={() => setShowCreateStaffMemberModal(true)}>
-                        Stwórz członka personelu
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateStaffMemberModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj członka personelu
                     </Button>
                 }
             >

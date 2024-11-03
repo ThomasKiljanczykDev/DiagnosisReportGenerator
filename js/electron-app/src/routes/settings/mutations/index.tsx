@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type MutationDto, MutationService } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -43,8 +44,9 @@ function MutationsSettings() {
                     <Button
                         variant="contained"
                         onClick={() => setShowCreateRecommendationModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
                     >
-                        Stwórz mutację
+                        Dodaj mutację
                     </Button>
                 }
             >

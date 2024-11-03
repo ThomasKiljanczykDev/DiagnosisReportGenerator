@@ -6,6 +6,7 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -52,8 +53,12 @@ function IllnessesSettings() {
             <AppPageContent
                 title="Choroby"
                 actionButtons={
-                    <Button variant="contained" onClick={() => setShowCreateIllnessModal(true)}>
-                        Stwórz chorobę
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateIllnessModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj chorobę
                     </Button>
                 }
             >
