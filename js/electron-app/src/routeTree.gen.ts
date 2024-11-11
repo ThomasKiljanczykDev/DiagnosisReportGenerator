@@ -11,8 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SettingsLayoutImport } from './routes/settings/_layout'
-import { Route as ReportsLayoutImport } from './routes/reports/_layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as SettingsIndexImport } from './routes/settings/index'
 import { Route as ReportsIndexImport } from './routes/reports/index'
@@ -26,18 +24,6 @@ import { Route as SettingsDiagnosesIndexImport } from './routes/settings/diagnos
 
 // Create/Update Routes
 
-const SettingsLayoutRoute = SettingsLayoutImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ReportsLayoutRoute = ReportsLayoutImport.update({
-  id: '/reports',
-  path: '/reports',
-  getParentRoute: () => rootRoute,
-} as any)
-
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
@@ -45,58 +31,58 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const SettingsIndexRoute = SettingsIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const ReportsIndexRoute = ReportsIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ReportsLayoutRoute,
+  id: '/reports/',
+  path: '/reports/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsTestMethodsIndexRoute = SettingsTestMethodsIndexImport.update({
-  id: '/test-methods/',
-  path: '/test-methods/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/test-methods/',
+  path: '/settings/test-methods/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsStaffIndexRoute = SettingsStaffIndexImport.update({
-  id: '/staff/',
-  path: '/staff/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/staff/',
+  path: '/settings/staff/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsRecommendationsIndexRoute =
   SettingsRecommendationsIndexImport.update({
-    id: '/recommendations/',
-    path: '/recommendations/',
-    getParentRoute: () => SettingsLayoutRoute,
+    id: '/settings/recommendations/',
+    path: '/settings/recommendations/',
+    getParentRoute: () => rootRoute,
   } as any)
 
 const SettingsMutationsIndexRoute = SettingsMutationsIndexImport.update({
-  id: '/mutations/',
-  path: '/mutations/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/mutations/',
+  path: '/settings/mutations/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsIllnessesIndexRoute = SettingsIllnessesIndexImport.update({
-  id: '/illnesses/',
-  path: '/illnesses/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/illnesses/',
+  path: '/settings/illnesses/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsGenesIndexRoute = SettingsGenesIndexImport.update({
-  id: '/genes/',
-  path: '/genes/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/genes/',
+  path: '/settings/genes/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const SettingsDiagnosesIndexRoute = SettingsDiagnosesIndexImport.update({
-  id: '/diagnoses/',
-  path: '/diagnoses/',
-  getParentRoute: () => SettingsLayoutRoute,
+  id: '/settings/diagnoses/',
+  path: '/settings/diagnoses/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -110,132 +96,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/reports': {
-      id: '/reports'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsLayoutImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsLayoutImport
-      parentRoute: typeof rootRoute
-    }
     '/reports/': {
       id: '/reports/'
-      path: '/'
-      fullPath: '/reports/'
+      path: '/reports'
+      fullPath: '/reports'
       preLoaderRoute: typeof ReportsIndexImport
-      parentRoute: typeof ReportsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/': {
       id: '/settings/'
-      path: '/'
-      fullPath: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
       preLoaderRoute: typeof SettingsIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/diagnoses/': {
       id: '/settings/diagnoses/'
-      path: '/diagnoses'
+      path: '/settings/diagnoses'
       fullPath: '/settings/diagnoses'
       preLoaderRoute: typeof SettingsDiagnosesIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/genes/': {
       id: '/settings/genes/'
-      path: '/genes'
+      path: '/settings/genes'
       fullPath: '/settings/genes'
       preLoaderRoute: typeof SettingsGenesIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/illnesses/': {
       id: '/settings/illnesses/'
-      path: '/illnesses'
+      path: '/settings/illnesses'
       fullPath: '/settings/illnesses'
       preLoaderRoute: typeof SettingsIllnessesIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/mutations/': {
       id: '/settings/mutations/'
-      path: '/mutations'
+      path: '/settings/mutations'
       fullPath: '/settings/mutations'
       preLoaderRoute: typeof SettingsMutationsIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/recommendations/': {
       id: '/settings/recommendations/'
-      path: '/recommendations'
+      path: '/settings/recommendations'
       fullPath: '/settings/recommendations'
       preLoaderRoute: typeof SettingsRecommendationsIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/staff/': {
       id: '/settings/staff/'
-      path: '/staff'
+      path: '/settings/staff'
       fullPath: '/settings/staff'
       preLoaderRoute: typeof SettingsStaffIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
     '/settings/test-methods/': {
       id: '/settings/test-methods/'
-      path: '/test-methods'
+      path: '/settings/test-methods'
       fullPath: '/settings/test-methods'
       preLoaderRoute: typeof SettingsTestMethodsIndexImport
-      parentRoute: typeof SettingsLayoutImport
+      parentRoute: typeof rootRoute
     }
   }
 }
 
 // Create and export the route tree
 
-interface ReportsLayoutRouteChildren {
-  ReportsIndexRoute: typeof ReportsIndexRoute
-}
-
-const ReportsLayoutRouteChildren: ReportsLayoutRouteChildren = {
-  ReportsIndexRoute: ReportsIndexRoute,
-}
-
-const ReportsLayoutRouteWithChildren = ReportsLayoutRoute._addFileChildren(
-  ReportsLayoutRouteChildren,
-)
-
-interface SettingsLayoutRouteChildren {
-  SettingsIndexRoute: typeof SettingsIndexRoute
-  SettingsDiagnosesIndexRoute: typeof SettingsDiagnosesIndexRoute
-  SettingsGenesIndexRoute: typeof SettingsGenesIndexRoute
-  SettingsIllnessesIndexRoute: typeof SettingsIllnessesIndexRoute
-  SettingsMutationsIndexRoute: typeof SettingsMutationsIndexRoute
-  SettingsRecommendationsIndexRoute: typeof SettingsRecommendationsIndexRoute
-  SettingsStaffIndexRoute: typeof SettingsStaffIndexRoute
-  SettingsTestMethodsIndexRoute: typeof SettingsTestMethodsIndexRoute
-}
-
-const SettingsLayoutRouteChildren: SettingsLayoutRouteChildren = {
-  SettingsIndexRoute: SettingsIndexRoute,
-  SettingsDiagnosesIndexRoute: SettingsDiagnosesIndexRoute,
-  SettingsGenesIndexRoute: SettingsGenesIndexRoute,
-  SettingsIllnessesIndexRoute: SettingsIllnessesIndexRoute,
-  SettingsMutationsIndexRoute: SettingsMutationsIndexRoute,
-  SettingsRecommendationsIndexRoute: SettingsRecommendationsIndexRoute,
-  SettingsStaffIndexRoute: SettingsStaffIndexRoute,
-  SettingsTestMethodsIndexRoute: SettingsTestMethodsIndexRoute,
-}
-
-const SettingsLayoutRouteWithChildren = SettingsLayoutRoute._addFileChildren(
-  SettingsLayoutRouteChildren,
-)
-
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/reports': typeof ReportsLayoutRouteWithChildren
-  '/settings': typeof SettingsLayoutRouteWithChildren
-  '/reports/': typeof ReportsIndexRoute
-  '/settings/': typeof SettingsIndexRoute
+  '/reports': typeof ReportsIndexRoute
+  '/settings': typeof SettingsIndexRoute
   '/settings/diagnoses': typeof SettingsDiagnosesIndexRoute
   '/settings/genes': typeof SettingsGenesIndexRoute
   '/settings/illnesses': typeof SettingsIllnessesIndexRoute
@@ -261,8 +193,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/reports': typeof ReportsLayoutRouteWithChildren
-  '/settings': typeof SettingsLayoutRouteWithChildren
   '/reports/': typeof ReportsIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/settings/diagnoses/': typeof SettingsDiagnosesIndexRoute
@@ -280,8 +210,6 @@ export interface FileRouteTypes {
     | '/'
     | '/reports'
     | '/settings'
-    | '/reports/'
-    | '/settings/'
     | '/settings/diagnoses'
     | '/settings/genes'
     | '/settings/illnesses'
@@ -304,8 +232,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/reports'
-    | '/settings'
     | '/reports/'
     | '/settings/'
     | '/settings/diagnoses/'
@@ -320,14 +246,28 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ReportsLayoutRoute: typeof ReportsLayoutRouteWithChildren
-  SettingsLayoutRoute: typeof SettingsLayoutRouteWithChildren
+  ReportsIndexRoute: typeof ReportsIndexRoute
+  SettingsIndexRoute: typeof SettingsIndexRoute
+  SettingsDiagnosesIndexRoute: typeof SettingsDiagnosesIndexRoute
+  SettingsGenesIndexRoute: typeof SettingsGenesIndexRoute
+  SettingsIllnessesIndexRoute: typeof SettingsIllnessesIndexRoute
+  SettingsMutationsIndexRoute: typeof SettingsMutationsIndexRoute
+  SettingsRecommendationsIndexRoute: typeof SettingsRecommendationsIndexRoute
+  SettingsStaffIndexRoute: typeof SettingsStaffIndexRoute
+  SettingsTestMethodsIndexRoute: typeof SettingsTestMethodsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ReportsLayoutRoute: ReportsLayoutRouteWithChildren,
-  SettingsLayoutRoute: SettingsLayoutRouteWithChildren,
+  ReportsIndexRoute: ReportsIndexRoute,
+  SettingsIndexRoute: SettingsIndexRoute,
+  SettingsDiagnosesIndexRoute: SettingsDiagnosesIndexRoute,
+  SettingsGenesIndexRoute: SettingsGenesIndexRoute,
+  SettingsIllnessesIndexRoute: SettingsIllnessesIndexRoute,
+  SettingsMutationsIndexRoute: SettingsMutationsIndexRoute,
+  SettingsRecommendationsIndexRoute: SettingsRecommendationsIndexRoute,
+  SettingsStaffIndexRoute: SettingsStaffIndexRoute,
+  SettingsTestMethodsIndexRoute: SettingsTestMethodsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -341,22 +281,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/reports",
-        "/settings"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/reports": {
-      "filePath": "reports/_layout.tsx",
-      "children": [
-        "/reports/"
-      ]
-    },
-    "/settings": {
-      "filePath": "settings/_layout.tsx",
-      "children": [
+        "/reports/",
         "/settings/",
         "/settings/diagnoses/",
         "/settings/genes/",
@@ -367,41 +292,35 @@ export const routeTree = rootRoute
         "/settings/test-methods/"
       ]
     },
+    "/": {
+      "filePath": "index.tsx"
+    },
     "/reports/": {
-      "filePath": "reports/index.tsx",
-      "parent": "/reports"
+      "filePath": "reports/index.tsx"
     },
     "/settings/": {
-      "filePath": "settings/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/index.tsx"
     },
     "/settings/diagnoses/": {
-      "filePath": "settings/diagnoses/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/diagnoses/index.tsx"
     },
     "/settings/genes/": {
-      "filePath": "settings/genes/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/genes/index.tsx"
     },
     "/settings/illnesses/": {
-      "filePath": "settings/illnesses/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/illnesses/index.tsx"
     },
     "/settings/mutations/": {
-      "filePath": "settings/mutations/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/mutations/index.tsx"
     },
     "/settings/recommendations/": {
-      "filePath": "settings/recommendations/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/recommendations/index.tsx"
     },
     "/settings/staff/": {
-      "filePath": "settings/staff/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/staff/index.tsx"
     },
     "/settings/test-methods/": {
-      "filePath": "settings/test-methods/index.tsx",
-      "parent": "/settings"
+      "filePath": "settings/test-methods/index.tsx"
     }
   }
 }

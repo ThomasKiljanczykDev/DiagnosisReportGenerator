@@ -2,43 +2,43 @@ import { memo } from 'react';
 
 import { MaterialSymbol } from 'react-material-symbols';
 
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import CoronavirusRoundedIcon from '@mui/icons-material/CoronavirusRounded';
-import KeyboardBackspaceRoundedIcon from '@mui/icons-material/KeyboardBackspaceRounded';
 import MedicalInformationRoundedIcon from '@mui/icons-material/MedicalInformationRounded';
 import MedicationRoundedIcon from '@mui/icons-material/MedicationRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
-import { Divider, Drawer, List } from '@mui/material';
+import { Drawer, List } from '@mui/material';
 
+import DrawerHeaderListItem from '@/modules/core/components/drawer/DrawerHeaderListItem';
 import DrawerListItem from '@/modules/core/components/drawer/DrawerListItem';
 
 const drawerWidth = 240;
 
-const SettingsDrawer = memo(function SettingsDrawer() {
+const AppDrawer = memo(function MainDrawer() {
     return (
         <Drawer
             sx={{
+                flexShrink: 0,
                 width: drawerWidth,
                 minWidth: drawerWidth,
-                flexShrink: 0,
                 '& .MuiDrawer-paper': {
                     width: drawerWidth,
                     boxSizing: 'border-box',
                     transition: 'background-color 0.3s'
                 }
             }}
-            anchor="left"
             variant="permanent"
+            anchor="left"
         >
             <List>
+                <DrawerHeaderListItem text="Raporty" />
                 <DrawerListItem
-                    text="Powróć do aplikacji"
                     navigateTo="/reports"
-                    icon={<KeyboardBackspaceRoundedIcon />}
+                    text="Generowanie Raportów"
+                    icon={<ArticleRoundedIcon />}
                 />
-            </List>
-            <Divider />
-            <List>
+                <DrawerHeaderListItem text="Ustawienia" />
                 <DrawerListItem
                     text="Personel"
                     navigateTo="/settings/staff"
@@ -80,4 +80,4 @@ const SettingsDrawer = memo(function SettingsDrawer() {
     );
 });
 
-export default SettingsDrawer;
+export default AppDrawer;

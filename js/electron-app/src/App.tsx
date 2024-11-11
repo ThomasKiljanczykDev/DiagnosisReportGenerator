@@ -1,14 +1,13 @@
 import React, { Suspense, useMemo } from 'react';
 
 import axios from 'axios';
+import 'react-material-symbols/rounded';
 
 import { serviceOptions } from '@diagnosis-report-generator/api/services';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { plPL } from '@mui/material/locale';
 import { plPL as dataGridPlPL } from '@mui/x-data-grid/locales';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-
-import MaterialSymbolPreloader from '@/modules/app/components/MaterialSymbolPreloader';
 
 import './App.css';
 // Import the generated route tree
@@ -49,7 +48,6 @@ export default function App() {
             <Suspense>
                 <RouterProvider router={router} />
             </Suspense>
-            <MaterialSymbolPreloader />
         </ThemeProvider>
     );
 }
