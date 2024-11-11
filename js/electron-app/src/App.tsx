@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import axios from 'axios';
 import { SnackbarProvider } from 'notistack';
@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next';
 import 'react-material-symbols/rounded';
 
 import { serviceOptions } from '@diagnosis-report-generator/api/services';
+import '@fontsource-variable/roboto-flex';
 import { ThemeProvider, createTheme } from '@mui/material';
 import * as muiLocales from '@mui/material/locale';
 import * as muiDataGridLocales from '@mui/x-data-grid/locales';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 
 import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
+import { theme } from '@/theme';
 
 import './App.css';
 import './i18n';
@@ -46,12 +48,7 @@ export default function App() {
         const muiDataGridLocaleKey = getMuiLocaleKey(muiDataGridLocales, i18n.language) ?? 'enUS';
 
         return createTheme(
-            {
-                colorSchemes: {
-                    dark: true
-                },
-                defaultColorScheme: 'light'
-            },
+            theme,
             muiLocales[muiLocaleKey],
             muiDataGridLocales[muiDataGridLocaleKey]
         );

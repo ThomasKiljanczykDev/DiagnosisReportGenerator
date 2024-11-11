@@ -1,27 +1,13 @@
 import React, { type PropsWithChildren, type ReactNode, memo } from 'react';
 
-import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
-import BrightnessHighRoundedIcon from '@mui/icons-material/BrightnessHighRounded';
-import { Grid2, useColorScheme, useTheme } from '@mui/material';
+import { Grid2, useTheme } from '@mui/material';
 
-import AppBreadcrumbs from '@/modules/core/components/AppPageContent/AppBreadcrumbs';
-import ToggleIcon from '@/modules/core/components/ToggleIcon';
+import AppBreadcrumbs from '@/modules/core/components/AppBreadcrumbs';
+import DarkModeToggle from '@/modules/core/components/DarkModeToggle';
 
 interface AppPageContentProps {
     title: string;
     actionButtons?: ReactNode;
-}
-
-function DarkModeToggle() {
-    const { mode, setMode } = useColorScheme();
-
-    return (
-        <ToggleIcon
-            on={mode === 'dark'}
-            onIcon={<BrightnessHighRoundedIcon onClick={() => setMode('light')} />}
-            offIcon={<Brightness4RoundedIcon onClick={() => setMode('dark')} />}
-        />
-    );
 }
 
 const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<AppPageContentProps>) {

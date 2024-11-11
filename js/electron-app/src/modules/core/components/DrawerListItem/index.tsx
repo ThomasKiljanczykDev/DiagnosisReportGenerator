@@ -32,7 +32,7 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
     return (
         <ListItem
             sx={{
-                paddingY: 0,
+                paddingY: 0.5,
                 paddingX: 2
             }}
         >
@@ -40,7 +40,9 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
                 onClick={handleClick}
                 selected={selected}
                 sx={{
-                    borderRadius: 2
+                    borderRadius: 2,
+                    paddingY: 1,
+                    paddingX: 2
                 }}
             >
                 <ListItemIcon>{props.icon}</ListItemIcon>

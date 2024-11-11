@@ -56,3 +56,5 @@ config.json
 !.yarn/versions
 .pnp.*
 
+
+*storybook.log

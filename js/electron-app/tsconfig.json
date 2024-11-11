@@ -6,8 +6,10 @@
         "inlineSourceMap": true
     },
     "include": [
-        "src",
-        "e2e",
+        "src/",
+        "e2e/",
+        ".storybook/main.ts",
+        ".storybook/preview.ts",
         "vite.config.ts",
         "vite.config.development.ts",
         "playwright.config.ts"

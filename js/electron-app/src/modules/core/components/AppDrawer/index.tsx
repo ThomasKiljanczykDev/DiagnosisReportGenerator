@@ -10,10 +10,10 @@ import MedicationRoundedIcon from '@mui/icons-material/MedicationRounded';
 import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import { Drawer, List } from '@mui/material';
 
-import DrawerHeaderListItem from '@/modules/core/components/drawer/DrawerHeaderListItem';
-import DrawerListItem from '@/modules/core/components/drawer/DrawerListItem';
+import DrawerHeaderListItem from '@/modules/core/components/DrawerHeaderListItem';
+import DrawerListItem from '@/modules/core/components/DrawerListItem';
 
-const drawerWidth = 240;
+export const drawerWidth = 240;
 
 const AppDrawer = memo(function MainDrawer() {
     return (
