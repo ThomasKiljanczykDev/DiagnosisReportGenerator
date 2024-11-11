@@ -1,10 +1,11 @@
 import { Chip } from '@mui/material';
 import { type GridRenderCellParams } from '@mui/x-data-grid';
+import type { GridValidRowModel } from '@mui/x-data-grid/models/gridRows';
 
 type ItemValue = string | number | undefined;
 
-interface MultiSelectCellProps<I extends object> {
-    params: GridRenderCellParams<any, I[]>;
+interface MultiSelectCellProps<R extends GridValidRowModel, I extends object> {
+    params: GridRenderCellParams<R, I[]>;
     items: I[];
     value: ItemValue[];
 
@@ -12,7 +13,9 @@ interface MultiSelectCellProps<I extends object> {
     displayFn: (item: I) => string;
 }
 
-export default function MultiSelectCell<I extends object>(props: MultiSelectCellProps<I>) {
+export default function MultiSelectCell<R extends GridValidRowModel, I extends object>(
+    props: MultiSelectCellProps<R, I>
+) {
     return (
         <div
             style={{

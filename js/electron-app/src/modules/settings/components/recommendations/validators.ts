@@ -2,14 +2,13 @@ import { type ZodTypeAny } from 'zod';
 
 import type { CreateUpdateRecommendationDto } from '@diagnosis-report-generator/api/services';
 
-import { z } from '@/modules/core/lib/pl-zod';
+import { z } from '@/modules/core/lib/zod-i18n';
 
 type RecommendationShape = {
     [k in keyof CreateUpdateRecommendationDto]: ZodTypeAny;
 };
 
 export function recommendationValidator() {
-    // TODO: Add validation for age range (from < to)
     return z.object({
         name: z.string(),
         content: z.string(),

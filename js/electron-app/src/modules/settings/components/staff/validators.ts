@@ -2,7 +2,7 @@ import { type ZodTypeAny } from 'zod';
 
 import type { CreateUpdateStaffMemberDto } from '@diagnosis-report-generator/api/services';
 
-import { z } from '@/modules/core/lib/pl-zod';
+import { z } from '@/modules/core/lib/zod-i18n';
 
 type StaffMemberShape = {
     [k in keyof CreateUpdateStaffMemberDto]: ZodTypeAny;

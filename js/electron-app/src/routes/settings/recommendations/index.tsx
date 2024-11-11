@@ -4,7 +4,8 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -39,22 +40,22 @@ function RecommendationsSettings() {
                 }}
                 onRecommendationsChanged={getRecommendations}
             />
-            <AppPageContent title="Zalecenia">
-                <Box marginBottom={1}>
+            <AppPageContent
+                title="Zalecenia"
+                actionButtons={
                     <Button
                         variant="contained"
                         onClick={() => setShowCreateRecommendationModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
                     >
-                        Stwórz zalecenie
+                        Dodaj zalecenie
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <RecommendationsDataGrid
-                        recommendations={recommendations}
-                        onRecommendationsChanged={getRecommendations}
-                    />
-                </Box>
+                }
+            >
+                <RecommendationsDataGrid
+                    recommendations={recommendations}
+                    onRecommendationsChanged={getRecommendations}
+                />
             </AppPageContent>
         </>
     );

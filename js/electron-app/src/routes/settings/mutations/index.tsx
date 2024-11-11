@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type MutationDto, MutationService } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -37,19 +38,19 @@ function MutationsSettings() {
                 }}
                 onMutationsChanged={getMutations}
             />
-            <AppPageContent title="Mutacje">
-                <Box marginBottom={1}>
+            <AppPageContent
+                title="Mutacje"
+                actionButtons={
                     <Button
                         variant="contained"
                         onClick={() => setShowCreateRecommendationModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
                     >
-                        Stwórz mutację
+                        Dodaj mutację
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <MutationsDataGrid mutations={mutations} onMutationsChanged={getMutations} />
-                </Box>
+                }
+            >
+                <MutationsDataGrid mutations={mutations} onMutationsChanged={getMutations} />
             </AppPageContent>
         </>
     );

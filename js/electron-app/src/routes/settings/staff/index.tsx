@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -35,16 +36,19 @@ function StaffSettings() {
                 }}
                 onStaffChanged={getStaff}
             />
-            <AppPageContent title="Personel">
-                <Box marginBottom={1}>
-                    <Button variant="contained" onClick={() => setShowCreateStaffMemberModal(true)}>
-                        Stwórz członka personelu
+            <AppPageContent
+                title="Personel"
+                actionButtons={
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateStaffMemberModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj członka personelu
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <StaffDataGrid staff={staff} onStaffChanged={getStaff} />
-                </Box>
+                }
+            >
+                <StaffDataGrid staff={staff} onStaffChanged={getStaff} />
             </AppPageContent>
         </>
     );

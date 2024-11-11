@@ -138,7 +138,6 @@ export default function GenesDataGrid(props: GenesDataGridProps) {
             rows={props.genes}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount={true}
         />
     );

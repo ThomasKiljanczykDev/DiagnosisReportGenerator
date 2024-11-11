@@ -30,8 +30,19 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
     }, [location.pathname, navigate, props.navigateTo]);
 
     return (
-        <ListItem disablePadding>
-            <ListItemButton onClick={handleClick} selected={selected}>
+        <ListItem
+            sx={{
+                paddingY: 0,
+                paddingX: 2
+            }}
+        >
+            <ListItemButton
+                onClick={handleClick}
+                selected={selected}
+                sx={{
+                    borderRadius: 2
+                }}
+            >
                 <ListItemIcon>{props.icon}</ListItemIcon>
                 <ListItemText primary={props.text} />
             </ListItemButton>

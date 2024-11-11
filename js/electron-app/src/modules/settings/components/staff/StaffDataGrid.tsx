@@ -96,7 +96,6 @@ export default function StaffDataGrid(props: StaffSettingsProps) {
             rows={props.staff}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount
         />
     );

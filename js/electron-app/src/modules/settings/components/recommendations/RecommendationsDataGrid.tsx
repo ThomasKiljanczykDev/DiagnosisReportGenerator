@@ -175,7 +175,6 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
             rows={props.recommendations}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount={true}
         />
     );

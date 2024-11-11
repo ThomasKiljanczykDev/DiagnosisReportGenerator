@@ -6,7 +6,8 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
@@ -49,20 +50,23 @@ function IllnessesSettings() {
                 onIllnessesChanged={getIllnesses}
                 recommendations={recommendations}
             />
-            <AppPageContent title="Choroby">
-                <Box marginBottom={1}>
-                    <Button variant="contained" onClick={() => setShowCreateIllnessModal(true)}>
-                        Stwórz chorobę
+            <AppPageContent
+                title="Choroby"
+                actionButtons={
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateIllnessModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj chorobę
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <IllnessesDataGrid
-                        illnesses={illnesses}
-                        recommendations={recommendations}
-                        onIllnessesChanged={getIllnesses}
-                    />
-                </Box>
+                }
+            >
+                <IllnessesDataGrid
+                    illnesses={illnesses}
+                    recommendations={recommendations}
+                    onIllnessesChanged={getIllnesses}
+                />
             </AppPageContent>
         </>
     );

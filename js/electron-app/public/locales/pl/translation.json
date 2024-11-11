@@ -1,0 +1,14 @@
+{
+    "breadcrumbs": {
+        "reports": "Raporty",
+        "patients": "Pacjenci",
+        "settings": "Ustawienia",
+        "diagnoses": "Rozpoznania",
+        "genes": "Geny",
+        "illnesses": "Choroby",
+        "mutations": "Mutacje",
+        "recommendations": "Zalecenia",
+        "staff": "Personel",
+        "test-methods": "Metody Badań"
+    }
+}

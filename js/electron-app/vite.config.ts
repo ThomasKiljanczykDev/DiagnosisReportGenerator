@@ -33,9 +33,7 @@ export default defineConfig(({ command }) => {
             nodePolyfills(),
             react(),
             // eslint-disable-next-line new-cap
-            TanStackRouterVite({
-                routeToken: '_layout'
-            }),
+            TanStackRouterVite(),
             electron({
                 main: {
                     // Shortcut of `build.lib.entry`

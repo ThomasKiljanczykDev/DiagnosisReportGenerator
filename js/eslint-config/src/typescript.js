@@ -21,18 +21,6 @@ export default tseslint.config(
         },
         rules: {
             '@typescript-eslint/no-non-null-assertion': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-explicit-any': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-unsafe-argument': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-unsafe-assignment': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-unsafe-call': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-unsafe-member-access': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-unsafe-return': 'off',
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-restricted-imports': [
                 'error',

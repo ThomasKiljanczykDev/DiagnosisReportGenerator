@@ -7,6 +7,7 @@ import classes from './ErrorTooltip.module.css';
 interface ErrorTooltipProps {
     open: boolean;
     title: ReactNode;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     children: ReactElement<any, any>;
 }
 

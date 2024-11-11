@@ -1,8 +1,11 @@
-import { type ChangeEvent, useCallback, useState } from 'react';
+import { type ChangeEvent, useCallback } from 'react';
 
+import { useSnackbar } from 'notistack';
+
+import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
+import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
 import { Button, Grid2 } from '@mui/material';
 
-import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import VisuallyHiddenInput from '@/modules/core/components/VisuallyHiddenInput';
 import { MimeType, saveFile } from '@/modules/core/utils/file-util';
 import ExportService from '@/modules/reports/services/ExportService';
@@ -15,8 +18,7 @@ interface MainPageActionButtonsProps {
 }
 
 export default function ReportsActionButtons(props: MainPageActionButtonsProps) {
-    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
-    const [errorSnackbarMessage, setErrorSnackbarMessage] = useState('');
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleFileChange = useCallback(
         async (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,10 +59,14 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
             try {
                 zipData = await ExportService.generateReport(fileData, props.patientData);
             } catch (e) {
-                setOpenErrorSnackbar(true);
-
                 if (e instanceof Error) {
-                    setErrorSnackbarMessage(e.message);
+                    enqueueSnackbar(`Wystąpił błąd podczas generowania raportów: ${e.message}`, {
+                        variant: 'error'
+                    });
+                } else {
+                    enqueueSnackbar('Wystąpił błąd podczas generowania raportów', {
+                        variant: 'error'
+                    });
                 }
                 return;
             }
@@ -71,47 +77,40 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
 
             saveFile(zipData, filename, MimeType.zip);
         },
-        [props.patientData]
+        [enqueueSnackbar, props.patientData]
     );
 
     return (
-        <>
-            <AlertSnackbar
-                open={openErrorSnackbar}
-                openSetter={setOpenErrorSnackbar}
-                severity="error"
+        <Grid2 container spacing={2}>
+            <Button
+                component="label"
+                role="none"
+                variant="contained"
+                startIcon={<UploadFileRoundedIcon fontSize="small" />}
             >
-                <span>Wystąpił błąd podczas generowania raportów: {errorSnackbarMessage}</span>
-            </AlertSnackbar>
-            <Grid2 container spacing={2}>
-                <Grid2>
-                    <Button component="label" role="none" variant="contained">
-                        Importuj plik
-                        <VisuallyHiddenInput
-                            accept=".csv,.xlsx,.xls"
-                            onChange={handleFileChange}
-                            type="file"
-                        />
-                    </Button>
-                </Grid2>
-                <Grid2>
-                    <Button
-                        component="label"
-                        role="none"
-                        variant="contained"
-                        disabled={!props.patientData.length}
-                    >
-                        Generuj raporty
-                        <VisuallyHiddenInput
-                            accept=".docx"
-                            title={'Wybierz plik szablonu raportu'}
-                            value={undefined}
-                            onChange={handleReportGeneration}
-                            type="file"
-                        />
-                    </Button>
-                </Grid2>
-            </Grid2>
-        </>
+                Importuj plik
+                <VisuallyHiddenInput
+                    accept=".csv,.xlsx,.xls"
+                    onChange={handleFileChange}
+                    type="file"
+                />
+            </Button>
+            <Button
+                component="label"
+                role="none"
+                variant="outlined"
+                disabled={!props.patientData.length}
+                startIcon={<DescriptionRoundedIcon fontSize="small" />}
+            >
+                Generuj raporty
+                <VisuallyHiddenInput
+                    accept=".docx"
+                    title={'Wybierz plik szablonu raportu'}
+                    value={undefined}
+                    onChange={handleReportGeneration}
+                    type="file"
+                />
+            </Button>
+        </Grid2>
     );
 }

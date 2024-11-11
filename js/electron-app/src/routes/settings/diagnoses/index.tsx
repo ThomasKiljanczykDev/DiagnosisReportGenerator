@@ -6,7 +6,8 @@ import {
     type RecommendationDto,
     RecommendationService
 } from '@diagnosis-report-generator/api/services';
-import { Box, Button } from '@mui/material';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+import { Button } from '@mui/material';
 import { useGridApiRef } from '@mui/x-data-grid';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -58,20 +59,23 @@ function DiagnosesSettings() {
                 onDiagnosesChanged={getDiagnoses}
                 recommendations={recommendations}
             />
-            <AppPageContent title="Rozpoznania">
-                <Box marginBottom={1}>
-                    <Button variant="contained" onClick={() => setShowCreateDiagnosisModal(true)}>
-                        Stwórz rozpoznanie
+            <AppPageContent
+                title="Rozpoznania"
+                actionButtons={
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateDiagnosisModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj rozpoznanie
                     </Button>
-                </Box>
-
-                <Box flexGrow={1}>
-                    <DiagnosesDataGrid
-                        diagnoses={diagnoses}
-                        recommendations={recommendations}
-                        onDiagnosesChanged={getDiagnoses}
-                    />
-                </Box>
+                }
+            >
+                <DiagnosesDataGrid
+                    diagnoses={diagnoses}
+                    recommendations={recommendations}
+                    onDiagnosesChanged={getDiagnoses}
+                />
             </AppPageContent>
         </>
     );

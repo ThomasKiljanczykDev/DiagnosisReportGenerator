@@ -111,7 +111,6 @@ export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
             rows={props.illnesses}
             rowSelection={false}
             processRowUpdate={processRowUpdate}
-            getRowClassName={(row) => (row.id ? '' : 'new-row')}
             autosizeOnMount={true}
         />
     );

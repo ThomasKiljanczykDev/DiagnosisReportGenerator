@@ -8,6 +8,7 @@ import {
     type TestMethodDto,
     TestMethodService
 } from '@diagnosis-report-generator/api/services';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Box, Button } from '@mui/material';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -57,13 +58,18 @@ function GenesSettings() {
                 testMethods={testMethods}
                 mutations={mutations}
             />
-            <AppPageContent title="Geny">
-                <Box marginBottom={1}>
-                    <Button variant="contained" onClick={() => setShowCreateGeneModal(true)}>
-                        Stwórz gen
+            <AppPageContent
+                title="Geny"
+                actionButtons={
+                    <Button
+                        variant="contained"
+                        onClick={() => setShowCreateGeneModal(true)}
+                        startIcon={<AddCircleOutlineRoundedIcon fontSize="small" />}
+                    >
+                        Dodaj gen
                     </Button>
-                </Box>
-
+                }
+            >
                 <Box flexGrow={1}>
                     <GenesDataGrid
                         genes={genes}

@@ -307,7 +307,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.25.7, @babel/runtime@npm:^7.26.0":
+"@babel/runtime@npm:^7.25.0, @babel/runtime@npm:^7.25.7, @babel/runtime@npm:^7.26.0":
   version: 7.26.0
   resolution: "@babel/runtime@npm:7.26.0"
   dependencies:
@@ -3408,6 +3408,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.1.0":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 10c0/34dead8bee24f5e96f6e7937d711978380647e936a22e76380290e35486afd8634966ce300fc4b74a32f3762c7d4c0303f442c3e259f4ce02374eb0c82834f27
+  languageName: node
+  linkType: hard
+
 "clsx@npm:^2.1.1":
   version: 2.1.1
   resolution: "clsx@npm:2.1.1"
@@ -3842,11 +3849,13 @@ __metadata:
     fflate: "npm:^0.8.2"
     formik: "npm:^2.4.6"
     i18next: "npm:^23.16.4"
+    notistack: "npm:^3.0.1"
     papaparse: "npm:^5.4.1"
     postcss: "npm:^8.4.47"
     postcss-import: "npm:^16.1.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
+    react-i18next: "npm:^15.1.1"
     react-material-symbols: "npm:^4.4.0"
     ts-config: "workspace:*"
     typescript: "npm:<5.7"
@@ -5301,7 +5310,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"goober@npm:^2.1.16":
+"goober@npm:^2.0.33, goober@npm:^2.1.16":
   version: 2.1.16
   resolution: "goober@npm:2.1.16"
   peerDependencies:
@@ -5478,6 +5487,15 @@ __metadata:
   dependencies:
     lru-cache: "npm:^6.0.0"
   checksum: 10c0/150fbcb001600336d17fdbae803264abed013548eea7946c2264c49ebe2ebd8c4441ba71dd23dd8e18c65de79d637f98b22d4760ba5fb2e0b15d62543d0fff07
+  languageName: node
+  linkType: hard
+
+"html-parse-stringify@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "html-parse-stringify@npm:3.0.1"
+  dependencies:
+    void-elements: "npm:3.1.0"
+  checksum: 10c0/159292753d48b84d216d61121054ae5a33466b3db5b446e2ffc093ac077a411a99ce6cbe0d18e55b87cf25fa3c5a86c4d8b130b9719ec9b66623259000c72c15
   languageName: node
   linkType: hard
 
@@ -6887,6 +6905,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"notistack@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "notistack@npm:3.0.1"
+  dependencies:
+    clsx: "npm:^1.1.0"
+    goober: "npm:^2.0.33"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10c0/dd5bd492dbaf8d07a1f45a53ae195c5d481bc7136d73a756eb076534d315216a3cd2f4628263be55ad21d8bfed6ec546e5063584ffcc2798fb2aac56e5ccf0cf
+  languageName: node
+  linkType: hard
+
 "npmlog@npm:^6.0.0":
   version: 6.0.2
   resolution: "npmlog@npm:6.0.2"
@@ -7536,6 +7567,24 @@ __metadata:
   version: 2.0.4
   resolution: "react-fast-compare@npm:2.0.4"
   checksum: 10c0/f0300c677e95198b5f993cbb8a983dab09586157dc678f9e2b5b29ff941b6677a8776fbbdc425ce102fad86937e36bb45cfcfd797f006270b97ccf287ebfb885
+  languageName: node
+  linkType: hard
+
+"react-i18next@npm:^15.1.1":
+  version: 15.1.1
+  resolution: "react-i18next@npm:15.1.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.25.0"
+    html-parse-stringify: "npm:^3.0.1"
+  peerDependencies:
+    i18next: ">= 23.2.3"
+    react: ">= 16.8.0"
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+    react-native:
+      optional: true
+  checksum: 10c0/c1e8af21422cdaa1a493b1d73502a496aab84c3318de1137bb56b1f2f37eae4ba5856cf079b0a0abe9f2a18e0457c986ad2e43e70875f7cd43d0efa2f70897a5
   languageName: node
   linkType: hard
 
@@ -9032,6 +9081,13 @@ __metadata:
   version: 1.1.2
   resolution: "vm-browserify@npm:1.1.2"
   checksum: 10c0/0cc1af6e0d880deb58bc974921320c187f9e0a94f25570fca6b1bd64e798ce454ab87dfd797551b1b0cc1849307421aae0193cedf5f06bdb5680476780ee344b
+  languageName: node
+  linkType: hard
+
+"void-elements@npm:3.1.0":
+  version: 3.1.0
+  resolution: "void-elements@npm:3.1.0"
+  checksum: 10c0/0b8686f9f9aa44012e9bd5eabf287ae0cde409b9a2854c5a2335cb83920c957668ac5876e3f0d158dd424744ac411a7270e64128556b451ed3bec875ef18534d
   languageName: node
   linkType: hard
 
