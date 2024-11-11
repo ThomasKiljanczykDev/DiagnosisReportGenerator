@@ -21,8 +21,6 @@ export default tseslint.config(
         },
         rules: {
             '@typescript-eslint/no-non-null-assertion': 'off',
-            // TODO: Refactor the code later to make it possible to enable this rule
-            '@typescript-eslint/no-explicit-any': 'off',
             '@typescript-eslint/no-shadow': 'error',
             '@typescript-eslint/no-restricted-imports': [
                 'error',

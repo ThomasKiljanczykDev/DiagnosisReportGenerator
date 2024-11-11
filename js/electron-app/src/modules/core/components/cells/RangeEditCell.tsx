@@ -3,13 +3,14 @@ import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { type Range } from '@diagnosis-report-generator/api/services';
 import { TextField } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
+import type { GridValidRowModel } from '@mui/x-data-grid/models/gridRows';
 
-interface RangeEditCellProps {
-    params: GridRenderEditCellParams<any, Range>;
+interface RangeEditCellProps<R extends GridValidRowModel> {
+    params: GridRenderEditCellParams<R, Range>;
     defaultValue: Range;
 }
 
-export default function RangeEditCell(props: RangeEditCellProps) {
+export default function RangeEditCell<R extends GridValidRowModel>(props: RangeEditCellProps<R>) {
     const apiRef = useGridApiContext();
 
     const [value, setValue] = useState<Range>(props.defaultValue);

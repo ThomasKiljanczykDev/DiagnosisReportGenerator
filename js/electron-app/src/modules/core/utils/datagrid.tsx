@@ -4,6 +4,7 @@ import MultiSelectCell from '@/modules/core/components/cells/MultiSelectCell';
 import MultiSelectEditCell from '@/modules/core/components/cells/MultiSelectEditCell';
 
 export function createSingleSelectDefinition<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     R extends Record<string, any>,
     P extends keyof R,
     V extends R[P],
@@ -40,8 +41,10 @@ export function createSingleSelectDefinition<
 }
 
 export function createMultiSelectDefinition<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     R extends Record<string, any>,
     P extends keyof R,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     V extends R[P] & Array<any>,
     O extends V
 >(

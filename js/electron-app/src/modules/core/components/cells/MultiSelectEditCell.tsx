@@ -2,19 +2,22 @@ import { type ReactNode, useCallback, useEffect, useState } from 'react';
 
 import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
 import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
+import type { GridValidRowModel } from '@mui/x-data-grid/models/gridRows';
 
 export type ItemValue = string | number | undefined;
 
-interface MultiSelectEditCellProps<I extends object> {
-    params: GridRenderEditCellParams<any, I[]>;
+interface MultiSelectEditCellProps<R extends GridValidRowModel, I extends object> {
+    params: GridRenderEditCellParams<R, I[]>;
     items: I[];
     initialValue: ItemValue[];
     keyFn: (item: I) => ItemValue;
     displayFn: (item: I) => ReactNode;
-    valueFn?: (item: I) => any;
+    valueFn?: (item: I) => I[keyof I];
 }
 
-export default function MultiSelectEditCell<I extends object>(props: MultiSelectEditCellProps<I>) {
+export default function MultiSelectEditCell<R extends GridValidRowModel, I extends object>(
+    props: MultiSelectEditCellProps<R, I>
+) {
     const apiRef = useGridApiContext();
 
     const [value, setValue] = useState<ItemValue[]>(props.initialValue);
