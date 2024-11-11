@@ -33,7 +33,7 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
         <ListItem
             sx={{
                 paddingY: 0,
-                paddingX: 2,
+                paddingX: 2
             }}
         >
             <ListItemButton

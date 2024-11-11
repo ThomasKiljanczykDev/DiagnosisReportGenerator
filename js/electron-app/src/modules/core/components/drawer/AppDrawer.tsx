@@ -34,8 +34,8 @@ const AppDrawer = memo(function MainDrawer() {
             <List>
                 <DrawerHeaderListItem text="Raporty" />
                 <DrawerListItem
-                    navigateTo="/reports"
-                    text="Generowanie Raportów"
+                    navigateTo="/reports/patients"
+                    text="Pacjenci"
                     icon={<ArticleRoundedIcon />}
                 />
                 <DrawerHeaderListItem text="Ustawienia" />

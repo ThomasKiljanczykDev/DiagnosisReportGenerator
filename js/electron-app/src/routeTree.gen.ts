@@ -21,6 +21,7 @@ import { Route as SettingsMutationsIndexImport } from './routes/settings/mutatio
 import { Route as SettingsIllnessesIndexImport } from './routes/settings/illnesses/index'
 import { Route as SettingsGenesIndexImport } from './routes/settings/genes/index'
 import { Route as SettingsDiagnosesIndexImport } from './routes/settings/diagnoses/index'
+import { Route as ReportsPatientsIndexImport } from './routes/reports/patients/index'
 
 // Create/Update Routes
 
@@ -85,6 +86,12 @@ const SettingsDiagnosesIndexRoute = SettingsDiagnosesIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ReportsPatientsIndexRoute = ReportsPatientsIndexImport.update({
+  id: '/reports/patients/',
+  path: '/reports/patients/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -108,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/reports/patients/': {
+      id: '/reports/patients/'
+      path: '/reports/patients'
+      fullPath: '/reports/patients'
+      preLoaderRoute: typeof ReportsPatientsIndexImport
       parentRoute: typeof rootRoute
     }
     '/settings/diagnoses/': {
@@ -168,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/reports': typeof ReportsIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/reports/patients': typeof ReportsPatientsIndexRoute
   '/settings/diagnoses': typeof SettingsDiagnosesIndexRoute
   '/settings/genes': typeof SettingsGenesIndexRoute
   '/settings/illnesses': typeof SettingsIllnessesIndexRoute
@@ -181,6 +196,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/reports': typeof ReportsIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/reports/patients': typeof ReportsPatientsIndexRoute
   '/settings/diagnoses': typeof SettingsDiagnosesIndexRoute
   '/settings/genes': typeof SettingsGenesIndexRoute
   '/settings/illnesses': typeof SettingsIllnessesIndexRoute
@@ -195,6 +211,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/reports/': typeof ReportsIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/reports/patients/': typeof ReportsPatientsIndexRoute
   '/settings/diagnoses/': typeof SettingsDiagnosesIndexRoute
   '/settings/genes/': typeof SettingsGenesIndexRoute
   '/settings/illnesses/': typeof SettingsIllnessesIndexRoute
@@ -210,6 +227,7 @@ export interface FileRouteTypes {
     | '/'
     | '/reports'
     | '/settings'
+    | '/reports/patients'
     | '/settings/diagnoses'
     | '/settings/genes'
     | '/settings/illnesses'
@@ -222,6 +240,7 @@ export interface FileRouteTypes {
     | '/'
     | '/reports'
     | '/settings'
+    | '/reports/patients'
     | '/settings/diagnoses'
     | '/settings/genes'
     | '/settings/illnesses'
@@ -234,6 +253,7 @@ export interface FileRouteTypes {
     | '/'
     | '/reports/'
     | '/settings/'
+    | '/reports/patients/'
     | '/settings/diagnoses/'
     | '/settings/genes/'
     | '/settings/illnesses/'
@@ -248,6 +268,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ReportsIndexRoute: typeof ReportsIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
+  ReportsPatientsIndexRoute: typeof ReportsPatientsIndexRoute
   SettingsDiagnosesIndexRoute: typeof SettingsDiagnosesIndexRoute
   SettingsGenesIndexRoute: typeof SettingsGenesIndexRoute
   SettingsIllnessesIndexRoute: typeof SettingsIllnessesIndexRoute
@@ -261,6 +282,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ReportsIndexRoute: ReportsIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
+  ReportsPatientsIndexRoute: ReportsPatientsIndexRoute,
   SettingsDiagnosesIndexRoute: SettingsDiagnosesIndexRoute,
   SettingsGenesIndexRoute: SettingsGenesIndexRoute,
   SettingsIllnessesIndexRoute: SettingsIllnessesIndexRoute,
@@ -283,6 +305,7 @@ export const routeTree = rootRoute
         "/",
         "/reports/",
         "/settings/",
+        "/reports/patients/",
         "/settings/diagnoses/",
         "/settings/genes/",
         "/settings/illnesses/",
@@ -300,6 +323,9 @@ export const routeTree = rootRoute
     },
     "/settings/": {
       "filePath": "settings/index.tsx"
+    },
+    "/reports/patients/": {
+      "filePath": "reports/patients/index.tsx"
     },
     "/settings/diagnoses/": {
       "filePath": "settings/diagnoses/index.tsx"

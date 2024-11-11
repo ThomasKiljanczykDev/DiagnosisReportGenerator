@@ -38,6 +38,7 @@
         "papaparse": "^5.4.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
+        "react-i18next": "^15.1.1",
         "react-material-symbols": "^4.4.0",
         "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
         "zod": "^3.23.8",
