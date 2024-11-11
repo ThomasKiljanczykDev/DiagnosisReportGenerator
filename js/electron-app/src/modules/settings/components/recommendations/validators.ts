@@ -9,7 +9,6 @@ type RecommendationShape = {
 };
 
 export function recommendationValidator() {
-    // TODO: Add validation for age range (from < to)
     return z.object({
         name: z.string(),
         content: z.string(),
