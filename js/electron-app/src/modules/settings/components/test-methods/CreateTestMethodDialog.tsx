@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import {
@@ -10,7 +11,6 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 
-import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormTextField from '@/modules/core/components/form/FormTextField';
 import { testMethodValidator } from '@/modules/settings/components/test-methods/validators';
 
@@ -21,7 +21,7 @@ interface CreateTestMethodDialogProps {
 }
 
 export default function CreateTestMethodDialog(props: CreateTestMethodDialogProps) {
-    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleCreateTestMethod = useCallback(
         async (dto: CreateUpdateTestMethodDto) => {
@@ -32,17 +32,20 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
                 await props.onTestMethodsChanged();
             } catch (e) {
                 if (axios.isAxiosError(e)) {
-                    setOpenErrorSnackbar(true);
+                    enqueueSnackbar(
+                        'Wystąpił błąd podczas tworzenia metody badania. Upewnij się, że nazwa metody badania jest unikatowa',
+                        {
+                            variant: 'error'
+                        }
+                    );
                 }
-
-                // TODO: Add snackbar for unexpected errors
 
                 return;
             }
 
             props.onClose();
         },
-        [props]
+        [enqueueSnackbar, props]
     );
 
     const formik = useFormik({
@@ -65,44 +68,28 @@ export default function CreateTestMethodDialog(props: CreateTestMethodDialogProp
     }, [props.open]);
 
     return (
-        <>
-            <AlertSnackbar
-                open={openErrorSnackbar}
-                openSetter={setOpenErrorSnackbar}
-                severity="error"
-            >
-                <span>
-                    Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa metody badań
-                    jest unikatowa.
-                </span>
-            </AlertSnackbar>
-            <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Dodaj metodę badania</DialogTitle>
-                <DialogContent>
-                    <Stack spacing="1rem">
-                        <FormTextField
-                            label="Nazwa"
-                            variant="standard"
-                            formik={formik}
-                            field="name"
-                            required
-                            fixedHeight
-                        />
-                    </Stack>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="secondary" onClick={props.onClose}>
-                        Anuluj
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={formik.submitForm}
-                        disabled={!formik.isValid}
-                    >
-                        Dodaj
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+        <Dialog open={props.open} onClose={props.onClose}>
+            <DialogTitle>Dodaj metodę badania</DialogTitle>
+            <DialogContent>
+                <Stack spacing="1rem">
+                    <FormTextField
+                        label="Nazwa"
+                        variant="standard"
+                        formik={formik}
+                        field="name"
+                        required
+                        fixedHeight
+                    />
+                </Stack>
+            </DialogContent>
+            <DialogActions>
+                <Button color="secondary" onClick={props.onClose}>
+                    Anuluj
+                </Button>
+                <Button variant="contained" onClick={formik.submitForm} disabled={!formik.isValid}>
+                    Dodaj
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import {
@@ -19,7 +20,6 @@ import {
     Stack
 } from '@mui/material';
 
-import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormSelect from '@/modules/core/components/form/FormSelect';
 import FormTextField from '@/modules/core/components/form/FormTextField';
 import { int32max } from '@/modules/core/utils/constants';
@@ -32,7 +32,7 @@ interface CreateRecommendationDialogProps {
 }
 
 export default function CreateRecommendationDialog(props: CreateRecommendationDialogProps) {
-    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleCreateRecommendation = useCallback(
         async (dto: CreateUpdateRecommendationDto) => {
@@ -43,7 +43,12 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
                 await props.onRecommendationsChanged();
             } catch (e) {
                 if (axios.isAxiosError(e)) {
-                    setOpenErrorSnackbar(true);
+                    enqueueSnackbar(
+                        'Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa zalecenia jest unikatowa',
+                        {
+                            variant: 'error'
+                        }
+                    );
                 }
 
                 return;
@@ -51,7 +56,7 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
 
             props.onClose();
         },
-        [props]
+        [enqueueSnackbar, props]
     );
 
     const formik = useFormik({
@@ -81,92 +86,76 @@ export default function CreateRecommendationDialog(props: CreateRecommendationDi
     }, [props.open]);
 
     return (
-        <>
-            <AlertSnackbar
-                open={openErrorSnackbar}
-                openSetter={setOpenErrorSnackbar}
-                severity="error"
-            >
-                <span>
-                    Wystąpił błąd podczas tworzenia zalecenia. Upewnij się, że nazwa zalecenia jest
-                    unikatowa.
-                </span>
-            </AlertSnackbar>
-            <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Dodaj zalecenie</DialogTitle>
-                <DialogContent>
-                    <Stack>
-                        <Box display="flex" gap="0.75rem" width="100%">
-                            <FormTextField
-                                label="Nazwa"
-                                variant="standard"
-                                formik={formik}
-                                field="name"
-                                required
-                                fixedHeight
-                            />
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    flexGrow: 1,
-                                    alignContent: 'center',
-                                    flexWrap: 'wrap'
-                                }}
-                            >
-                                <FormSelect
-                                    formik={formik}
-                                    label="Poziom zalecenia"
-                                    field="level"
-                                    fullWidth
-                                    items={Object.values(RecommendationLevel).map((level) => ({
-                                        label: level,
-                                        value: level
-                                    }))}
-                                />
-                            </div>
-                        </Box>
+        <Dialog open={props.open} onClose={props.onClose}>
+            <DialogTitle>Dodaj zalecenie</DialogTitle>
+            <DialogContent>
+                <Stack>
+                    <Box display="flex" gap="0.75rem" width="100%">
                         <FormTextField
-                            label="Opis"
+                            label="Nazwa"
                             variant="standard"
                             formik={formik}
-                            field="content"
+                            field="name"
                             required
                             fixedHeight
                         />
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexGrow: 1,
+                                alignContent: 'center',
+                                flexWrap: 'wrap'
+                            }}
+                        >
+                            <FormSelect
+                                formik={formik}
+                                label="Poziom zalecenia"
+                                field="level"
+                                fullWidth
+                                items={Object.values(RecommendationLevel).map((level) => ({
+                                    label: level,
+                                    value: level
+                                }))}
+                            />
+                        </div>
+                    </Box>
+                    <FormTextField
+                        label="Opis"
+                        variant="standard"
+                        formik={formik}
+                        field="content"
+                        required
+                        fixedHeight
+                    />
 
-                        <Box display="flex" gap="0.75rem">
-                            <FormTextField
-                                label="Wiek od"
-                                variant="standard"
-                                formik={formik}
-                                field="ageRange.from"
-                                type="number"
-                                fixedHeight
-                            />
-                            <FormTextField
-                                label="Wiek do"
-                                variant="standard"
-                                formik={formik}
-                                field="ageRange.to"
-                                type="number"
-                                fixedHeight
-                            />
-                        </Box>
-                    </Stack>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="secondary" onClick={props.onClose}>
-                        Anuluj
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={formik.submitForm}
-                        disabled={!formik.isValid}
-                    >
-                        Dodaj
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+                    <Box display="flex" gap="0.75rem">
+                        <FormTextField
+                            label="Wiek od"
+                            variant="standard"
+                            formik={formik}
+                            field="ageRange.from"
+                            type="number"
+                            fixedHeight
+                        />
+                        <FormTextField
+                            label="Wiek do"
+                            variant="standard"
+                            formik={formik}
+                            field="ageRange.to"
+                            type="number"
+                            fixedHeight
+                        />
+                    </Box>
+                </Stack>
+            </DialogContent>
+            <DialogActions>
+                <Button color="secondary" onClick={props.onClose}>
+                    Anuluj
+                </Button>
+                <Button variant="contained" onClick={formik.submitForm} disabled={!formik.isValid}>
+                    Dodaj
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

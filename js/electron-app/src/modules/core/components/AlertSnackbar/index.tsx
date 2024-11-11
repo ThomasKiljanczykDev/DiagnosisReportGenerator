@@ -1,46 +1,47 @@
-import type { SyntheticEvent } from 'react';
+import { forwardRef } from 'react';
 
-import { Alert, type AlertColor, type SnackbarCloseReason } from '@mui/material';
-import Snackbar from '@mui/material/Snackbar';
-import type { SnackbarProps } from '@mui/material/Snackbar/Snackbar';
+import { type CustomContentProps, SnackbarContent, useSnackbar } from 'notistack';
+
+import { Alert, type AlertColor } from '@mui/material';
 
 import classes from './AlertSnackbar.module.css';
 
-interface AlertSnackbarProps extends SnackbarProps {
-    openSetter: (value: boolean) => void;
-    severity: AlertColor;
-}
+const AlertSnackbar = forwardRef<HTMLDivElement, CustomContentProps>(
+    function AlertSnackbar(props, ref) {
+        const { closeSnackbar } = useSnackbar();
 
-export default function AlertSnackbar(props: AlertSnackbarProps) {
-    function handleSnackbarClose(
-        visibilitySetter: (value: boolean) => void,
-        event?: SyntheticEvent | Event,
-        reason?: SnackbarCloseReason
-    ) {
-        if (reason === 'clickaway') {
-            return;
+        let severity: AlertColor;
+        switch (props.variant) {
+            case 'success':
+                severity = 'success';
+                break;
+            case 'error':
+                severity = 'error';
+                break;
+            case 'warning':
+                severity = 'warning';
+                break;
+            case 'info':
+                severity = 'info';
+                break;
+            case 'default':
+            default:
+                severity = 'info';
+                break;
         }
 
-        visibilitySetter(false);
+        return (
+            <SnackbarContent ref={ref}>
+                <Alert
+                    className={`${classes.AlertSnackbar} ${props.className}`}
+                    severity={severity}
+                    onClose={() => closeSnackbar(props.id)}
+                >
+                    {props.message}
+                </Alert>
+            </SnackbarContent>
+        );
     }
+);
 
-    return (
-        <Snackbar
-            {...{
-                ...props,
-                openSetter: undefined,
-                severity: undefined
-            }}
-            open={props.open}
-            onClose={(event, reason) => handleSnackbarClose(props.openSetter, event, reason)}
-        >
-            <Alert
-                className={classes.AlertSnackbarAlert}
-                severity={props.severity}
-                onClose={() => handleSnackbarClose(props.openSetter)}
-            >
-                {props.children}
-            </Alert>
-        </Snackbar>
-    );
-}
+export default AlertSnackbar;

@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import axios from 'axios';
 import { useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
 import { toFormikValidationSchema } from 'zod-formik-adapter';
 
 import {
@@ -11,7 +12,6 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 
-import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 import FormMultiSelect from '@/modules/core/components/form/FormMultiSelect';
 import FormTextField from '@/modules/core/components/form/FormTextField';
 import { diagnosisValidator } from '@/modules/settings/components/diagnoses/validators';
@@ -24,7 +24,7 @@ interface CreateDiagnosisDialogProps {
 }
 
 export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps) {
-    const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     const handleCreateDiagnosis = useCallback(
         async (dto: CreateUpdateDiagnosisDto) => {
@@ -35,7 +35,12 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
                 await props.onDiagnosesChanged();
             } catch (e) {
                 if (axios.isAxiosError(e)) {
-                    setOpenErrorSnackbar(true);
+                    enqueueSnackbar(
+                        'Wystąpił błąd podczas tworzenia rozpoznania. Upewnij się, że nazwa rozpoznania jest unikatowa',
+                        {
+                            variant: 'error'
+                        }
+                    );
                 }
 
                 return;
@@ -43,7 +48,7 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
 
             props.onClose();
         },
-        [props]
+        [enqueueSnackbar, props]
     );
 
     const formik = useFormik({
@@ -67,53 +72,37 @@ export default function CreateDiagnosisDialog(props: CreateDiagnosisDialogProps)
     }, [props.open]);
 
     return (
-        <>
-            <AlertSnackbar
-                open={openErrorSnackbar}
-                openSetter={setOpenErrorSnackbar}
-                severity="error"
-            >
-                <span>
-                    Wystąpił błąd podczas tworzenia rozpoznania. Upewnij się, że nazwa rozpoznania
-                    jest unikatowa.
-                </span>
-            </AlertSnackbar>
-            <Dialog open={props.open} onClose={props.onClose}>
-                <DialogTitle>Dodaj rozpoznanie</DialogTitle>
-                <DialogContent>
-                    <Stack spacing="1rem">
-                        <FormTextField
-                            label="Nazwa"
-                            variant="standard"
-                            formik={formik}
-                            field="name"
-                            required
-                            fixedHeight
-                        />
-                        <FormMultiSelect
-                            formik={formik}
-                            label="Zalecenia"
-                            field="recommendationIds"
-                            items={Object.values(props.recommendations).map((recommendation) => ({
-                                label: recommendation.name,
-                                value: recommendation.id
-                            }))}
-                        />
-                    </Stack>
-                </DialogContent>
-                <DialogActions>
-                    <Button color="secondary" onClick={props.onClose}>
-                        Anuluj
-                    </Button>
-                    <Button
-                        variant="contained"
-                        onClick={formik.submitForm}
-                        disabled={!formik.isValid}
-                    >
-                        Dodaj
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </>
+        <Dialog open={props.open} onClose={props.onClose}>
+            <DialogTitle>Dodaj rozpoznanie</DialogTitle>
+            <DialogContent>
+                <Stack spacing="1rem">
+                    <FormTextField
+                        label="Nazwa"
+                        variant="standard"
+                        formik={formik}
+                        field="name"
+                        required
+                        fixedHeight
+                    />
+                    <FormMultiSelect
+                        formik={formik}
+                        label="Zalecenia"
+                        field="recommendationIds"
+                        items={Object.values(props.recommendations).map((recommendation) => ({
+                            label: recommendation.name,
+                            value: recommendation.id
+                        }))}
+                    />
+                </Stack>
+            </DialogContent>
+            <DialogActions>
+                <Button color="secondary" onClick={props.onClose}>
+                    Anuluj
+                </Button>
+                <Button variant="contained" onClick={formik.submitForm} disabled={!formik.isValid}>
+                    Dodaj
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

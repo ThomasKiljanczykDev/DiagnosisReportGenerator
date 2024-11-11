@@ -1,6 +1,7 @@
 import React, { Suspense, useMemo } from 'react';
 
 import axios from 'axios';
+import { SnackbarProvider } from 'notistack';
 import { useTranslation } from 'react-i18next';
 import 'react-material-symbols/rounded';
 
@@ -9,6 +10,8 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import * as muiLocales from '@mui/material/locale';
 import * as muiDataGridLocales from '@mui/x-data-grid/locales';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
+
+import AlertSnackbar from '@/modules/core/components/AlertSnackbar';
 
 import './App.css';
 import './i18n';
@@ -56,9 +59,18 @@ export default function App() {
 
     return (
         <ThemeProvider theme={themeWithLocale}>
-            <Suspense>
-                <RouterProvider router={router} />
-            </Suspense>
+            <SnackbarProvider
+                Components={{
+                    error: AlertSnackbar,
+                    success: AlertSnackbar,
+                    warning: AlertSnackbar,
+                    info: AlertSnackbar
+                }}
+            >
+                <Suspense>
+                    <RouterProvider router={router} />
+                </Suspense>
+            </SnackbarProvider>
         </ThemeProvider>
     );
 }
