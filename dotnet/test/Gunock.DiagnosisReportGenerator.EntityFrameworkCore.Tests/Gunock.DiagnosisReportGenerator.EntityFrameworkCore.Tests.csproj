@@ -3,18 +3,18 @@
     <Import Project="..\..\common.props"/>
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Gunock.DiagnosisReportGenerator.EntityFrameworkCore\Gunock.DiagnosisReportGenerator.EntityFrameworkCore.csproj" />
         <ProjectReference Include="..\Gunock.DiagnosisReportGenerator.Application.Tests\Gunock.DiagnosisReportGenerator.Application.Tests.csproj"/>
-        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="8.3.1" />
+        <PackageReference Include="Volo.Abp.EntityFrameworkCore.Sqlite" Version="9.0.4" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     </ItemGroup>
 
 </Project>
