@@ -5,10 +5,10 @@
     "type": "module",
     "main": "index.js",
     "dependencies": {
-        "@trivago/prettier-plugin-sort-imports": "^4.3.0"
+        "@trivago/prettier-plugin-sort-imports": "^5.2.1"
     },
     "devDependencies": {
-        "prettier": "^3.3.3"
+        "prettier": "^3.4.2"
     },
     "peerDependencies": {
         "prettier": "^3.3.2"

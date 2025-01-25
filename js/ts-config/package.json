@@ -7,9 +7,9 @@
         "tsconfig.json"
     ],
     "devDependencies": {
-        "prettier": "^3.3.3"
+        "prettier": "^3.4.2"
     },
     "peerDependencies": {
-        "typescript": "<5.7"
+        "typescript": "<5.8"
     }
 }
