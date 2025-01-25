@@ -1,0 +1,9 @@
+﻿using ThomasKiljanczykDev.DiagnosisReportGenerator.TestBase;
+using Xunit;
+
+namespace ThomasKiljanczykDev.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFrameworkCore;
+
+[CollectionDefinition(DiagnosisReportGeneratorTestConsts.CollectionDefinitionName)]
+public class
+    DiagnosisReportGeneratorEntityFrameworkCoreCollection : ICollectionFixture<
+    DiagnosisReportGeneratorEntityFrameworkCoreFixture>;

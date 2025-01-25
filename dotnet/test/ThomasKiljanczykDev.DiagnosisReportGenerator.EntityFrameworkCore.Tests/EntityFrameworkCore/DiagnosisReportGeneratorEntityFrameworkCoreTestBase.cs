@@ -1,0 +1,6 @@
+﻿using ThomasKiljanczykDev.DiagnosisReportGenerator.TestBase;
+
+namespace ThomasKiljanczykDev.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFrameworkCore;
+
+public abstract class DiagnosisReportGeneratorEntityFrameworkCoreTestBase : DiagnosisReportGeneratorTestBase<
+    DiagnosisReportGeneratorEntityFrameworkCoreTestModule>;

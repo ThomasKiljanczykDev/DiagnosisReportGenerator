@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\common.props"/>
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\src\ThomasKiljanczykDev.DiagnosisReportGenerator.Domain\ThomasKiljanczykDev.DiagnosisReportGenerator.Domain.csproj" />
+        <ProjectReference Include="..\ThomasKiljanczykDev.DiagnosisReportGenerator.TestBase\ThomasKiljanczykDev.DiagnosisReportGenerator.TestBase.csproj" />
+    </ItemGroup>
+
+</Project>

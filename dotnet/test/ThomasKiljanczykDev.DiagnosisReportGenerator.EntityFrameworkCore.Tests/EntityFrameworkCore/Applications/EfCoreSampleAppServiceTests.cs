@@ -1,0 +1,8 @@
+using ThomasKiljanczykDev.DiagnosisReportGenerator.Application.Tests.Samples;
+using ThomasKiljanczykDev.DiagnosisReportGenerator.TestBase;
+using Xunit;
+
+namespace ThomasKiljanczykDev.DiagnosisReportGenerator.EntityFrameworkCore.Tests.EntityFrameworkCore.Applications;
+
+[Collection(DiagnosisReportGeneratorTestConsts.CollectionDefinitionName)]
+public class EfCoreSampleAppServiceTests : SampleAppServiceTests<DiagnosisReportGeneratorEntityFrameworkCoreTestModule>;
