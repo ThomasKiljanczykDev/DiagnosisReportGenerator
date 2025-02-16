@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { type MutationDto, MutationService } from '@diagnosis-report-generator/api/services';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateMutationDialog from '@/modules/settings/components/mutations/CreateMutationDialog';
@@ -56,6 +56,6 @@ function MutationsSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/mutations/')({
+export const Route = createLazyFileRoute('/settings/mutations/')({
     component: MutationsSettings
 });

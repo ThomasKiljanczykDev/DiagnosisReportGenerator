@@ -10,7 +10,7 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Box, Button } from '@mui/material';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateGeneDialog from '@/modules/settings/components/genes/CreateGeneDialog';
@@ -83,6 +83,6 @@ function GenesSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/genes/')({
+export const Route = createLazyFileRoute('/settings/genes/')({
     component: GenesSettings
 });

@@ -1,7 +1,7 @@
 # Diagnosis Report Generator
-![Main Screen Light](docs/images/main-screen-1-light.png "Main Screen Light")
-![Main Screen Dark](docs/images/main-screen-1-dark.png "Main Screen Dark")
 
+![Main Screen Light](docs/images/main-screen-1-light.png 'Main Screen Light')
+![Main Screen Dark](docs/images/main-screen-1-dark.png 'Main Screen Dark')
 
 ## 👀 Overview
 

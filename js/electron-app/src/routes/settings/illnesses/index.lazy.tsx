@@ -8,7 +8,7 @@ import {
 } from '@diagnosis-report-generator/api/services';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateIllnessDialog from '@/modules/settings/components/illnesses/CreateIllnessDialog';
@@ -29,11 +29,11 @@ function IllnessesSettings() {
 
         getIllnesses(abortController.signal);
 
-        RecommendationService.getList(undefined, { signal: abortController.signal }).then(
-            (response) => {
-                setRecommendations(response.items);
-            }
-        );
+        RecommendationService.getList(undefined, {
+            signal: abortController.signal
+        }).then((response) => {
+            setRecommendations(response.items);
+        });
 
         return () => {
             abortController.abort();
@@ -72,6 +72,6 @@ function IllnessesSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/illnesses/')({
+export const Route = createLazyFileRoute('/settings/illnesses/')({
     component: IllnessesSettings
 });

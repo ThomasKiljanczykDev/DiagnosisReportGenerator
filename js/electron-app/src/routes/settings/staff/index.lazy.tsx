@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { type StaffMemberDto, StaffService } from '@diagnosis-report-generator/api/services';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateStaffMemberDialog from '@/modules/settings/components/staff/CreateStaffMemberDialog';
@@ -54,6 +54,6 @@ function StaffSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/staff/')({
+export const Route = createLazyFileRoute('/settings/staff/')({
     component: StaffSettings
 });

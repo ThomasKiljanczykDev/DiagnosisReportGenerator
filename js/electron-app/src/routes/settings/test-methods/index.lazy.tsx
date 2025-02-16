@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { type TestMethodDto, TestMethodService } from '@diagnosis-report-generator/api/services';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateTestMethodDialog from '@/modules/settings/components/test-methods/CreateTestMethodDialog';
@@ -55,6 +55,6 @@ function TestMethodsSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/test-methods/')({
+export const Route = createLazyFileRoute('/settings/test-methods/')({
     component: TestMethodsSettings
 });

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import LoadingContainer from '@/modules/core/components/LoadingContainer';
@@ -42,6 +42,6 @@ function Reports() {
     );
 }
 
-export const Route = createFileRoute('/reports/patients/')({
+export const Route = createLazyFileRoute('/reports/patients/')({
     component: Reports
 });

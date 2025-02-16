@@ -9,7 +9,7 @@ import {
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { Button } from '@mui/material';
 import { useGridApiRef } from '@mui/x-data-grid';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import AppPageContent from '@/modules/core/components/AppPageContent';
 import CreateDiagnosisDialog from '@/modules/settings/components/diagnoses/CreateDiagnosisDialog';
@@ -81,6 +81,6 @@ function DiagnosesSettings() {
     );
 }
 
-export const Route = createFileRoute('/settings/diagnoses/')({
+export const Route = createLazyFileRoute('/settings/diagnoses/')({
     component: DiagnosesSettings
 });

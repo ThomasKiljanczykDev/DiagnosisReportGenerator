@@ -15,19 +15,21 @@ interface DrawerListItemProps {
 }
 
 const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) {
-    const location = useLocation();
+    const pathname = useLocation({
+        select: (location) => location.pathname
+    }) as RoutePaths<RegisteredRouter['routeTree']>;
     const navigate = useNavigate();
 
     const selected = useMemo(() => {
-        return location.pathname == props.navigateTo;
-    }, [location.pathname, props.navigateTo]);
+        return pathname == props.navigateTo;
+    }, [pathname, props.navigateTo]);
 
     const handleClick = useCallback(() => {
         navigate({
-            from: location.pathname,
+            from: pathname,
             to: props.navigateTo
         });
-    }, [location.pathname, navigate, props.navigateTo]);
+    }, [pathname, navigate, props.navigateTo]);
 
     return (
         <ListItem
