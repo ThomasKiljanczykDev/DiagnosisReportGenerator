@@ -15,7 +15,7 @@ The app is built using React and Electron.
 git clone https://github.com/ThomasKiljanczykDev/DiagnosisReportGenerator
 
 # enter the project directory
-cd electron-vite-react
+cd js/electron-app
 
 # install dependency
 yarn install
