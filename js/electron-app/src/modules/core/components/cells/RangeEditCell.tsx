@@ -71,9 +71,11 @@ export default function RangeEditCell<R extends GridValidRowModel>(props: RangeE
                     props.defaultValue.to != null &&
                     props.defaultValue.from >= props.defaultValue.to
                 }
-                InputProps={{
-                    inputProps: {
-                        min: 0
+                slotProps={{
+                    input: {
+                        inputProps: {
+                            min: 0
+                        }
                     }
                 }}
                 style={{
@@ -99,9 +101,11 @@ export default function RangeEditCell<R extends GridValidRowModel>(props: RangeE
                     props.defaultValue.to != null &&
                     props.defaultValue.to <= props.defaultValue.from
                 }
-                InputProps={{
-                    inputProps: {
-                        min: 0
+                slotProps={{
+                    input: {
+                        inputProps: {
+                            min: 0
+                        }
                     }
                 }}
                 style={{
