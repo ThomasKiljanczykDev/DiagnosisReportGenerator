@@ -9,6 +9,8 @@ import { HomeService, serviceOptions } from '@diagnosis-report-generator/api/ser
 
 import { update } from './update';
 
+app.commandLine.appendSwitch('js-flags', '--enable-source-maps');
+
 // setup api axios
 serviceOptions.axios = axios.create({
     baseURL: import.meta.env.VITE_API_URL
