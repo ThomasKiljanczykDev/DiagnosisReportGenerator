@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 
-import { Grid2 } from '@mui/material';
+import { Grid } from '@mui/material';
 
 import Panel from '@/modules/core/components/Panel';
 
@@ -13,10 +13,10 @@ interface PanelGridItemProps {
 
 export default function PanelGridItem(props: PanelGridItemProps) {
     return (
-        <Grid2>
+        <Grid>
             <Panel title={props.title} width={props.width} height={props.height}>
                 {props.children}
             </Panel>
-        </Grid2>
+        </Grid>
     );
 }

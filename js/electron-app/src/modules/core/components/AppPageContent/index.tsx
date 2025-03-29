@@ -2,7 +2,7 @@ import React, { type PropsWithChildren, type ReactNode, memo } from 'react';
 
 import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
 import BrightnessHighRoundedIcon from '@mui/icons-material/BrightnessHighRounded';
-import { Grid2, useColorScheme, useTheme } from '@mui/material';
+import { Grid, useColorScheme, useTheme } from '@mui/material';
 
 import AppBreadcrumbs from '@/modules/core/components/AppPageContent/AppBreadcrumbs';
 import ToggleIcon from '@/modules/core/components/ToggleIcon';
@@ -28,7 +28,7 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
     const theme = useTheme();
 
     return (
-        <Grid2
+        <Grid
             container
             flexDirection="column"
             height="100%"
@@ -38,7 +38,7 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
             minHeight={0}
             maxWidth="100%"
         >
-            <Grid2
+            <Grid
                 flexShrink={0}
                 minWidth={0}
                 minHeight={0}
@@ -48,8 +48,8 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
             >
                 <AppBreadcrumbs />
                 <DarkModeToggle />
-            </Grid2>
-            <Grid2
+            </Grid>
+            <Grid
                 display="flex"
                 flexShrink={0}
                 minWidth={0}
@@ -59,8 +59,8 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
             >
                 <h2 style={{ color: theme.palette.text.primary, margin: 0 }}>{props.title}</h2>
                 {props.actionButtons}
-            </Grid2>
-            <Grid2
+            </Grid>
+            <Grid
                 display="flex"
                 flex={1}
                 flexDirection="column"
@@ -69,8 +69,8 @@ const AppPageContent = memo(function AppPageContent(props: PropsWithChildren<App
                 maxWidth="100%"
             >
                 {props.children}
-            </Grid2>
-        </Grid2>
+            </Grid>
+        </Grid>
     );
 });
 export default AppPageContent;

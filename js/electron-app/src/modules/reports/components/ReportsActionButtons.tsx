@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 
 import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
 import UploadFileRoundedIcon from '@mui/icons-material/UploadFileRounded';
-import { Button, Grid2 } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 
 import VisuallyHiddenInput from '@/modules/core/components/VisuallyHiddenInput';
 import { MimeType, saveFile } from '@/modules/core/utils/file-util';
@@ -81,7 +81,7 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
     );
 
     return (
-        <Grid2 container spacing={2}>
+        <Grid container spacing={2}>
             <Button
                 component="label"
                 role="none"
@@ -111,6 +111,6 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
                     type="file"
                 />
             </Button>
-        </Grid2>
+        </Grid>
     );
 }
