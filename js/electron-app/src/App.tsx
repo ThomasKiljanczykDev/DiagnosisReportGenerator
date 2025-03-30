@@ -3,7 +3,6 @@ import React, { Suspense, useMemo } from 'react';
 import axios from 'axios';
 import { SnackbarProvider } from 'notistack';
 import { useTranslation } from 'react-i18next';
-import 'react-material-symbols/rounded';
 
 import { serviceOptions } from '@diagnosis-report-generator/api/services';
 import { ThemeProvider, createTheme } from '@mui/material';

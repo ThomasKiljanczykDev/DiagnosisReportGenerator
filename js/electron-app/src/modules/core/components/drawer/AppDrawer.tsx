@@ -1,7 +1,6 @@
 import { memo } from 'react';
 
-import { MaterialSymbol } from 'react-material-symbols';
-
+import { GeneticsRounded, MicrobiologyRounded } from '@mui-symbols-material/w400';
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
 import BiotechRoundedIcon from '@mui/icons-material/BiotechRounded';
 import CoronavirusRoundedIcon from '@mui/icons-material/CoronavirusRounded';
@@ -59,16 +58,15 @@ const AppDrawer = memo(function MainDrawer() {
                     navigateTo="/settings/test-methods"
                     icon={<BiotechRoundedIcon />}
                 />
-                {/* TODO: Find a better icon in the future */}
                 <DrawerListItem
                     text="Mutacje"
                     navigateTo="/settings/mutations"
-                    icon={<MaterialSymbol icon="microbiology" size={24} />}
+                    icon={<MicrobiologyRounded />}
                 />
                 <DrawerListItem
                     text="Geny"
                     navigateTo="/settings/genes"
-                    icon={<MaterialSymbol icon="genetics" size={24} />}
+                    icon={<GeneticsRounded />}
                 />
                 <DrawerListItem
                     text="Choroby"
