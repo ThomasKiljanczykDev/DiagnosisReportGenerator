@@ -2,22 +2,21 @@ import { type ReactNode, memo, useCallback, useMemo } from 'react';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import {
-    type RegisteredRouter,
-    type RoutePaths,
+    type FileRouteTypes,
     useLocation,
     useNavigate
 } from '@tanstack/react-router';
 
 interface DrawerListItemProps {
     text: string;
-    navigateTo: RoutePaths<RegisteredRouter['routeTree']>;
+    navigateTo: FileRouteTypes['fullPaths'];
     icon: ReactNode;
 }
 
 const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) {
     const pathname = useLocation({
         select: (location) => location.pathname
-    }) as RoutePaths<RegisteredRouter['routeTree']>;
+    }) as FileRouteTypes['fullPaths'];
     const navigate = useNavigate();
 
     const selected = useMemo(() => {

@@ -10,9 +10,8 @@ import {
 import type { FormikProps, FormikState, FormikValues } from 'formik';
 
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import type { InputProps as StandardInputProps } from '@mui/material/Input/Input';
-import type { BaseSelectProps } from '@mui/material/Select/Select';
-import type { SelectChangeEvent, SelectInputProps } from '@mui/material/Select/SelectInput';
+import type { InputProps as StandardInputProps } from '@mui/material/Input';
+import type { BaseSelectProps, SelectChangeEvent, SelectProps } from '@mui/material/Select';
 
 interface SelectItem {
     value?: LiHTMLAttributes<unknown>['value'];
@@ -20,7 +19,7 @@ interface SelectItem {
 }
 
 interface FormSelectProps<Values extends FormikValues, Value> extends BaseSelectProps<Value> {
-    onChange?: SelectInputProps<Value>['onChange'];
+    onChange?: SelectProps<Value>['onChange'];
     InputProps?: Partial<StandardInputProps>;
 
     formik: FormikProps<Values> & FormikState<Values>;

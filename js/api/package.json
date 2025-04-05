@@ -11,11 +11,11 @@
     },
     "dependencies": {
         "axios": "^1.8.4",
-        "swagger-axios-codegen": "^0.17.3"
+        "swagger-axios-codegen": "^0.17.4"
     },
     "devDependencies": {
         "ts-config": "workspace:*",
-        "typescript": "^5.8.2"
+        "typescript": "^5.8.3"
     },
     "packageManager": "yarn@4.3.1"
 }

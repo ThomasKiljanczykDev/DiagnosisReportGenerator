@@ -2,11 +2,10 @@ import { type ChangeEvent, type ReactElement, useCallback, useMemo } from 'react
 
 import type { FormikProps, FormikState, FormikValues } from 'formik';
 
-import type { InternalStandardProps as StandardProps } from '@mui/material';
-import type { InputProps as StandardInputProps } from '@mui/material/Input/Input';
+import type { BaseTextFieldProps, InternalStandardProps as StandardProps } from '@mui/material';
+import type { InputProps as StandardInputProps } from '@mui/material/Input';
 import type { InputBaseProps } from '@mui/material/InputBase';
 import TextField from '@mui/material/TextField';
-import type { BaseTextFieldProps } from '@mui/material/TextField/TextField';
 
 interface FormTextInputProps<Values extends FormikValues> extends BaseTextFieldProps {
     onChange?: StandardProps<InputBaseProps>['onChange'];

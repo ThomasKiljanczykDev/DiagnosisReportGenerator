@@ -14,7 +14,7 @@ export default tseslint.config(
         languageOptions: {
             parser: tseslint.parser,
             parserOptions: {
-                project: true,
+                projectService: true,
                 ecmaVersion: 'latest',
                 sourceType: 'module'
             }
