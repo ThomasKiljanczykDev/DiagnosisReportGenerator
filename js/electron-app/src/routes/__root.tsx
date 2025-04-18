@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Box, useTheme } from '@mui/material';
 import { Outlet, createRootRoute } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
 
 import AppDrawer from '@/modules/core/components/drawer/AppDrawer';
 
