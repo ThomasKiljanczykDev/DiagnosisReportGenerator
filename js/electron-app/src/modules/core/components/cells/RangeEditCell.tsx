@@ -2,8 +2,11 @@ import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
 
 import { type Range } from '@diagnosis-report-generator/api/services';
 import { TextField } from '@mui/material';
-import { type GridRenderEditCellParams, useGridApiContext } from '@mui/x-data-grid';
-import type { GridValidRowModel } from '@mui/x-data-grid/models/gridRows';
+import {
+    type GridRenderEditCellParams,
+    type GridValidRowModel,
+    useGridApiContext
+} from '@mui/x-data-grid';
 
 interface RangeEditCellProps<R extends GridValidRowModel> {
     params: GridRenderEditCellParams<R, Range>;

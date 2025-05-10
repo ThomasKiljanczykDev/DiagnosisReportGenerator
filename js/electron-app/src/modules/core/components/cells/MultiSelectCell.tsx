@@ -1,6 +1,5 @@
 import { Chip } from '@mui/material';
-import { type GridRenderCellParams } from '@mui/x-data-grid';
-import type { GridValidRowModel } from '@mui/x-data-grid/models/gridRows';
+import { type GridRenderCellParams, type GridValidRowModel } from '@mui/x-data-grid';
 
 type ItemValue = string | number | undefined;
 

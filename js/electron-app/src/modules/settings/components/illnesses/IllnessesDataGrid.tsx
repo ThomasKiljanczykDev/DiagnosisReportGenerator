@@ -97,7 +97,7 @@ export default function IllnessesDataGrid(props: IllnessesDataGridProps) {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns({
+            await apiRef.current?.autosizeColumns({
                 includeOutliers: true,
                 includeHeaders: true
             });

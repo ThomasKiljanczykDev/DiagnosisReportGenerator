@@ -3,7 +3,7 @@ import { type ReactNode, memo, useCallback, useMemo } from 'react';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useLocation, useNavigate } from '@tanstack/react-router';
 
-import { type FileRouteTypes } from '@/routeTree.gen';
+import type { FileRouteTypes } from '@/routeTree.gen';
 
 interface DrawerListItemProps {
     text: string;
@@ -17,16 +17,16 @@ const DrawerListItem = memo(function DrawerListItem(props: DrawerListItemProps) 
     }) as FileRouteTypes['fullPaths'];
     const navigate = useNavigate();
 
-    const selected = useMemo(() => {
-        return pathname == props.navigateTo;
-    }, [pathname, props.navigateTo]);
+    const selected = useMemo(() => pathname == props.navigateTo, [pathname, props.navigateTo]);
 
-    const handleClick = useCallback(() => {
-        navigate({
-            from: pathname,
-            to: props.navigateTo
-        });
-    }, [pathname, navigate, props.navigateTo]);
+    const handleClick = useCallback(
+        () =>
+            navigate({
+                from: pathname,
+                to: props.navigateTo
+            }),
+        [pathname, navigate, props.navigateTo]
+    );
 
     return (
         <ListItem

@@ -82,7 +82,7 @@ export default function StaffDataGrid(props: StaffSettingsProps) {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns({
+            await apiRef.current?.autosizeColumns({
                 includeOutliers: true,
                 includeHeaders: true
             });

@@ -161,7 +161,7 @@ export default function RecommendationsDataGrid(props: RecommendationsDataGridPr
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns({
+            await apiRef.current?.autosizeColumns({
                 includeOutliers: true,
                 includeHeaders: true
             });

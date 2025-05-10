@@ -29,7 +29,7 @@ function DiagnosesSettings() {
 
     useEffect(() => {
         window.setTimeout(async () => {
-            await apiRef.current.autosizeColumns();
+            await apiRef.current?.autosizeColumns();
         }, 100);
     }, [diagnoses, apiRef]);
 
