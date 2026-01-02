@@ -13,18 +13,19 @@ import typescript from './src/typescript.js';
 const baseEslintConfig = tseslint.config(...errors, ...style, eslintConfigPrettier);
 
 const tsEslintConfig = tseslint.config(
+    {
+        settings: {
+            react: {
+                version: 'detect'
+            }
+        }
+    },
     eslint.configs.recommended,
     ...typescript,
     ...baseEslintConfig,
-    {
-        plugins: {
-            react: eslintPluginReact,
-            'react-hooks': eslintPluginReactHooks
-        },
-        rules: {
-            ...eslintPluginReactHooks.configs.recommended.rules
-        }
-    }
+    eslintPluginReact.configs.flat.recommended,
+    eslintPluginReact.configs.flat['jsx-runtime'],
+    eslintPluginReactHooks.configs.flat.recommended
 );
 
 export { tsEslintConfig };

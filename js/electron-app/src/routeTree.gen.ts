@@ -10,213 +10,110 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
 
-import { Route as rootRoute } from './routes/__root'
-
-// Create Virtual Routes
-
-const IndexLazyImport = createFileRoute('/')()
-const SettingsIndexLazyImport = createFileRoute('/settings/')()
-const ReportsIndexLazyImport = createFileRoute('/reports/')()
-const SettingsTestMethodsIndexLazyImport = createFileRoute(
+const IndexLazyRouteImport = createFileRoute('/')()
+const SettingsIndexLazyRouteImport = createFileRoute('/settings/')()
+const ReportsIndexLazyRouteImport = createFileRoute('/reports/')()
+const SettingsTestMethodsIndexLazyRouteImport = createFileRoute(
   '/settings/test-methods/',
 )()
-const SettingsStaffIndexLazyImport = createFileRoute('/settings/staff/')()
-const SettingsRecommendationsIndexLazyImport = createFileRoute(
+const SettingsStaffIndexLazyRouteImport = createFileRoute('/settings/staff/')()
+const SettingsRecommendationsIndexLazyRouteImport = createFileRoute(
   '/settings/recommendations/',
 )()
-const SettingsMutationsIndexLazyImport = createFileRoute(
+const SettingsMutationsIndexLazyRouteImport = createFileRoute(
   '/settings/mutations/',
 )()
-const SettingsIllnessesIndexLazyImport = createFileRoute(
+const SettingsIllnessesIndexLazyRouteImport = createFileRoute(
   '/settings/illnesses/',
 )()
-const SettingsGenesIndexLazyImport = createFileRoute('/settings/genes/')()
-const SettingsDiagnosesIndexLazyImport = createFileRoute(
+const SettingsGenesIndexLazyRouteImport = createFileRoute('/settings/genes/')()
+const SettingsDiagnosesIndexLazyRouteImport = createFileRoute(
   '/settings/diagnoses/',
 )()
-const ReportsPatientsIndexLazyImport = createFileRoute('/reports/patients/')()
+const ReportsPatientsIndexLazyRouteImport =
+  createFileRoute('/reports/patients/')()
 
-// Create/Update Routes
-
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-
-const SettingsIndexLazyRoute = SettingsIndexLazyImport.update({
+const SettingsIndexLazyRoute = SettingsIndexLazyRouteImport.update({
   id: '/settings/',
   path: '/settings/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() =>
   import('./routes/settings/index.lazy').then((d) => d.Route),
 )
-
-const ReportsIndexLazyRoute = ReportsIndexLazyImport.update({
+const ReportsIndexLazyRoute = ReportsIndexLazyRouteImport.update({
   id: '/reports/',
   path: '/reports/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/reports/index.lazy').then((d) => d.Route))
-
 const SettingsTestMethodsIndexLazyRoute =
-  SettingsTestMethodsIndexLazyImport.update({
+  SettingsTestMethodsIndexLazyRouteImport.update({
     id: '/settings/test-methods/',
     path: '/settings/test-methods/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any).lazy(() =>
     import('./routes/settings/test-methods/index.lazy').then((d) => d.Route),
   )
-
-const SettingsStaffIndexLazyRoute = SettingsStaffIndexLazyImport.update({
+const SettingsStaffIndexLazyRoute = SettingsStaffIndexLazyRouteImport.update({
   id: '/settings/staff/',
   path: '/settings/staff/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() =>
   import('./routes/settings/staff/index.lazy').then((d) => d.Route),
 )
-
 const SettingsRecommendationsIndexLazyRoute =
-  SettingsRecommendationsIndexLazyImport.update({
+  SettingsRecommendationsIndexLazyRouteImport.update({
     id: '/settings/recommendations/',
     path: '/settings/recommendations/',
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => rootRouteImport,
   } as any).lazy(() =>
     import('./routes/settings/recommendations/index.lazy').then((d) => d.Route),
   )
-
-const SettingsMutationsIndexLazyRoute = SettingsMutationsIndexLazyImport.update(
-  {
+const SettingsMutationsIndexLazyRoute =
+  SettingsMutationsIndexLazyRouteImport.update({
     id: '/settings/mutations/',
     path: '/settings/mutations/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/settings/mutations/index.lazy').then((d) => d.Route),
-)
-
-const SettingsIllnessesIndexLazyRoute = SettingsIllnessesIndexLazyImport.update(
-  {
+    getParentRoute: () => rootRouteImport,
+  } as any).lazy(() =>
+    import('./routes/settings/mutations/index.lazy').then((d) => d.Route),
+  )
+const SettingsIllnessesIndexLazyRoute =
+  SettingsIllnessesIndexLazyRouteImport.update({
     id: '/settings/illnesses/',
     path: '/settings/illnesses/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/settings/illnesses/index.lazy').then((d) => d.Route),
-)
-
-const SettingsGenesIndexLazyRoute = SettingsGenesIndexLazyImport.update({
+    getParentRoute: () => rootRouteImport,
+  } as any).lazy(() =>
+    import('./routes/settings/illnesses/index.lazy').then((d) => d.Route),
+  )
+const SettingsGenesIndexLazyRoute = SettingsGenesIndexLazyRouteImport.update({
   id: '/settings/genes/',
   path: '/settings/genes/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() =>
   import('./routes/settings/genes/index.lazy').then((d) => d.Route),
 )
-
-const SettingsDiagnosesIndexLazyRoute = SettingsDiagnosesIndexLazyImport.update(
-  {
+const SettingsDiagnosesIndexLazyRoute =
+  SettingsDiagnosesIndexLazyRouteImport.update({
     id: '/settings/diagnoses/',
     path: '/settings/diagnoses/',
-    getParentRoute: () => rootRoute,
-  } as any,
-).lazy(() =>
-  import('./routes/settings/diagnoses/index.lazy').then((d) => d.Route),
-)
-
-const ReportsPatientsIndexLazyRoute = ReportsPatientsIndexLazyImport.update({
-  id: '/reports/patients/',
-  path: '/reports/patients/',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() =>
-  import('./routes/reports/patients/index.lazy').then((d) => d.Route),
-)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/': {
-      id: '/reports/'
-      path: '/reports'
-      fullPath: '/reports'
-      preLoaderRoute: typeof ReportsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/': {
-      id: '/settings/'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/reports/patients/': {
-      id: '/reports/patients/'
-      path: '/reports/patients'
-      fullPath: '/reports/patients'
-      preLoaderRoute: typeof ReportsPatientsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/diagnoses/': {
-      id: '/settings/diagnoses/'
-      path: '/settings/diagnoses'
-      fullPath: '/settings/diagnoses'
-      preLoaderRoute: typeof SettingsDiagnosesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/genes/': {
-      id: '/settings/genes/'
-      path: '/settings/genes'
-      fullPath: '/settings/genes'
-      preLoaderRoute: typeof SettingsGenesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/illnesses/': {
-      id: '/settings/illnesses/'
-      path: '/settings/illnesses'
-      fullPath: '/settings/illnesses'
-      preLoaderRoute: typeof SettingsIllnessesIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/mutations/': {
-      id: '/settings/mutations/'
-      path: '/settings/mutations'
-      fullPath: '/settings/mutations'
-      preLoaderRoute: typeof SettingsMutationsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/recommendations/': {
-      id: '/settings/recommendations/'
-      path: '/settings/recommendations'
-      fullPath: '/settings/recommendations'
-      preLoaderRoute: typeof SettingsRecommendationsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/staff/': {
-      id: '/settings/staff/'
-      path: '/settings/staff'
-      fullPath: '/settings/staff'
-      preLoaderRoute: typeof SettingsStaffIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/settings/test-methods/': {
-      id: '/settings/test-methods/'
-      path: '/settings/test-methods'
-      fullPath: '/settings/test-methods'
-      preLoaderRoute: typeof SettingsTestMethodsIndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
+    getParentRoute: () => rootRouteImport,
+  } as any).lazy(() =>
+    import('./routes/settings/diagnoses/index.lazy').then((d) => d.Route),
+  )
+const ReportsPatientsIndexLazyRoute =
+  ReportsPatientsIndexLazyRouteImport.update({
+    id: '/reports/patients/',
+    path: '/reports/patients/',
+    getParentRoute: () => rootRouteImport,
+  } as any).lazy(() =>
+    import('./routes/reports/patients/index.lazy').then((d) => d.Route),
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
@@ -231,7 +128,6 @@ export interface FileRoutesByFullPath {
   '/settings/staff': typeof SettingsStaffIndexLazyRoute
   '/settings/test-methods': typeof SettingsTestMethodsIndexLazyRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/reports': typeof ReportsIndexLazyRoute
@@ -245,9 +141,8 @@ export interface FileRoutesByTo {
   '/settings/staff': typeof SettingsStaffIndexLazyRoute
   '/settings/test-methods': typeof SettingsTestMethodsIndexLazyRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/reports/': typeof ReportsIndexLazyRoute
   '/settings/': typeof SettingsIndexLazyRoute
@@ -260,7 +155,6 @@ export interface FileRoutesById {
   '/settings/staff/': typeof SettingsStaffIndexLazyRoute
   '/settings/test-methods/': typeof SettingsTestMethodsIndexLazyRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
@@ -303,7 +197,6 @@ export interface FileRouteTypes {
     | '/settings/test-methods/'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   ReportsIndexLazyRoute: typeof ReportsIndexLazyRoute
@@ -316,6 +209,88 @@ export interface RootRouteChildren {
   SettingsRecommendationsIndexLazyRoute: typeof SettingsRecommendationsIndexLazyRoute
   SettingsStaffIndexLazyRoute: typeof SettingsStaffIndexLazyRoute
   SettingsTestMethodsIndexLazyRoute: typeof SettingsTestMethodsIndexLazyRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/': {
+      id: '/settings/'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof ReportsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/test-methods/': {
+      id: '/settings/test-methods/'
+      path: '/settings/test-methods'
+      fullPath: '/settings/test-methods'
+      preLoaderRoute: typeof SettingsTestMethodsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/staff/': {
+      id: '/settings/staff/'
+      path: '/settings/staff'
+      fullPath: '/settings/staff'
+      preLoaderRoute: typeof SettingsStaffIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/recommendations/': {
+      id: '/settings/recommendations/'
+      path: '/settings/recommendations'
+      fullPath: '/settings/recommendations'
+      preLoaderRoute: typeof SettingsRecommendationsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/mutations/': {
+      id: '/settings/mutations/'
+      path: '/settings/mutations'
+      fullPath: '/settings/mutations'
+      preLoaderRoute: typeof SettingsMutationsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/illnesses/': {
+      id: '/settings/illnesses/'
+      path: '/settings/illnesses'
+      fullPath: '/settings/illnesses'
+      preLoaderRoute: typeof SettingsIllnessesIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/genes/': {
+      id: '/settings/genes/'
+      path: '/settings/genes'
+      fullPath: '/settings/genes'
+      preLoaderRoute: typeof SettingsGenesIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings/diagnoses/': {
+      id: '/settings/diagnoses/'
+      path: '/settings/diagnoses'
+      fullPath: '/settings/diagnoses'
+      preLoaderRoute: typeof SettingsDiagnosesIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reports/patients/': {
+      id: '/reports/patients/'
+      path: '/reports/patients'
+      fullPath: '/reports/patients'
+      preLoaderRoute: typeof ReportsPatientsIndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -331,63 +306,6 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsStaffIndexLazyRoute: SettingsStaffIndexLazyRoute,
   SettingsTestMethodsIndexLazyRoute: SettingsTestMethodsIndexLazyRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/reports/",
-        "/settings/",
-        "/reports/patients/",
-        "/settings/diagnoses/",
-        "/settings/genes/",
-        "/settings/illnesses/",
-        "/settings/mutations/",
-        "/settings/recommendations/",
-        "/settings/staff/",
-        "/settings/test-methods/"
-      ]
-    },
-    "/": {
-      "filePath": "index.lazy.tsx"
-    },
-    "/reports/": {
-      "filePath": "reports/index.lazy.tsx"
-    },
-    "/settings/": {
-      "filePath": "settings/index.lazy.tsx"
-    },
-    "/reports/patients/": {
-      "filePath": "reports/patients/index.lazy.tsx"
-    },
-    "/settings/diagnoses/": {
-      "filePath": "settings/diagnoses/index.lazy.tsx"
-    },
-    "/settings/genes/": {
-      "filePath": "settings/genes/index.lazy.tsx"
-    },
-    "/settings/illnesses/": {
-      "filePath": "settings/illnesses/index.lazy.tsx"
-    },
-    "/settings/mutations/": {
-      "filePath": "settings/mutations/index.lazy.tsx"
-    },
-    "/settings/recommendations/": {
-      "filePath": "settings/recommendations/index.lazy.tsx"
-    },
-    "/settings/staff/": {
-      "filePath": "settings/staff/index.lazy.tsx"
-    },
-    "/settings/test-methods/": {
-      "filePath": "settings/test-methods/index.lazy.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

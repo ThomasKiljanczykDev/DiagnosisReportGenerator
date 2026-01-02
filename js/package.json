@@ -20,9 +20,9 @@
         ]
     },
     "devDependencies": {
-        "eslint": "^9.26.0",
+        "eslint": "^9.39.2",
         "eslint-config": "workspace:*",
-        "prettier": "^3.5.3",
+        "prettier": "^3.7.4",
         "prettier-config": "workspace:*"
     },
     "packageManager": "yarn@4.12.0"

@@ -8,7 +8,18 @@ import { type Patient, parsePesel } from '@/types/patient';
 export class ImportService {
     static async parseExcelFile(fileData: Uint8Array) {
         const workBook = read(fileData);
-        const workSheet = workBook.Sheets[workBook.SheetNames[0]];
+
+        const sheetName = workBook.SheetNames[0];
+        if (!sheetName) {
+            console.error('No worksheet found in the Excel file');
+            return [];
+        }
+
+        const workSheet = workBook.Sheets[sheetName];
+        if (!workSheet) {
+            console.error(`Worksheet "${sheetName}" not found in the Excel file`);
+            return [];
+        }
 
         const rawSheetData = utils.sheet_to_json<string[]>(workSheet, {
             header: 1,
@@ -34,9 +45,9 @@ export class ImportService {
         staff: StaffMemberDto[]
     ): Patient | null {
         try {
-            const sourceAssistants = data[5];
-            const sourceConsultants = data[6];
-            const sourceDoctor = data[7];
+            const sourceAssistants = data[5] ?? '';
+            const sourceConsultants = data[6] ?? '';
+            const sourceDoctor = data[7] ?? '';
 
             const assistants = staff.filter((staffMember) =>
                 sourceAssistants.toUpperCase().includes(staffMember.name.toUpperCase())
@@ -55,7 +66,7 @@ export class ImportService {
                 date: new Date(),
                 cardNumber: data[0],
                 name: data[1],
-                pesel: parsePesel(data[2]),
+                pesel: parsePesel(data[2] ?? ''),
                 doctor: doctor ?? null,
                 assistants: assistants,
                 consultants: consultants,
@@ -77,6 +88,8 @@ export class ImportService {
             .map((row) => row.map((cell) => cell.trim()))
             .filter((row) => row.some((cell) => cell))
             .filter((row) => row.length > 0);
+
+        // TODO: should validate the data with Zod schema
 
         return rawSheetData
             .slice(1)

@@ -55,7 +55,7 @@ export default function ReportsActionButtons(props: MainPageActionButtonsProps) 
 
             const fileData = new Uint8Array(await file.arrayBuffer());
 
-            let zipData: Uint8Array;
+            let zipData: Uint8Array<ArrayBuffer>;
             try {
                 zipData = await ExportService.generateReport(fileData, props.patientData);
             } catch (e) {

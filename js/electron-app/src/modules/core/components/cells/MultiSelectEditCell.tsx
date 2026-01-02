@@ -1,4 +1,4 @@
-import { type ReactNode, useCallback, useEffect, useState } from 'react';
+import { type ReactNode, useCallback, useState } from 'react';
 
 import { Box, Chip, MenuItem, OutlinedInput, Select, type SelectChangeEvent } from '@mui/material';
 import {
@@ -23,7 +23,7 @@ export default function MultiSelectEditCell<R extends GridValidRowModel, I exten
 ) {
     const apiRef = useGridApiContext();
 
-    const [value, setValue] = useState<ItemValue[]>(props.initialValue);
+    const [value, setValue] = useState<ItemValue[]>(() => props.initialValue);
 
     const handleValueChange = useCallback(
         (e: SelectChangeEvent<ItemValue[]>) => {
@@ -49,10 +49,6 @@ export default function MultiSelectEditCell<R extends GridValidRowModel, I exten
         },
         [apiRef, props]
     );
-
-    useEffect(() => {
-        setValue(props.initialValue);
-    }, [props.initialValue]);
 
     return (
         <div style={{ display: 'flex', flexGrow: 1, minWidth: 0, minHeight: 0 }}>

@@ -3,11 +3,7 @@ export enum MimeType {
     zip = 'application/zip'
 }
 
-export function saveFile(
-    fileContent: BufferSource | Blob | string,
-    filename: string,
-    fileType: MimeType
-) {
+export function saveFile(fileContent: BlobPart, filename: string, fileType: MimeType) {
     const blob = new Blob([fileContent], {
         type: fileType
     });

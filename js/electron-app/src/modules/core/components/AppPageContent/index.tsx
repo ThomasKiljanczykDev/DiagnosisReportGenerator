@@ -1,4 +1,4 @@
-import React, { type PropsWithChildren, type ReactNode, memo } from 'react';
+import { type PropsWithChildren, type ReactNode, memo } from 'react';
 
 import Brightness4RoundedIcon from '@mui/icons-material/Brightness4Rounded';
 import BrightnessHighRoundedIcon from '@mui/icons-material/BrightnessHighRounded';

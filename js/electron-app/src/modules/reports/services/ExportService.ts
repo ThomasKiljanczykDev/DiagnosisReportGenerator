@@ -17,7 +17,10 @@ import { type Report, type ReportGene } from '@/types/report';
 const zip = promisify(zipCb);
 
 export default class ExportService {
-    static async generateReport(templateFileData: Uint8Array, patientData: Patient[]) {
+    static async generateReport(
+        templateFileData: Uint8Array,
+        patientData: Patient[]
+    ): Promise<Uint8Array<ArrayBuffer>> {
         const reports: AsyncZippable = {};
 
         const mutations = await MutationService.getList().then((result) => result.items);
@@ -101,6 +104,7 @@ export default class ExportService {
             reports[filename] = new Uint8Array(report);
         }
 
-        return zip(reports);
+        const result = await zip(reports);
+        return new Uint8Array(result);
     }
 }

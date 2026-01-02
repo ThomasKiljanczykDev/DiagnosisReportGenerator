@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
     type DiagnosisDto,
@@ -36,6 +36,7 @@ function DiagnosesSettings() {
     useEffect(() => {
         const abortController = new AbortController();
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getDiagnoses(abortController.signal);
 
         RecommendationService.getList(undefined, { signal: abortController.signal }).then(

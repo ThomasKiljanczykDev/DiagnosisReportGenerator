@@ -24,6 +24,7 @@ function RecommendationsSettings() {
     useEffect(() => {
         const abortController = new AbortController();
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getRecommendations(abortController.signal);
 
         return () => {

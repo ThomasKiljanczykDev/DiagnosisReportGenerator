@@ -12,5 +12,6 @@
         "vite.config.development.ts",
         "playwright.config.ts"
     ],
+    "types": [],
     "extends": ["ts-config"]
 }

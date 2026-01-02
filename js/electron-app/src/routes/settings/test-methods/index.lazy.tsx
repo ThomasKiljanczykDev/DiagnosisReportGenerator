@@ -20,6 +20,8 @@ function TestMethodsSettings() {
 
     useEffect(() => {
         const abortController = new AbortController();
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getTestMethods(abortController.signal);
 
         return () => {

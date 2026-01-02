@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 
 import axios from 'axios';
 import { SnackbarProvider } from 'notistack';

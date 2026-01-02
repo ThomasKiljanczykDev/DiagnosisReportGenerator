@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import {
     type GeneDto,
@@ -30,6 +30,7 @@ function GenesSettings() {
     useEffect(() => {
         const abortController = new AbortController();
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getGenes(abortController.signal);
 
         TestMethodService.getList(undefined, { signal: abortController.signal }).then(

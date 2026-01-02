@@ -22,6 +22,7 @@ function MutationsSettings() {
     useEffect(() => {
         const abortController = new AbortController();
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getMutations(abortController.signal);
 
         return () => {

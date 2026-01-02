@@ -1,4 +1,4 @@
-import { type ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { type ChangeEvent, useCallback, useState } from 'react';
 
 import { type Range } from '@diagnosis-report-generator/api/services';
 import { TextField } from '@mui/material';
@@ -16,7 +16,7 @@ interface RangeEditCellProps<R extends GridValidRowModel> {
 export default function RangeEditCell<R extends GridValidRowModel>(props: RangeEditCellProps<R>) {
     const apiRef = useGridApiContext();
 
-    const [value, setValue] = useState<Range>(props.defaultValue);
+    const [value, setValue] = useState<Range>(() => props.defaultValue);
 
     const handleValueChange = useCallback(
         (field: keyof Range, e: ChangeEvent<HTMLInputElement>) => {
@@ -50,10 +50,6 @@ export default function RangeEditCell<R extends GridValidRowModel>(props: RangeE
         (e: ChangeEvent<HTMLInputElement>) => handleValueChange('to', e),
         [handleValueChange]
     );
-
-    useEffect(() => {
-        setValue(props.defaultValue);
-    }, [props.defaultValue]);
 
     return (
         <div style={{ display: 'flex', margin: '2px', alignItems: 'center', userSelect: 'none' }}>

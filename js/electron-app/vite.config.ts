@@ -5,8 +5,8 @@ import circularDependency from 'vite-plugin-circular-dependency';
 import electron from 'vite-plugin-electron/simple';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
-import react from '@vitejs/plugin-react-swc';
+import { tanstackRouter } from '@tanstack/router-plugin/vite';
+import react from '@vitejs/plugin-react';
 
 import pkg from './package.json';
 
@@ -31,11 +31,10 @@ export default defineConfig(({ command }) => {
         plugins: [
             circularDependency(),
             nodePolyfills(),
-            react(),
-            // eslint-disable-next-line new-cap
-            TanStackRouterVite({
+            tanstackRouter({
                 autoCodeSplitting: true
             }),
+            react(),
             electron({
                 main: {
                     // Shortcut of `build.lib.entry`

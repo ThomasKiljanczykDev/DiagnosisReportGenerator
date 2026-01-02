@@ -20,6 +20,8 @@ function StaffSettings() {
 
     useEffect(() => {
         const abortController = new AbortController();
+
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         getStaff(abortController.signal);
 
         return () => {
