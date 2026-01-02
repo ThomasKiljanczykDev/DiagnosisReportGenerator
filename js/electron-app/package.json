@@ -66,6 +66,5 @@
         "vite-plugin-circular-dependency": "^0.5.0",
         "vite-plugin-electron": "^0.29.0",
         "vite-plugin-node-polyfills": "^0.23.0"
-    },
-    "packageManager": "yarn@4.3.1"
+    }
 }
